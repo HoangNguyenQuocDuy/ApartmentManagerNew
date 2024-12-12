@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  room-service:
+    depends_on:
+      - postgres
+    build:
+      context: ./room-service
+#      dockerfile: docker-compose.yml
+#    image: room_service_container
+    container_name: room_service_container
+    ports:
+      - "9002:9002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/room_service
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - apartment_network
+
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres_container
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: room_service
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+volumes:
+  postgres_data:
+
+networks:
+  apartment_network:
+    driver: bridge

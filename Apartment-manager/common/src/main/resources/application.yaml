@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: upload-service
+
+server:
+  port: 9005
+
+cloudinary:
+  cloud-name: dpc4ckhqs
+  api-key: 378389729151436
+  api-secret: mWM7_sWVv85g_SDCWV6yZmTfz8g
+
+
+
+
