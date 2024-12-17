@@ -8,3 +8,11 @@ logging:
   level:
     org.springframework: DEBUG
     org.hibernate: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9999/eureka/ #where our registry server is located
+  instance:
+    prefer-ip-address: true #when the application registers with eureka,
+                            #true means: it uses its ip address rather than its hostname

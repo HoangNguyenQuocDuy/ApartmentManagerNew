@@ -12,6 +12,7 @@
         <module>common</module>
         <module>room-service</module>
         <module>config-service</module>
+        <module>discovery-service</module>
     </modules>
 
     <properties>
