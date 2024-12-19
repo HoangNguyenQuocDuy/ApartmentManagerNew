@@ -16,3 +16,13 @@ eureka:
   instance:
     prefer-ip-address: true #when the application registers with eureka,
                             #true means: it uses its ip address rather than its hostname
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #public all API
+
+  endpoint:
+    health:
+      show-components: always

@@ -24,4 +24,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway, routes
+        include: "*" #public all API
+
+  endpoint:
+    health:
+      show-components: always
