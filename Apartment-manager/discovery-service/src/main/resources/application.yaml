@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: discovery-service
+
+  config:
+    import: configserver:http://localhost:9998 #where the config-service is running
+
+  cloud:
+    config:
+      fail-fast: true #the service will not run if it can't reach the config-service
+
+eureka:
+  client:
+    register-with-eureka: false #tell the build-in eureka client to not register itself with eureka, because we should act
+                                #as a server
+    fetch-registry: false #Eureka clients not fetch the registry information from the server and caches it local

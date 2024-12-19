@@ -1,10 +1,10 @@
 spring:
   application:
-    name: room-service
+    name: monitor-admin
 
   config:
     import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
 
   cloud:
     config:
-      fail-fast: true
+      fail-fast: false
