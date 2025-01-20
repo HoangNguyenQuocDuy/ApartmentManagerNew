@@ -3,7 +3,7 @@ spring:
     name: gateway-service
 
   config:
-    import: configserver:http://localhost:9998
+    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
 
   cloud:
     gateway:
@@ -14,6 +14,15 @@ spring:
             - Path=/room/**
           filters:
             - StripPrefix=1
+
+        - id: auth-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+  main:
+    web-application-type: reactive
 
 logging:
   level:
@@ -29,3 +38,16 @@ management:
   endpoint:
     health:
       show-components: always
+
+publicApi:
+  GET: > 
+    /api/public/**, 
+    /swagger-ui/**, 
+    /v3/api-docs/**, 
+    /api/rooms/list
+  POST: >
+    /api/auth/login, 
+    /api/auth/forgotPassword, 
+    /api/auth/resetPassword,
+    /api/users/
+    

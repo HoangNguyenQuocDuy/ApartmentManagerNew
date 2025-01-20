@@ -26,3 +26,6 @@ management:
   endpoint:
     health:
       show-components: always
+
+secret:
+  key: 'my_secret_key'

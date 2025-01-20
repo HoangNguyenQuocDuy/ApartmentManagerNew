@@ -43,14 +43,26 @@ public class CommonException{
         }
     }
 
-    public static class DueDateException extends RuntimeException {
+    public static class DueDateException extends BaseException {
         public DueDateException(String message) {
             super(message);
         }
     }
 
-    public static class DuplicationError extends RuntimeException {
+    public static class DuplicationError extends BaseException {
         public DuplicationError(String message) {
+            super(message);
+        }
+    }
+
+    public static class TokenExpired extends BaseException {
+        public TokenExpired(String message) {
+            super(message);
+        }
+    }
+
+    public static class UnknownValuesException extends BaseException {
+        public UnknownValuesException(String message) {
             super(message);
         }
     }

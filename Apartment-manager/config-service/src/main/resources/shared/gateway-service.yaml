@@ -3,22 +3,3 @@ server:
 
   servlet:
     context-path: /
-
-  cloud:
-    gateway:
-      routes:
-        - id: room-route
-          uri: lb://room-service
-          predicates:
-            - Path=/room/**
-          filters:
-            - StripPrefix=1
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: gateway, routes
-  endpoint:
-    gateway:
-      enabled: true

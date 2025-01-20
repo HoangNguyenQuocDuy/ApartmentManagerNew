@@ -1,0 +1,13 @@
+server:
+  port: 8989
+
+otp:
+  ttl: 300
+
+user:
+  redisPassword: KhoaLuanTotNghiep
+  mail:
+    username: quocduy6114@gmail.com
+    password: sdtp ahlt xkzk ptyh
+
+debug: true

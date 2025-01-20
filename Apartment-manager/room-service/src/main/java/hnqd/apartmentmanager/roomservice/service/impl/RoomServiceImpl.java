@@ -1,13 +1,14 @@
 package hnqd.apartmentmanager.roomservice.service.impl;
 
 import hnqd.aparmentmanager.common.exceptions.CommonException;
+import hnqd.aparmentmanager.common.utils.UploadImage;
 import hnqd.apartmentmanager.roomservice.dto.RoomRequest;
 import hnqd.apartmentmanager.roomservice.entity.Room;
 import hnqd.apartmentmanager.roomservice.entity.RoomType;
 import hnqd.apartmentmanager.roomservice.repository.IRoomRepo;
 import hnqd.apartmentmanager.roomservice.repository.IRoomTypeRepo;
 import hnqd.apartmentmanager.roomservice.service.IRoomService;
-import hnqd.apartmentmanager.roomservice.utils.UploadImage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,13 +21,11 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RoomServiceImpl implements IRoomService {
-    @Autowired
-    private IRoomRepo roomRepo;
-    @Autowired
-    private IRoomTypeRepo roomTypeRepo;
-    @Autowired
-    private UploadImage uploadImage;
+    private final IRoomRepo roomRepo;
+    private final IRoomTypeRepo roomTypeRepo;
+    private final UploadImage uploadImage;
 
     @Override
     public Room createRoom(RoomRequest roomReq) throws IOException {

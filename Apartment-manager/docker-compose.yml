@@ -1,27 +1,9 @@
 version: '3.8'
 services:
-  room-service:
-    depends_on:
-      - postgres
-    build:
-      context: ./room-service
-#      dockerfile: docker-compose.yml
-#    image: room_service_container
-    container_name: room_service_container
-    ports:
-      - "9002:9002"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/room_service
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=12345
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    networks:
-      - apartment_network
-
-  postgres:
+  # Room Service PostgreSQL
+  room-service-postgres:
     image: postgres:12-alpine
-    container_name: postgres_container
+    container_name: room_service_container
     ports:
       - "5434:5432"
     environment:
@@ -29,12 +11,44 @@ services:
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: room_service
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - room_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Locker Service PostgreSQL
+  locker-service-postgres:
+    image: postgres:12-alpine
+    container_name: locker_service_container
+    ports:
+      - "5435:5432"  # Chú ý thay đổi cổng để không bị trùng với service trước
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: locker_service
+    volumes:
+      - locker_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Auth Service PostgreSQL
+  auth-service-postgres:
+    image: postgres:12-alpine
+    container_name: auth_service_container
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: user_service
+    volumes:
+      - auth_service_postgres_data:/var/lib/postgresql/data
     networks:
       - apartment_network
 
 volumes:
-  postgres_data:
+  room_service_postgres_data:
+  locker_service_postgres_data:
+  auth_service_postgres_data:
 
 networks:
   apartment_network:

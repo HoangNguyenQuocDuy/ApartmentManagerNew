@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/user_service
+    username: root
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.transaction.jta.platform: org.hibernate.transaction.JTATransactionFactory
+      hibernate:
+        format_sql: true
+
+  # Redis Host và Port
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # Redis Password (nếu có)
+#  spring.redis.password=
+
+cloudinary:
+  cloud-name: dpc4ckhqs
+  api-key: 378389729151436
+  api-secret: mWM7_sWVv85g_SDCWV6yZmTfz8g

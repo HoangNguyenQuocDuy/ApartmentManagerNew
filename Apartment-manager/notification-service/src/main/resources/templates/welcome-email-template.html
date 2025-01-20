@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Quốc Duy Apartment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .otp {
+            background-color: #ffeb3b;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+            color: #333;
+        }
+        .footer {
+            font-size: 14px;
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to Quốc Duy Apartment</h1>
+    <p>
+        Dear, <span th:text="${username}"></span>
+    </p>
+    <p>Welcome to our apartment community! We are excited to have you with us at Quốc Duy Apartment.</p>
+    <p>To complete your registration and log in, please use the following init password:</p>
+    <div class="otp" th:text="${otp}" ></div>
+    <p>You need to login and change this password. Please enter it on our login page to continue.</p>
+    <div class="footer">
+        <p>If you have any questions, feel free to <a href="mailto:support@quocduyapartments.com">contact us</a>.</p>
+    </div>
+</div>
+</body>
+</html>
