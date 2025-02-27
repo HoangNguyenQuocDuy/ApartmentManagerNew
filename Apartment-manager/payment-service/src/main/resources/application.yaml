@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: payment-service
+
+  config:
+    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
+
+  cloud:
+    config:
+      fail-fast: true
+
+  data:
+    mongodb:
+      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/apartmnetDB?retryWrites=true&w=majority
+      database: payment_service
+
+vnpay:
+  vnp_payurl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  vnp_returnurl: http://localhost:9010/api/invoices?page=0&size=2&userId=49
+  vnp_tmnCode: MDCLI0U4
+  vnp_hashsecret: 5ECZ6H9DQBYV6XXJDF2F4WM0T9HZD8YC
+  vnp_apiurl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction

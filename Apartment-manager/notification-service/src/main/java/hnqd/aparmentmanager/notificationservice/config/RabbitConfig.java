@@ -48,7 +48,7 @@ public class RabbitConfig {
     public Binding bindingNotificationQueue(Queue notificationQueue, DirectExchange exchange) {
         return BindingBuilder.bind(notificationQueue)
                 .to(exchange)
-                .with(" "); // Main binding with routing key "notificationRoutingKey"
+                .with("rSc7D1FNUS"); // Main binding with routing key "rSc7D1FNUS"
     }
 
     // binding for deadLetterQueue and dlxExchange

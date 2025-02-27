@@ -10,15 +10,19 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface IRoomService {
+
     Room createRoom(RoomRequest room) throws IOException;
 
     List<Room> getRooms(Map<String, String> params);
 
-    Optional<Room> getRoomById(Integer id);
+    Room getRoomById(Integer id);
 
     Page<Room> getRoomsPaging(Map<String, String> params);
 
     Room updateRoom(RoomRequest roomReq, Integer roomId);
 
     void deleteRoom(Integer id);
+
+    Page<Integer> getRoomIdsByUserId(Integer userId, int page, int size);
+
 }

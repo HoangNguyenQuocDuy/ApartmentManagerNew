@@ -60,6 +60,19 @@ public class RoomController {
         }
     }
 
+    @GetMapping("/{roomId}")
+    public ResponseEntity<ResponseObject> getRoomById(@PathVariable("roomId") Integer roomId) {
+        try {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get room by Id successfully!", roomService.getRoomById(roomId))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get room failed!", e.getMessage())
+            );
+        }
+    }
+
     @GetMapping("/")
     public ResponseEntity<ResponseObject> getRoomsPaging(@RequestParam Map<String, String> params) {
         try {

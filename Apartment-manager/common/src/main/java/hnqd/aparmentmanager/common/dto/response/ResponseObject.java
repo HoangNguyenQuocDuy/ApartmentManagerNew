@@ -1,4 +1,4 @@
-package hnqd.aparmentmanager.common.dto;
+package hnqd.aparmentmanager.common.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

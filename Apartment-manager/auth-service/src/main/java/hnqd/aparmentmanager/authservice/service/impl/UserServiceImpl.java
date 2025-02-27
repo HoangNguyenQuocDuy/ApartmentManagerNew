@@ -6,6 +6,7 @@ import hnqd.aparmentmanager.authservice.entity.User;
 import hnqd.aparmentmanager.authservice.repository.IUserRepo;
 import hnqd.aparmentmanager.authservice.service.IOtpService;
 import hnqd.aparmentmanager.authservice.service.IUserService;
+import hnqd.aparmentmanager.common.Enum.EEmailType;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.common.utils.UploadImage;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
+
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private static SecureRandom random = new SecureRandom();
@@ -71,10 +73,12 @@ public class UserServiceImpl implements IUserService {
         otpMessage.put("otp", password);
         otpMessage.put("email", user.getEmail());
         otpMessage.put("username", user.getUsername());
+        otpMessage.put("mailType", EEmailType.WELCOME.name());
+        otpMessage.put("subject", "WELCOME TO QUOC DUY APARTMENT");
         log.info("Start send to notification's queue ->>>>>>");
         rabbitTemplate.convertAndSend(
                 "notificationExchange",
-                "notificationRoutingKey",
+                "rSc7D1FNUS",
                 otpMessage,
                 message -> {
                     message.getMessageProperties().setCorrelationId(UUID.randomUUID().toString());

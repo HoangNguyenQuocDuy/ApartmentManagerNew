@@ -1,8 +1,7 @@
 package hnqd.aparmentmanager.notificationservice.service.impl;
 
 import com.rabbitmq.client.Channel;
-import hnqd.aparmentmanager.notificationservice.service.IEmailService;
-
+import hnqd.aparmentmanager.notificationservice.service.IEmailProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -15,12 +14,14 @@ import java.util.Map;
 
 @Service
 public class NotificationService {
-    private final IEmailService emailService;
+    private final IEmailProvider emailProvider;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public NotificationService(IEmailService emailService) {
-        this.emailService = emailService;
+    public NotificationService(
+            IEmailProvider emailService
+    ) {
+        this.emailProvider = emailService;
     }
 
     @RabbitListener(queues = "notificationQueue")
@@ -34,14 +35,14 @@ public class NotificationService {
         handleSendMail(otpMessage, message, channel);
     }
 
-    private void handleSendMail(Map<String, String> otpMessage, Message message, Channel channel) {
+    private void handleSendMail(Map<String, String> paramMessage, Message message, Channel channel) {
         try {
-            log.info("Received notification message: {}", otpMessage);
-            String email = otpMessage.get("email");
-            String otp = otpMessage.get("otp");
-            String username = otpMessage.get("username");
+            log.info("Received notification message: {}", paramMessage);
+            String email = paramMessage.get("email");
+            String mailType = paramMessage.get("mailType");
+            String subject = paramMessage.get("subject");
 
-            emailService.sendEmailWelcome(email, username, otp);
+            emailProvider.sendEmail(email, subject, mailType, paramMessage);
 
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {

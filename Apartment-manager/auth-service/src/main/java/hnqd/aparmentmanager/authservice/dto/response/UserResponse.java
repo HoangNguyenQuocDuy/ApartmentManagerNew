@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
+
     private int id;
     private String username;
     private String firstName;
@@ -16,4 +17,5 @@ public class UserResponse {
     private String phone;
     private String roleName;
     private String status;
+
 }

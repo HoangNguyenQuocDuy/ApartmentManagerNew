@@ -66,4 +66,16 @@ public class CommonException{
             super(message);
         }
     }
+
+    public static class PaymentFailed extends BaseException {
+        public PaymentFailed(String message) {
+            super(message);
+        }
+    }
+
+    public static class IllegalArguement extends BaseException {
+        public IllegalArguement(String message) {
+            super(message);
+        }
+    }
 }

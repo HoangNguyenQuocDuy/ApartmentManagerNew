@@ -17,6 +17,8 @@
         <module>monitor-admin</module>
         <module>locker-service</module>
         <module>notification-service</module>
+        <module>document-service-1</module>
+        <module>payment-service</module>
     </modules>
 
     <properties>

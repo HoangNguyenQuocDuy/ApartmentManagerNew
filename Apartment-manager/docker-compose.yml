@@ -15,27 +15,12 @@ services:
     networks:
       - apartment_network
 
-  # Locker Service PostgreSQL
-  locker-service-postgres:
-    image: postgres:12-alpine
-    container_name: locker_service_container
-    ports:
-      - "5435:5432"  # Chú ý thay đổi cổng để không bị trùng với service trước
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: locker_service
-    volumes:
-      - locker_service_postgres_data:/var/lib/postgresql/data
-    networks:
-      - apartment_network
-
   # Auth Service PostgreSQL
   auth-service-postgres:
     image: postgres:12-alpine
     container_name: auth_service_container
     ports:
-      - "5436:5432"
+      - "5435:5434"
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 12345
@@ -45,10 +30,41 @@ services:
     networks:
       - apartment_network
 
+  # Document Service PostgreSQL
+  document-service-postgres:
+    image: postgres:12-alpine
+    container_name: document_service_container
+    ports:
+      - "5436:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: document_service
+    volumes:
+      - document_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Payment Service PostgreSQL
+  payment-service-postgres:
+    image: postgres:12-alpine
+    container_name: payment_service_container
+    ports:
+      - "5437:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: payment_service
+    volumes:
+      - payment_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
 volumes:
   room_service_postgres_data:
-  locker_service_postgres_data:
   auth_service_postgres_data:
+  document_service_postgres_data:
+  payment_service_postgres_data:
 
 networks:
   apartment_network:
