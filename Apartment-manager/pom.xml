@@ -19,6 +19,8 @@
         <module>notification-service</module>
         <module>document-service-1</module>
         <module>payment-service</module>
+        <module>visitor-service</module>
+        <module>access-service</module>
     </modules>
 
     <properties>

@@ -94,4 +94,10 @@ public class ExceptionHandling {
     public ErrorResponse handleMisParameterException(CommonException.IllegalArguement ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
+
+    @ExceptionHandler(CommonException.BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadRequestException(CommonException.BadRequestException ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }

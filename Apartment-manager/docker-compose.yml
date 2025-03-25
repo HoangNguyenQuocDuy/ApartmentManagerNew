@@ -60,11 +60,43 @@ services:
     networks:
       - apartment_network
 
+#   Visitor Service PostgreSQL
+  visitor-service-postgres:
+    image: postgres:12-alpine
+    container_name: visitor_service_container
+    ports:
+      - "5438:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: visitor_service
+    volumes:
+      - visitor_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  #   Access Service PostgreSQL
+  access-service-postgres:
+    image: postgres:12-alpine
+    container_name: access_service_container
+    ports:
+      - "5439:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: access_service
+    volumes:
+      - access_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
 volumes:
   room_service_postgres_data:
   auth_service_postgres_data:
   document_service_postgres_data:
   payment_service_postgres_data:
+  visitor_service_postgres_data:
+  access_service_postgres_data:
 
 networks:
   apartment_network:

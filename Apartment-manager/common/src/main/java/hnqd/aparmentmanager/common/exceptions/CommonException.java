@@ -78,4 +78,10 @@ public class CommonException{
             super(message);
         }
     }
+
+    public static class BadRequestException extends BaseException {
+        public BadRequestException(String message) {
+            super(message);
+        }
+    }
 }

@@ -17,7 +17,7 @@ import hnqd.aparmentmanager.paymentservice.repository.IPaymentRepo;
 import hnqd.aparmentmanager.paymentservice.service.IPayService;
 import hnqd.aparmentmanager.paymentservice.service.IPaymentCallbackService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.type.descriptor.DateTimeUtils;
+import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -57,6 +55,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         this.userServiceClient = userServiceClient;
     }
 
+    @Transactional
     @Override
     public PaymentResponse createPaymentUrl(HttpServletRequest req, PaymentRequest paymentRequest) throws UnsupportedEncodingException, JsonProcessingException {
         String vnp_Version = "2.1.0";
@@ -158,69 +157,6 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
                 .build();
     }
 
-//    @Override
-//    public ResponseObject handleVNPayIpn(
-//            String vnp_TmnCode,
-//            Long vnp_Amount,
-//            String vnp_BankCode,
-//            String vnp_BankTranNo,
-//            Long vnp_CardType,
-//            Long vnp_PayDate,
-//            String vnp_OrderInfo,
-//            Long vnp_TransactionNo,
-//            Long vnp_ResponseCode,
-//            Long vnp_TransactionStatus,
-//            String vnp_TxnRef,
-//            String vnp_SecureHash
-//    ) throws JsonProcessingException {
-//        if (EVNPayIpsEnum.safeValueOfCode(vnp_ResponseCode.toString()).equals(EVNPayIpsEnum.SUCCESS)) {
-//            Map<String, String> orderInfo = objectMapper.readValue(vnp_OrderInfo, Map.class);
-//
-//            String paymentId = orderInfo.getOrDefault("paymentId", "0");
-//
-//            if (!paymentId.equals("0")) {
-//                Payment payment = paymentRepo.findById(Integer.parseInt(paymentId)).orElseThrow(
-//                        () -> new CommonException.NotFoundException("Payment not found")
-//                );
-//
-//                Map<String, Object> extraData = new HashMap<>();
-//                extraData.put("vnp_TmnCode", response.getVnp_TmnCode());
-//                extraData.put("vnp_Amount", response.getVnp_Amount());
-//                extraData.put("vnp_BankCode", response.getVnp_BankCode());
-//                extraData.put("vnp_BankTranNo", response.getVnp_BankTranNo());
-//                extraData.put("vnp_CardType", response.getVnp_CardType());
-//                extraData.put("vnp_PayDate", response.getVnp_PayDate());
-//                extraData.put("vnp_TransactionNo", response.getVnp_TransactionNo());
-//                extraData.put("vnp_ResponseCode", response.getVnp_ResponseCode());
-//                extraData.put("vnp_TransactionStatus", response.getVnp_TransactionStatus());
-//                extraData.put("vnp_TxnRef", response.getVnp_TxnRef());
-//                extraData.put("vnp_SecureHash", response.getVnp_SecureHash());
-//
-//                payment.
-//            }
-//
-//
-//            VNPayIpn payment = VNPayIpn
-//                    .builder()
-//                    .vnp_TmnCode(vnp_TmnCode)
-//                    .vnp_Amount(vnp_Amount)
-//                    .vnp_BankCode(vnp_BankCode)
-//                    .vnp_BankTranNo(vnp_BankTranNo)
-//                    .vnp_CardType(vnp_CardType)
-//                    .vnp_PayDate(vnp_PayDate)
-//                    .vnp_TransactionNo(vnp_TransactionNo)
-//                    .vnp_ResponseCode(vnp_ResponseCode)
-//                    .vnp_TransactionStatus(vnp_TransactionStatus)
-//                    .vnp_TxnRef(vnp_TxnRef)
-//                    .userId(Integer.parseInt(orderInfo.get("userId").toString()))
-//                    .invoiceId(Integer.parseInt(orderInfo.get("invoiceId").toString()))
-//                    .build();
-//
-//            return new ResponseObject("OK!", "Payment successful!", payment);
-//        }
-//        throw new CommonException.PaymentFailed("Payment failed!");
-//    }
-
     @Override
     public ResponseObject handleCallback(Map<String, String> params) throws JsonProcessingException {
         String vnp_TmnCode = params.getOrDefault("vnp_TmnCode", "");
@@ -289,4 +225,5 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
 
         return new ResponseObject("FAILED!", "Payment failed!", "");
     }
+
 }

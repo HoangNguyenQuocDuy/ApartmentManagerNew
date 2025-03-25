@@ -1,7 +1,10 @@
 package hnqd.aparmentmanager.documentservice.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hnqd.aparmentmanager.common.Enum.EContractStatus;
 import hnqd.aparmentmanager.common.Enum.EContractType;
+import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
+import hnqd.aparmentmanager.common.dto.response.ContractResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.documentservice.dto.ContractDto;
 import hnqd.aparmentmanager.documentservice.entity.Contract;
@@ -23,10 +26,15 @@ import java.util.Objects;
 
 public class ContractServiceImpl implements IContractService {
     private final IContractRepo contractRepo;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public ContractServiceImpl(IContractRepo contractRepo) {
+    public ContractServiceImpl(
+            IContractRepo contractRepo,
+            ObjectMapper objectMapper
+    ) {
         this.contractRepo = contractRepo;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -78,6 +86,38 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public List<Integer> getRoomIdsByUserId(Integer userId) {
         return contractRepo.getRoomIdsByUserId(userId);
+    }
+
+    @Override
+    public Integer getUserIdByRoomId(Integer roomId) {
+        return contractRepo.getUserIdByRoomId(roomId);
+    }
+
+    @Override
+    public ContractResponse getContractById(Integer contractId) {
+        Contract contract = contractRepo.findById(contractId).orElseThrow(
+                () -> new CommonException.NotFoundException("Contract with id " + contractId + " not found")
+        );
+
+        return objectMapper.convertValue(contract, ContractResponse.class);
+    }
+
+    @Override
+    public ContractResponse getContractByRoomIdAndUserId(GetContractForRelativeRequest request) {
+        return objectMapper.convertValue(
+                contractRepo.findByUserIdAndRoomIdAndStatus(request.getUserId(), request.getRoomId(), request.getStatus()),
+                ContractResponse.class
+        );
+    }
+
+    @Override
+    public List<Integer> getContractIdsByUserId(Integer userId) {
+        return contractRepo.findAllByUserIdAndStatus(userId, EContractStatus.ACTIVE);
+    }
+
+    @Override
+    public List<Integer> getContractIdsByRoomId(Integer roomId) {
+        return contractRepo.findAllByRoomIdAndStatus(roomId, EContractStatus.ACTIVE);
     }
 
     private String generateContractNumber() {

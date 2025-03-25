@@ -12,19 +12,4 @@ public interface IPayService {
 
     PaymentResponse createPaymentUrl(HttpServletRequest req, PaymentRequest paymentRequest) throws UnsupportedEncodingException, JsonProcessingException;
 
-//    ResponseObject handleVNPayIpn(
-//            String vnp_TmnCode,
-//            Long vnp_Amount,
-//            String vnp_BankCode,
-//            String vnp_BankTranNo,
-//            Long vnp_CardType,
-//            Long vnp_PayDate,
-//            String vnp_OrderInfo,
-//            Long vnp_TransactionNo,
-//            Long vnp_ResponseCode,
-//            Long vnp_TransactionStatus,
-//            String vnp_TxnRef,
-//            String vnp_SecureHash
-//    ) throws JsonProcessingException;
-
 }
