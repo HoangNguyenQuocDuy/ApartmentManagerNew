@@ -63,10 +63,10 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         Map<String, String> vnp_OrderInfo = new HashMap<>();
         double amount = Integer.parseInt(req.getParameter("amount"));
         Integer userId = Optional.ofNullable(paymentRequest.getUserId()).orElseThrow(() ->
-                new CommonException.IllegalArguement("UserId is required!")
+                new CommonException.IllegalArgument("UserId is required!")
         );
         Integer invoiceId = Optional.ofNullable(paymentRequest.getInvoiceId()).orElseThrow(() ->
-                new CommonException.IllegalArguement("InvoiceId is required!")
+                new CommonException.IllegalArgument("InvoiceId is required!")
         );
         Payment payment = Payment
                 .builder()

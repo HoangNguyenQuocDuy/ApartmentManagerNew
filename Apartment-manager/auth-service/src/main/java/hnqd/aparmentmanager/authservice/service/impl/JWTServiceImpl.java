@@ -23,6 +23,7 @@ public class JWTServiceImpl implements IJWTService {
     public String generateToken(User user) {
         return JWT.create()
                 .withSubject(user.getUsername())
+                .withClaim("userId", user.getId())
                 .withClaim("authorities", List.of(user.getRoleName()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 50*60*1000))
                 .sign(Algorithm.HMAC256(secretKey.getBytes()));

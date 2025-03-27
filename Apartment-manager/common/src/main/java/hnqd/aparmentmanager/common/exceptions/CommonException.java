@@ -73,8 +73,8 @@ public class CommonException{
         }
     }
 
-    public static class IllegalArguement extends BaseException {
-        public IllegalArguement(String message) {
+    public static class IllegalArgument extends BaseException {
+        public IllegalArgument(String message) {
             super(message);
         }
     }

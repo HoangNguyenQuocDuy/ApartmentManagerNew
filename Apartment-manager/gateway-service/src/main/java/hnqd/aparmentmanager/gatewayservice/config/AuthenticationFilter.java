@@ -39,8 +39,14 @@ public class AuthenticationFilter implements GlobalFilter {
                 );
             }
 
-            exchange.getRequest().mutate()
-                    .header("Authorization", "Bearer " + token);
+            String userId = jwtTokenProvider.getUserIdFromToken(token);
+
+            exchange = exchange.mutate().request(
+                    exchange.getRequest().mutate()
+                            .header("X-User-Id", userId)
+                            .header("Authorization", "Bearer " + token)
+                            .build()
+                    ).build();
         } else {
             return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or missing token"));
         }

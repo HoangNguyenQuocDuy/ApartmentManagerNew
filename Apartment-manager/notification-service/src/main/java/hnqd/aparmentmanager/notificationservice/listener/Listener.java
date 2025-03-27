@@ -1,4 +1,4 @@
-package hnqd.aparmentmanager.notificationservice.service.impl;
+package hnqd.aparmentmanager.notificationservice.listener;
 
 import com.rabbitmq.client.Channel;
 import hnqd.aparmentmanager.common.dto.request.ChatMessageRequestDto;
@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationService {
+public class Listener {
     private final IEmailProvider emailProvider;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final SimpMessagingTemplate messagingTemplate;
@@ -39,8 +38,8 @@ public class NotificationService {
     }
 
     @RabbitListener(queues = "alertQueue")
-    public void handleAlert(Map<String, String> otpMessage, Message message, Channel channel) {
-        handleSendMail(otpMessage, message, channel);
+    public void handleAlert(Map<String, String> data, Message message, Channel channel) {
+        handleSendMail(data, message, channel);
     }
 
     private void handleSendMail(Map<String, String> paramMessage, Message message, Channel channel) {

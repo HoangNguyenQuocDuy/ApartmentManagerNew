@@ -21,6 +21,7 @@
         <module>payment-service</module>
         <module>visitor-service</module>
         <module>access-service</module>
+        <module>incident-service</module>
     </modules>
 
     <properties>

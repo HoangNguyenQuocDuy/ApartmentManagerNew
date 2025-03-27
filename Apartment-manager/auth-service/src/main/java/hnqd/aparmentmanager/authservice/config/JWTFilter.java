@@ -1,5 +1,6 @@
 package hnqd.aparmentmanager.authservice.config;
 
+import hnqd.aparmentmanager.authservice.entity.User;
 import hnqd.aparmentmanager.authservice.repository.IUserRepo;
 import hnqd.aparmentmanager.authservice.service.IJWTService;
 import hnqd.aparmentmanager.authservice.service.IUserService;
@@ -47,6 +48,7 @@ public class JWTFilter extends OncePerRequestFilter {
                             userDetails, null, userDetails.getAuthorities());
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    request.setAttribute("X-User-Id", ((User) userDetails).getId().toString());
                 }
             }
         }

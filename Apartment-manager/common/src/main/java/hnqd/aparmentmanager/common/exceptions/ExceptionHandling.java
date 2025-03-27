@@ -89,9 +89,9 @@ public class ExceptionHandling {
         return new ErrorResponse(HttpStatus.EXPECTATION_FAILED, ex.getMessage());
     }
 
-    @ExceptionHandler(CommonException.IllegalArguement.class)
+    @ExceptionHandler(CommonException.IllegalArgument.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMisParameterException(CommonException.IllegalArguement ex) {
+    public ErrorResponse handleMisParameterException(CommonException.IllegalArgument ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
