@@ -1,0 +1,60 @@
+springdoc:
+#  cloud:
+#    gateway:
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowed-origins:
+#              - "*"
+#            allowed-methods:
+#              - GET
+#              - POST
+#              - PUT
+#              - DELETE
+#              - PATCH
+#            allowedHeaders:
+#              - "*"
+#            allowCredentials: true
+
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org.springframework: DEBUG
+    org.hibernate: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9999/eureka/ #where our registry server is located
+  instance:
+    prefer-ip-address: true #when the application registers with eureka,
+                            #true means: it uses its ip address rather than its hostname
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #public all API
+
+  endpoint:
+    health:
+      show-components: always
+
+secret:
+  key: 'my_secret_key'
+
+cloudinary:
+  cloud-name: dpc4ckhqs
+  api-key: 378389729151436
+  api-secret: mWM7_sWVv85g_SDCWV6yZmTfz8g
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB

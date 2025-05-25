@@ -1,0 +1,77 @@
+.wrapper {
+    width: 100px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+
+    &.success, &.received, &.paid, &.open, &.completed, &.confirmed {
+        background-color: var(--success-bg);
+
+        .text {
+            color: var(--success-text);
+        }
+    }
+
+    &.pending, &.unpaid {
+        background-color: var(--pending-bg);
+
+        .text {
+            color: var(--pending-text);
+        }
+    }
+
+    &.reject, &.close, &.rejected {
+        background-color: var(--reject-bg);
+
+        .text {
+            color: var(--reject-text);
+        }
+    }
+
+    &.electric {
+        background-color: var(--light-iv-electrical);
+
+        .text {
+            color: #f3c90f;
+        }
+    }
+
+    &.water {
+        background-color: var(--light-iv-water);
+
+        .text {
+            color: #5AB2FF;
+        }
+    }
+
+    &.room {
+        background-color: var(--light-iv-room);
+
+        .text {
+            color: #33f740;
+        }
+    }
+
+    &.packing {
+        background-color: var(--light-iv-packing);
+
+        .text {
+            color: #f38b23;
+        }
+    }
+
+    &.other {
+        background-color: var(--light-iv-other);
+
+        .text {
+            color: #9a31e0;
+        }
+    }
+
+
+    .title {
+        text-align: center;
+        font-size: 16px;
+    }
+}

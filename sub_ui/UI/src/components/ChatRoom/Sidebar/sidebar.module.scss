@@ -1,0 +1,110 @@
+.wrapper {
+    width: 350px;
+    height: 100%;
+    border-right: 1px solid var(--border-color);
+
+    &.light {
+        border-color: var(--border-color-l);
+
+        .wrapper-header {
+            border-color: var(--border-color-l);
+        }
+    }
+}
+
+.wrapper-header {
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border-color);
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0 16px;
+    
+        .img {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+    
+        span {
+            font-size: 1.6rem;
+            font-weight: 600;
+            transition: var(--duration);
+        }
+    }
+    
+    .find-box {
+        display: flex;
+        width: 100%;
+        margin: 0 auto;
+        padding-bottom: 20px;
+        justify-content: space-between;
+        overflow: hidden;
+    
+        .icon {
+            font-size: 1rem;
+            background-color: var(--border-color);
+            padding: 10px 10px 10px 12px;
+            border-radius: 999px 0 0 999px;
+            color: #777;
+            // transition: var(--duration);
+            cursor: pointer;
+            overflow: hidden;
+
+            &.light {
+                background-color: var(--light-gray);
+            }
+
+            &.searchUser {
+                border-radius: 999px;
+                padding: 0;
+            }
+        }
+    
+        input {
+            width: 100%;
+            background-color: var(--border-color);
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 9px 6px;
+            border-radius: 0 999px 999px 0;
+            // transition: var(--duration);
+
+            &.light {
+                background-color: var(--light-gray);
+                color: #000;
+            }
+
+            &.searchUser {
+                padding-left: 10px;
+                width: 80%;
+                border-radius: 999px;
+            }
+        }
+    }
+}
+
+.room-list {
+    padding: 0 10px;
+    margin-top: 20px;
+    height: 66%;
+    overflow: auto;
+
+    .room {
+
+        &.active {
+            background-color: var(--light-grey);
+        }
+
+        &.light {
+
+            &.active {
+                background-color: var(--light-gray);
+            }
+        }
+    }
+}

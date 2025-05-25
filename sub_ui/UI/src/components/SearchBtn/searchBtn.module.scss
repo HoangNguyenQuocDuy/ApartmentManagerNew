@@ -1,0 +1,22 @@
+.warpper {
+    padding: 8px 16px;
+    border-radius: 12px;
+    transition: .15s;
+    opacity: .8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    box-shadow: rgba(103, 101, 101, 0.16) 0px 10px 36px 0px, rgba(152, 151, 151, 0.06) 0px 0px 0px 1px;
+    cursor: pointer;
+    background-color: #90C67C;
+    color: #fff;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &.dark {
+        color: #fff;
+    }
+}

@@ -1,0 +1,3 @@
+ultralytics
+pika
+opencv-python

@@ -1,0 +1,13 @@
+server:
+  port: 8989
+
+otp:
+  ttl: 300
+
+user:
+  redisPassword: KhoaLuanTotNghiep
+  mail:
+    username: quocduy6114@gmail.com
+    password: gftm gpat bpsk iojg
+
+debug: true

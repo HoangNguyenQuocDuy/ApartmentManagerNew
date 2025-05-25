@@ -1,0 +1,40 @@
+.wrapper {
+    display: flex;
+    background-color: var(--background);
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+    transition: .25s;
+
+    &.light {
+        color: #000;
+        background-color: #fff;
+    }
+}
+
+.sidebar {
+    width: 360px;
+}
+
+.chatWindow {
+    width: 100%;
+}
+
+.personal-setting, .add-room {
+    position: fixed;
+    top: 200%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top .2s;
+    opacity: 0;
+
+    &.overlay {
+        top: 0;
+        background-color: var(--overlay);
+        opacity: 1;
+    }
+}

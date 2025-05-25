@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: var(--light-grey);
+    padding: 10px;
+    border-radius: 999px;
+    transition: var(--duration);
+    
+    &:hover {
+        background-color: #6e6f6f;
+    }
+
+    &.light {
+        background-color: var(--light-gray);
+        color: #444;
+
+        &:hover {
+            background-color: var(--middle-grey);
+        }
+    }
+
+    &.noBackground {
+        background-color: transparent;
+
+        &:hover {
+            background-color: var(--light-grey);
+        }
+
+        &.light {
+            color: #444;
+    
+            &:hover {
+                background-color: var(--light-gray);
+            }
+        }
+    }
+}

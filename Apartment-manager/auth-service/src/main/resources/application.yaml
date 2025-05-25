@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: auth-service
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  config:
+    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
+
+  cloud:
+    config:
+      fail-fast: true
+
+secret:
+  key: mySecretKey

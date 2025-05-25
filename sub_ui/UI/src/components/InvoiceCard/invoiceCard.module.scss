@@ -1,0 +1,104 @@
+
+.item {
+    width: 280px;
+    box-shadow: 0 0 2px 0 rgba(145 158 171 / 0.2), 0 12px 24px -4px rgba(145 158 171 / 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    background-color: #fff;
+
+    .title {
+        padding: 8px 0;
+        font-size: 16px;
+        color: #333;
+
+        &.electric {
+            background-color: var(--iv-electrical);
+        }
+
+        &.water {
+            background-color: var(--iv-water);
+        }
+
+        &.room {
+            background-color: var(--iv-room);
+        }
+
+        &.packing {
+            background-color: var(--iv-packing);
+        }
+
+        &.other {
+            background-color: var(--iv-other);
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    .info {
+        margin-top: 8px;
+        padding: 4px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .status {
+            display: flex;
+            align-items: center;
+        }
+
+        .title {
+            display: inline-block;
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+    }
+
+    .btnBox {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        .payBtn {
+            opacity: 0.7;
+            padding: 12px 40px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            background-color: var(--main-color);
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            transition: .25s;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &.prevent {
+                pointer-events: none;
+            }
+        }
+    }
+
+    .select-form {
+        margin: 0 20px;
+        margin-bottom: 12px;
+    }
+
+    select {
+        font-size: 18px;
+    }
+
+    option {
+        font-size: 18px;
+    }
+
+}

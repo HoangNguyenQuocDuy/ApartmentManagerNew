@@ -1,5 +1,7 @@
 package hnqd.apartmentmanager.roomservice.service;
 
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.apartmentmanager.roomservice.dto.RoomRequest;
 import hnqd.apartmentmanager.roomservice.entity.Room;
 import org.springframework.data.domain.Page;
@@ -10,15 +12,22 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface IRoomService {
+
     Room createRoom(RoomRequest room) throws IOException;
 
     List<Room> getRooms(Map<String, String> params);
 
-    Optional<Room> getRoomById(Integer id);
+    Room getRoomById(Integer id);
 
     Page<Room> getRoomsPaging(Map<String, String> params);
 
     Room updateRoom(RoomRequest roomReq, Integer roomId);
 
     void deleteRoom(Integer id);
+
+    Page<Integer> getRoomIdsByUserId(Integer userId, int page, int size);
+
+    RestResponse<ListResponse<Room>> getListRoom(int page, int size,
+                                                         String sort, String filter,
+                                                         String search, boolean all);
 }

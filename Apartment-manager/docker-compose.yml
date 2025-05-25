@@ -1,27 +1,9 @@
 version: '3.8'
 services:
-  room-service:
-    depends_on:
-      - postgres
-    build:
-      context: ./room-service
-#      dockerfile: docker-compose.yml
-#    image: room_service_container
-    container_name: room_service_container
-    ports:
-      - "9002:9002"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/room_service
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=12345
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    networks:
-      - apartment_network
-
-  postgres:
+  # Room Service PostgreSQL
+  room-service-postgres:
     image: postgres:12-alpine
-    container_name: postgres_container
+    container_name: room_service_container
     ports:
       - "5434:5432"
     environment:
@@ -29,12 +11,105 @@ services:
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: room_service
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - room_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Auth Service PostgreSQL
+  auth-service-postgres:
+    image: postgres:12-alpine
+    container_name: auth_service_container
+    ports:
+      - "5435:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: user_service
+    volumes:
+      - auth_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Document Service PostgreSQL
+  document-service-postgres:
+    image: postgres:12-alpine
+    container_name: document_service_container
+    ports:
+      - "5436:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: document_service
+    volumes:
+      - document_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # Payment Service PostgreSQL
+  payment-service-postgres:
+    image: postgres:12-alpine
+    container_name: payment_service_container
+    ports:
+      - "5437:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: payment_service
+    volumes:
+      - payment_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+#   Visitor Service PostgreSQL
+  visitor-service-postgres:
+    image: postgres:12-alpine
+    container_name: visitor_service_container
+    ports:
+      - "5438:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: visitor_service
+    volumes:
+      - visitor_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  #   Access Service PostgreSQL
+  access-service-postgres:
+    image: postgres:12-alpine
+    container_name: access_service_container
+    ports:
+      - "5439:5434"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: access_service
+    volumes:
+      - access_service_postgres_data:/var/lib/postgresql/data
+    networks:
+      - apartment_network
+
+  # RabbitMQ Service
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     networks:
       - apartment_network
 
 volumes:
-  postgres_data:
+  room_service_postgres_data:
+  auth_service_postgres_data:
+  document_service_postgres_data:
+  payment_service_postgres_data:
+  visitor_service_postgres_data:
+  access_service_postgres_data:
 
 networks:
   apartment_network:

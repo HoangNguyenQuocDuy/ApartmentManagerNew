@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3ca7def4-f8b0-4a25-a841-a09419d89aad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/AuthRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/RabbitConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/client/IChatRoomService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/AuthRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EChatType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EKey.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/ERoomStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/NotifyToUserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/FireAlertRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/InvoiceReqDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/ListResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/RestResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/chat-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/client/IPaymentServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/client/IRoomServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/config/AuthRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/config/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/config/RabbitConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/schedule/ContractTermScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/IChatMessageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/ChatMessageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/fire-alert-email-template.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/reset-password-email-template.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/StatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IStatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/StatServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/config/AuthRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/config/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/VisitRequestVisitorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/dto/response/VisitRequestRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/dto/response/VisitRequestVisitorRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/repository/IVisitRequestVisitorRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/IVisitRequestVisitorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/impl/VisitRequestVisitorImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/specification/VisitRequestVisitorSpecification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/client/IDocumentServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/client/IDocumentServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/client/IUserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/client/IUserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/EntryRightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/EntryRightController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/ParkingRightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/ParkingRightController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/RelativeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/RelativeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/dto/ParkingRightRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/dto/ParkingRightRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/repository/IParkingRightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/repository/IParkingRightRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/repository/IRelativeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/repository/IRelativeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IEntryRightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IEntryRightService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IParkingRightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IParkingRightService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IRelativeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/IRelativeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/EntryRightServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/EntryRightServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/ParkingRightServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/ParkingRightServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/RelativeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/RelativeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/specification/EntryRightSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/specification/EntryRightSpecification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/specification/ParkingRightSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/specification/ParkingRightSpecification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/access-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/access-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/dto/request/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/dto/request/UserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/repository/IUserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/repository/IUserRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/JWTServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/JWTServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/ChatServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/ChatServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/RabbitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/config/RabbitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/controller/ChatRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/controller/ChatRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/listener/ChatRoomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/listener/ChatRoomListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/model/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/model/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/model/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/model/ChatRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/repository/IChatRoomRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/repository/IChatRoomRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/IChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/IChatMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/IChatRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/IChatRoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/impl/ChatRoomMessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/impl/ChatRoomMessageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/impl/ChatRoomServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/impl/ChatRoomServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EContractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EContractType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EEmailType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EEmailType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EInvoiceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EInvoiceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EPaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EPaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EVisitStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/Enum/EVisitStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/ChatMessageRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/ChatMessageRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/GetContractForRelativeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/request/GetContractForRelativeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/ContractResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/ContractResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/hnqd/aparmentmanager/common/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/access-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/access-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/document-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/document-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/incident-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/incident-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/notification-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/notification-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/payment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/payment-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/room-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/room-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/src/main/resources/shared/visitor-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/src/main/resources/shared/visitor-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/controller/ContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/controller/ContractController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/controller/ContractTermController.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/controller/ContractTermController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/dto/ContractDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/dto/ContractDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/dto/ContractTermDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/dto/ContractTermDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/entity/Contract.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/entity/Contract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/entity/ContractTerm.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/entity/ContractTerm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/repository/IContractRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/repository/IContractRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/repository/IContractTermRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/repository/IContractTermRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/IContractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/IContractService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/IContractTermService.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/IContractTermService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractTermServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractTermServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-service-1/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/document-service-1/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/JwtTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/JwtTokenProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/PublicApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/hnqd/aparmentmanager/gatewayservice/config/PublicApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/incident-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/incident-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/incident-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/incident-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/config/RabbitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/config/RabbitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/controller/ChatWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/controller/ChatWebSocketHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/listener/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/listener/Listener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/GmailEmailProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/GmailEmailProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/client/IDocumentServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/client/IDocumentServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/client/IUserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/client/IUserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/config/VNPayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/config/VNPayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/InvoiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/dto/request/InvoiceReqDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/entity/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/entity/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/entity/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/repository/impl/StatisticRepoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/repository/impl/StatisticRepoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IInvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IInvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IPaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/InvoiceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/InvoiceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/VNPayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/VNPayService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/specification/InvoiceSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/specification/InvoiceSpecification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/client/IDocumentServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/client/IDocumentServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/ApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/controller/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/dto/RoomRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/dto/RoomRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/repository/IRoomRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/repository/IRoomRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/service/IRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/service/IRoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/service/impl/RoomServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/hnqd/apartmentmanager/roomservice/service/impl/RoomServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/SecurityLogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/SecurityLogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/VisitRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/VisitRequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/VisitorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/controller/VisitorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/dto/request/VisitRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/dto/request/VisitRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/SecurityLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/SecurityLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/VisitRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/VisitRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/VisitRequestVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/VisitRequestVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/entity/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/repository/ISecurityLogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/repository/ISecurityLogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/serializable/VisitRequestVisitorId.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/serializable/VisitRequestVisitorId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/ISecurityLogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/ISecurityLogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/IVisitRequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/IVisitRequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/impl/SecurityLogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/impl/SecurityLogServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/impl/VisitRequestServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/visitor-service/src/main/java/hnqd/aparmentmanager/visitorservice/service/impl/VisitRequestServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2unkAgtwtstb9jTqw7eQhfLdj4p" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Docker.docker-compose.yml.rabbitmq: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AccessServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ChatServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.CommonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ConfigServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.DiscoveryServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.DocumentService.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GatewayServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.IncidentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MonitorAdminApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.RoomServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.VisitorServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;duy/dev&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/DoAnNganh_Web/Apartment-Management/API&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;service.view.auto.scroll.from.source&quot;: &quot;true&quot;,
+    &quot;service.view.auto.scroll.to.source&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Thesis\ApartmentManagerNew\Apartment-manager\chat-service\src\main\java\hnqd\aparmentmanager\chatservice\config" />
+      <recent name="E:\Thesis\ApartmentManagerNew\Apartment-manager\visitor-service\src\main\java\hnqd\aparmentmanager\visitorservice\config" />
+      <recent name="E:\Thesis\ApartmentManagerNew\Apartment-manager\room-service\src\main\java\hnqd\apartmentmanager\roomservice\config" />
+      <recent name="E:\Thesis\ApartmentManagerNew\Apartment-manager\document-service-1\src\main\java\hnqd\aparmentmanager\documentservice\config" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="hnqd.aparmentmanager.accessservice.config" />
+      <recent name="hnqd.aparmentmanager.common.dto.request" />
+      <recent name="hnqd.aparmentmanager.documentservice.config" />
+      <recent name="hnqd.aparmentmanager.common.dto.response" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.NotificationServiceApplication">
+    <configuration name="AccessServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="access-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.accessservice.AccessServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="auth-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.authservice.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="chat-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.chatservice.ChatServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CommonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="common" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.common.CommonApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="config-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.configservice.ConfigServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiscoveryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="discovery-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.discoveryservice.DiscoveryServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DocumentService" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="document-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.documentservice.DocumentService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="gateway-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.gatewayservice.GatewayServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IncidentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="incident-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.incidentservice.IncidentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MonitorAdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="monitor-admin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.monitoradmin.MonitorAdminApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="notification-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.notificationservice.NotificationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="payment-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.paymentservice.PaymentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="room-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.apartmentmanager.roomservice.RoomServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VisitorServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="visitor-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hnqd.aparmentmanager.visitorservice.VisitorServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.rabbitmq: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="rabbitmq" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.AccessServiceApplication" />
+      <item itemvalue="Spring Boot.AuthServiceApplication" />
+      <item itemvalue="Spring Boot.ChatServiceApplication" />
+      <item itemvalue="Spring Boot.CommonApplication" />
+      <item itemvalue="Spring Boot.ConfigServiceApplication" />
+      <item itemvalue="Spring Boot.DiscoveryServiceApplication" />
+      <item itemvalue="Spring Boot.DocumentService" />
+      <item itemvalue="Spring Boot.GatewayServiceApplication" />
+      <item itemvalue="Spring Boot.IncidentServiceApplication" />
+      <item itemvalue="Spring Boot.MonitorAdminApplication" />
+      <item itemvalue="Spring Boot.NotificationServiceApplication" />
+      <item itemvalue="Spring Boot.PaymentServiceApplication" />
+      <item itemvalue="Spring Boot.RoomServiceApplication" />
+      <item itemvalue="Spring Boot.VisitorServiceApplication" />
+      <item itemvalue="Docker.docker-compose.yml.rabbitmq: Compose Deployment" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml.rabbitmq: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3ca7def4-f8b0-4a25-a841-a09419d89aad" name="Changes" comment="" />
+      <created>1742891583818</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742891583818</updated>
+      <workItem from="1742891584928" duration="264000" />
+      <workItem from="1742891860972" duration="126000" />
+      <workItem from="1742891996310" duration="2000" />
+      <workItem from="1742893115538" duration="525000" />
+      <workItem from="1742893658424" duration="307000" />
+      <workItem from="1742893984257" duration="1929000" />
+      <workItem from="1742886962943" duration="2729000" />
+      <workItem from="1743034234557" duration="1954000" />
+      <workItem from="1743063462176" duration="41000" />
+      <workItem from="1743063514084" duration="6769000" />
+      <workItem from="1743126654547" duration="500000" />
+      <workItem from="1743117387848" duration="3520000" />
+      <workItem from="1743180284779" duration="1972000" />
+      <workItem from="1743265077559" duration="4878000" />
+      <workItem from="1743472489941" duration="756000" />
+      <workItem from="1743517967780" duration="8758000" />
+      <workItem from="1743578991584" duration="213000" />
+      <workItem from="1744041145443" duration="257000" />
+      <workItem from="1744086405443" duration="37000" />
+      <workItem from="1744101562868" duration="7427000" />
+      <workItem from="1744163368112" duration="42000" />
+      <workItem from="1744241193282" duration="603000" />
+      <workItem from="1744295907557" duration="4704000" />
+      <workItem from="1744336533620" duration="3356000" />
+      <workItem from="1744343555793" duration="1429000" />
+      <workItem from="1744351811658" duration="1855000" />
+      <workItem from="1744462482079" duration="10799000" />
+      <workItem from="1744625837105" duration="2809000" />
+      <workItem from="1744681406072" duration="4743000" />
+      <workItem from="1744746360792" duration="6626000" />
+      <workItem from="1744854394808" duration="3729000" />
+      <workItem from="1744957889066" duration="11020000" />
+      <workItem from="1745031757120" duration="5979000" />
+      <workItem from="1745067625332" duration="16367000" />
+      <workItem from="1745152216410" duration="11375000" />
+      <workItem from="1745203141617" duration="1187000" />
+      <workItem from="1745225093877" duration="6210000" />
+      <workItem from="1745250423296" duration="6104000" />
+      <workItem from="1745294025635" duration="1452000" />
+      <workItem from="1745311240280" duration="14584000" />
+      <workItem from="1745386015896" duration="14471000" />
+      <workItem from="1745421310531" duration="9146000" />
+      <workItem from="1745460196212" duration="926000" />
+      <workItem from="1745480182684" duration="7577000" />
+      <workItem from="1745569178346" duration="66000" />
+      <workItem from="1745595314575" duration="9680000" />
+      <workItem from="1745637022686" duration="2605000" />
+      <workItem from="1745621575252" duration="16127000" />
+      <workItem from="1745736486540" duration="10726000" />
+      <workItem from="1745813679952" duration="4774000" />
+      <workItem from="1746074019314" duration="13148000" />
+      <workItem from="1746236794949" duration="4585000" />
+      <workItem from="1746271997356" duration="13860000" />
+      <workItem from="1746320847903" duration="1915000" />
+      <workItem from="1746362313660" duration="681000" />
+      <workItem from="1746410596214" duration="2425000" />
+      <workItem from="1746502332599" duration="2056000" />
+      <workItem from="1746518750700" duration="23997000" />
+      <workItem from="1746683269066" duration="13534000" />
+      <workItem from="1746770982721" duration="14086000" />
+      <workItem from="1746800765074" duration="4532000" />
+      <workItem from="1746884147706" duration="3625000" />
+      <workItem from="1747068444609" duration="8111000" />
+      <workItem from="1747078911612" duration="1167000" />
+      <workItem from="1747242822996" duration="2234000" />
+      <workItem from="1747450900437" duration="1501000" />
+      <workItem from="1747712759128" duration="1779000" />
+      <workItem from="1747783120745" duration="6047000" />
+      <workItem from="1747806836533" duration="11760000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/service/impl/GmailEmailProvider.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/listener/Listener.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/EntryRightController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/ParkingRightController.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractServiceImpl.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/InvoiceServiceImpl.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/InvoiceServiceImpl.java</url>
+          <line>110</line>
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/controller/ChatRoomController.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractServiceImpl.java</url>
+          <line>141</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/service/impl/ContractTermServiceImpl.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/VNPayService.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/controller/ParkingRightController.java</url>
+          <line>52</line>
+          <properties class="hnqd.aparmentmanager.accessservice.controller.ParkingRightController" method="updateParkingRights">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/access-service/src/main/java/hnqd/aparmentmanager/accessservice/service/impl/ParkingRightServiceImpl.java</url>
+          <line>111</line>
+          <properties class="hnqd.aparmentmanager.accessservice.service.impl.ParkingRightServiceImpl" method="updateParkingRight">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/listener/Listener.java</url>
+          <line>71</line>
+          <properties class="hnqd.aparmentmanager.notificationservice.listener.Listener" method="handleMessage">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/IInvoiceService.java</url>
+          <line>12</line>
+          <properties class="hnqd.aparmentmanager.paymentservice.service.IInvoiceService" method="createInvoice">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/VNPayService.java</url>
+          <line>155</line>
+          <properties class="hnqd.aparmentmanager.paymentservice.service.impl.VNPayService" method="handleCallback">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/PaymentController.java</url>
+          <line>128</line>
+          <properties class="hnqd.aparmentmanager.paymentservice.controller.PaymentController" method="createPayment">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/service/impl/PaymentServiceImpl.java</url>
+          <line>87</line>
+          <properties class="hnqd.aparmentmanager.paymentservice.service.impl.PaymentServiceImpl" method="createPaymentManual">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/auth-service/src/main/java/hnqd/aparmentmanager/authservice/service/impl/UserServiceImpl.java</url>
+          <line>226</line>
+          <properties class="hnqd.aparmentmanager.authservice.service.impl.UserServiceImpl" method="forgotPassword">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/notification-service/src/main/java/hnqd/aparmentmanager/notificationservice/listener/Listener.java</url>
+          <line>39</line>
+          <properties class="hnqd.aparmentmanager.notificationservice.listener.Listener" method="handleChatMessage">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/chat-service/src/main/java/hnqd/aparmentmanager/chatservice/service/impl/ChatRoomMessageServiceImpl.java</url>
+          <line>25</line>
+          <properties class="hnqd.aparmentmanager.chatservice.service.impl.ChatRoomMessageServiceImpl" method="createChatMessage">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/document-service-1/src/main/java/hnqd/aparmentmanager/documentservice/controller/ContractController.java</url>
+          <line>68</line>
+          <properties class="hnqd.aparmentmanager.documentservice.controller.ContractController" method="createContract">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/payment-service/src/main/java/hnqd/aparmentmanager/paymentservice/controller/InvoiceController.java</url>
+          <line>41</line>
+          <properties class="hnqd.aparmentmanager.paymentservice.controller.InvoiceController" method="createInvoice">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Apartment_manager$PaymentServiceApplication.ic" NAME="PaymentServiceApplication Coverage Results" MODIFIED="1745488646083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>
