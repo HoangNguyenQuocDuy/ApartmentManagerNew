@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.common.exceptions;
 
-import hnqd.aparmentmanager.common.dto.ErrorResponse;
+import hnqd.aparmentmanager.common.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -68,6 +68,36 @@ public class ExceptionHandling {
     @ExceptionHandler(CommonException.DuplicationError.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleDuplicationException(CommonException.DuplicationError ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.TokenExpired.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleTokenExpired(CommonException.TokenExpired ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.UnknownValuesException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleUnknownValuesException(CommonException.UnknownValuesException ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.PaymentFailed.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    public ErrorResponse handlePaymentFailedException(CommonException.PaymentFailed ex) {
+        return new ErrorResponse(HttpStatus.EXPECTATION_FAILED, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.IllegalArgument.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMisParameterException(CommonException.IllegalArgument ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadRequestException(CommonException.BadRequestException ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }

@@ -26,13 +26,4 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "roomTypeId", referencedColumnName = "id", nullable = false)
     private RoomType roomType;
-    //    @JsonIgnore
-//    @OneToMany(mappedBy = "room")
-//    private Collection<Invoice> invoices;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "room")
-//    private Collection<User> users;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "room")
-//    private Collection<VisitLog> visitLogs;
 }

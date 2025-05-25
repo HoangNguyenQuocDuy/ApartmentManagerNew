@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: notification-service
+
+  config:
+    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
+
+  cloud:
+    config:
+      fail-fast: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    template:
+      reply-timeout: 20000
+
+logging:
+  level:
+    org.springframework.amqp.rabbit: DEBUG
+    org.springframework.amqp.rabbit.core: DEBUG
+    org.springframework.amqp.rabbit.listener: DEBUG
+    org.springframework.amqp.rabbit.connection: DEBUG
+    org.springframework.amqp.rabbit.listener.BlockingQueueConsumer: DEBUG
+    org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer: DEBUG
+    org.springframework.amqp.rabbit.retry: DEBUG
+

@@ -1,0 +1,86 @@
+.wrapper {
+    width: 100%;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // flex-direction: column;
+
+    .searchBox {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-top: 40px;
+
+        .statusList,
+        .typeList {
+
+            .title {
+                width: 200px;
+                padding: 12px 20px;
+                border-radius: 6px;
+                cursor: pointer;
+                position: relative;
+                border: 1px solid var(--light-grey);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .list {
+                margin-top: 2px;
+                visibility: hidden;
+                transition: .25s;
+                position: absolute;
+                box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+                opacity: 1;
+                transform-origin: 90% top;
+                transform: scale(0);
+                z-index: 2;
+                border-radius: 6px;
+                overflow: hidden;
+
+                &.active {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                li {
+                    width: 200px;
+                    padding: 12px 0 12px 20px;
+                    cursor: pointer;
+                    transition: .25s;
+                    background-color: #fff;
+                    opacity: 1;
+
+                    &:hover {
+                        background-color: #b0b0b0;
+                        color: #fff;
+                    }
+
+                    &.active {
+                        background-color: #b0b0b0;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .typeList {
+            margin-left: 40px;
+        }
+    }
+
+    .invoices {
+        display: flex;
+        flex-wrap: wrap;
+        width: 96%;
+        margin-top: 40px;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+}

@@ -1,0 +1,9 @@
+server:
+  port: 9012
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/access_service
+    username: root
+    password: 12345
+    driver-class-name: org.postgresql.Driver

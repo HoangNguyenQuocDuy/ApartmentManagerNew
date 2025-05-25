@@ -48,33 +48,81 @@ public class RoomController {
 
     @GetMapping("/list")
     public ResponseEntity<ResponseObject> getRooms(@RequestParam Map<String, String> params) {
-        List<Room> rooms = roomService.getRooms(params);
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                new ResponseObject("OK", "Get rooms successfully!", rooms)
-        );
+        try {
+            List<Room> rooms = roomService.getRooms(params);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get rooms successfully!", rooms)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get rooms failed!", e.getMessage())
+            );
+        }
     }
 
+    @GetMapping("/{roomId}")
+    public ResponseEntity<ResponseObject> getRoomById(@PathVariable("roomId") Integer roomId) {
+        try {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get room by Id successfully!", roomService.getRoomById(roomId))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get room failed!", e.getMessage())
+            );
+        }
+    }
+
+//    Nguyệt Quế phiền phức
+
     @GetMapping("/")
-    public ResponseEntity<ResponseObject> getRoomsPaging(@RequestParam Map<String, String> params) {
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                new ResponseObject("OK", "Get rooms successfully!", roomService.getRoomsPaging(params))
-        );
+    public ResponseEntity<ResponseObject> getRoomsPaging(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id, desc") String sort,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) boolean all
+    ) {
+        try {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get rooms successfully!",
+                            roomService.getListRoom(page, size, sort, filter, search, all))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get rooms paging failed!", e.getMessage())
+            );
+        }
     }
 
     @PutMapping("/{roomId}")
     public ResponseEntity<ResponseObject> updateRoom(
             @PathVariable Integer roomId,
-            @ModelAttribute RoomRequest roomReq) {
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                new ResponseObject("OK", "Update rooms successfully!", roomService.updateRoom(roomReq, roomId))
-        );
+            @RequestBody RoomRequest roomReq) {
+        try {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Update room successfully!", roomService.updateRoom(roomReq, roomId))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Update room failed!", e.getMessage())
+            );
+        }
     }
 
     @DeleteMapping("/{roomId}")
     public ResponseEntity<ResponseObject> deleteRoom(@PathVariable Integer roomId) {
-        roomService.deleteRoom(roomId);
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                new ResponseObject("OK", "Update rooms successfully!", "")
-        );
+        try {
+            roomService.deleteRoom(roomId);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Delete room successfully!", "")
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Delete room failed!", e.getMessage())
+            );
+        }
     }
+
 }

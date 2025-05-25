@@ -1,0 +1,41 @@
+.container {
+
+    .logo-box {
+        border-radius: 0 8px 8px 0;
+        background-color: #5494e7;
+        // margin: 20px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .header {
+        // height: 960px;
+
+        .aside {
+            border-right: 1px solid rgba(145 158 171 / 0.12);
+
+            .title {
+                color: #fff;
+            }
+
+            .link {
+                padding: 8px 12px;
+                border-radius: 8px;
+                margin-bottom: 4px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #919EAB;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(145 158 171 / 0.08);
+                }
+
+                &.active {
+                    color: #1877F2;
+                    background-color: rgba(24 119 242 / 0.08)
+                }
+            }
+        }
+    }
+}

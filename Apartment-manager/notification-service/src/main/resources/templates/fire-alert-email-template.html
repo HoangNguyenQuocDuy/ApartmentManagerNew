@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${subject}"></title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #fff3f3; padding: 20px;">
+<div style="border: 2px solid #ff0000; border-radius: 8px; padding: 20px;">
+    <h2 style="color: #ff0000;">🔥 CẢNH BÁO CHÁY NỔ!</h2>
+    <p style="font-size: 16px;">
+        Hệ thống giám sát đã phát hiện dấu hiệu <strong>cháy nổ</strong> tại khu vực:
+        <span th:text="${location}" style="color: #d80000; font-weight: bold;"></span>
+    </p>
+    <p>
+        Thời gian phát hiện: <strong th:text="${timestamp}"></strong>
+    </p>
+    <p>
+        Camera ghi nhận: <strong th:text="${cameraId}">[ID]</strong>
+    </p>
+    <p>Vui lòng kiểm tra khu vực này ngay lập tức để đảm bảo an toàn!</p>
+
+    <hr>
+    <p style="font-size: 12px; color: #666;">
+        Đây là email tự động từ hệ thống quản lý chung cư. Vui lòng không trả lời email này.
+    </p>
+</div>
+</body>
+</html>

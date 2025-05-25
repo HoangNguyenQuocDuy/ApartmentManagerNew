@@ -1,0 +1,143 @@
+.wrapper {
+}
+
+.user-name {
+    margin-top: 10px;
+    color: var(--text-normal);
+    font-size: 1rem;
+    padding-left: 44px;
+    display: none;
+
+    &.show{
+        display: block;
+    }
+
+    &.self {
+        display: none;
+    }
+}
+
+.messageItem {
+    padding-top: 4px;
+    display: flex;
+    align-items: end; 
+
+        &.self {
+            display: flex;
+            justify-content: end;
+            margin-right: 20px;
+        }
+
+    .imgUser-chat {
+        height: 28px;
+        width: 28px;
+        border-radius: 999px;
+        margin: 8px 8px 0 0;
+        display: none;
+
+        &.show { 
+            display: block;
+        }
+
+        &.self {
+            display: none;
+        }
+    }
+
+    .message {
+        border-radius: 6px 20px 20px 6px;
+        // border-radius: 200px 999px 999px 200px;
+        color: var(--text-black);
+        background-color: var(--message-gray);
+        padding: 12px 12px;
+        max-width: 40%;
+        word-break: break-word;
+        margin-left: 36px;
+
+        &.noImage {
+            margin-left: 0!important;
+        }
+
+        &.self {
+            margin-left: 0;
+            background-color: var(--primary);
+            color: #fff;
+            border-radius: 20px 6px 6px 20px;
+        }
+
+        &.light {
+            color: #fff;
+        }
+
+        &.start {
+            border-radius: 20px 20px 20px 6px;
+
+            &.self {
+                border-radius: 20px 20px 6px 20px;
+            }
+        }
+    
+        &.end {
+            border-radius: 6px 20px 20px 20px;
+
+            &.self {
+                border-radius: 20px 6px 20px 20px;
+                margin-left: 28px;
+            }
+        }
+
+        // span {
+        //     padding: 10px 0;
+        // }
+    }
+
+}
+
+.tippy-message {
+    background-color: #000;
+    opacity: .7;
+    color: #fff;
+    padding: 12px 10px;
+    border-radius: 16px;
+    box-shadow: 1px 1px 6px #222;
+}
+
+.image {
+    max-width: 220px;
+    margin-left: 36px;
+    border-radius: 6px 20px 20px 6px;
+    cursor: pointer;
+    background-color: transparent!important;
+
+    &.noImage {
+        margin-left: 0!important;
+    }
+
+    &.self {
+        margin-left: 0;
+        background-color: var(--primary);
+        color: #fff;
+        border-radius: 20px 6px 6px 20px;
+    }
+
+    &.light {
+        color: #fff;
+    }
+
+    &.start {
+        border-radius: 20px 20px 20px 6px;
+
+        &.self {
+            border-radius: 20px 20px 6px 20px;
+        }
+    }
+
+    &.end {
+        border-radius: 6px 20px 20px 20px;
+
+        &.self {
+            border-radius: 20px 6px 20px 20px;
+            margin-left: 28px;
+        }
+    }
+}

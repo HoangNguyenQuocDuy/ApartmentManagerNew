@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;800;900&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,900;1,200;1,400&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Inter:wght@600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --line-nav-bar: #fa6a67;
+    --main-color: #ff5a5f;
+    --light-grey: #dfdfdf;
+    --success-text: #97d577;
+    --success-bg: #ddfdd4;
+    --pending-text: #ccc462;
+    --pending-bg: #fafcd4;
+    --reject-text: #d47676;
+    --reject-bg: #fdd3d4;
+    --grey: #444;
+    --midium-grey: #888;
+    --height-nav: 92px;
+    --iv-electrical: #ffe678;
+    --light-iv-electrical: #f7eec7;
+    --iv-water: #5AB2FF;
+    --light-iv-water: #d0e4f5;
+    --iv-room: #9effa5;
+    --light-iv-room: #d5fbd7;
+    --iv-packing: #ffb264;
+    --light-iv-packing: #f5dfc8;
+    --iv-other: #AD88C6;
+    --light-iv-other: #eedbfa;
+
+    --border-color: #2f3031;
+    --light-grey: #3a3b3c;
+    --primary: #31A24C;
+    --text-grey: #787878;
+    --grey: #767677;
+    --background: #242526;
+    --overlay: rgba(0, 0, 0, .6);
+    --light-gray: #f3f3f5;
+    --middle-grey: #cbcbcb;
+    --border-color-l: #e4e6eb;
+    --duration: .15s;
+    --dark-gray: #606770;
+    --text-normal: #999;
+    --icon-close: #4d4b4b;
+    --text-black: #e4e6eb;
+    --message-gray: #3a3b3c;
+    --light-hover-grey: #d0d0d0;
+    --medium-gray: #bcc0c4;
+
+}
+
+html {
+    // font-size: 62.5%;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', "Nunito", "Poppins", "Inter", sans-serif;
+    font-size: 14px;
+    background-color: #f9fafb !important;
+}
+
+input {
+    outline: none;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    background-color: transparent;
+}
+
+a {
+    color: #fff;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+h3 {
+    display: block;
+}
+
+input {
+    font-size: 14px !important;
+}

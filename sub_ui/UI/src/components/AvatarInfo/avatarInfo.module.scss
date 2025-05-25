@@ -1,0 +1,106 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px;
+    border-radius: 10px;
+    transition: all 0.1s;
+    width: 100%;
+    cursor: pointer;
+
+    .sub-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    
+        .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-left: 12px;
+            width: 70%;
+    
+            .name {
+                width: 70%;
+                font-size: 1.5rem;
+                font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 225px;
+
+                &.maxName {
+                    max-width: 100%;
+                }
+            }
+            .des {
+                width: 70%;
+                font-size: 1.3rem;
+                color: var(--text-grey );
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--light-grey);
+    }
+
+    &:hover .iconTheme{
+        background-color: var(--grey);
+    }
+
+    .icon-primary{
+        margin-right: 20px;
+    }
+
+    &.light {
+
+        &:hover {
+            background-color: var(--light-gray);
+        }
+
+        &:hover .iconTheme{
+            background-color: var(--middle-grey);
+        }
+    }
+}
+
+.box-img {
+    position: relative;
+    
+    .img {
+        width: 60px;
+        // height: 60px;
+        border-radius: 999px;
+    }
+
+    .state{
+        position: absolute;
+        bottom: 0;
+
+        .active {
+            color: var(--primary);
+            font-size: 1.2rem;
+            padding: 0 !important;
+        }
+    }
+}
+
+.medium {
+
+    .sub-wrapper {
+        
+        .img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+.active {
+    color: var(--primary);
+    font-size: 1rem;
+}

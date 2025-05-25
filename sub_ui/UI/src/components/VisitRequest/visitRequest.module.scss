@@ -1,0 +1,474 @@
+.container {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+
+    .wrapper {
+        display: flex;
+        width: 90%;
+        margin-top: 40px;
+        position: relative;
+        justify-content: center;
+
+        .sub-title {
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .fieldBox {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 40px;
+            position: relative;
+            margin-top: 10px;
+
+            label {
+                width: 120px;
+                font-weight: 500;
+            }
+
+            input {
+                padding: 10px 8px;
+                border-top: 0;
+                border-left: 0;
+                border-right: 0;
+                border-color: #e2dede;
+                border-radius: 8px;
+                font-size: 16px;
+                width: 200px !important;
+            }
+
+            .list {
+                top: 106%;
+                left: 32%;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+        }
+
+        .list {
+            visibility: hidden;
+            transition: .25s;
+            position: absolute;
+            box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+            opacity: 0;
+            transform-origin: 90% top;
+            transform: scale(0);
+            z-index: 2;
+            border-radius: 6px;
+            overflow: hidden;
+
+            &.active {
+                visibility: visible;
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            &.contract {}
+
+        }
+
+        .type {
+            width: 200px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: .25s;
+            background-color: #fff;
+            opacity: 1;
+            color: #333;
+
+            &:hover {
+                background-color: #b0b0b0;
+                color: #fff;
+
+                &.selectedType {
+                    background-color: #fff;
+                    color: #333;
+                }
+            }
+
+            &.active {
+                background-color: #b0b0b0;
+                color: #fff;
+            }
+
+            &.selectedType {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-radius: 6px;
+                border: 1px solid #dbdada;
+
+                .arrowIcon {
+                    margin-left: 6px;
+                }
+            }
+        }
+
+        .visitRequests {
+            margin-left: 60px;
+            width: 100%;
+            box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+            padding: 20px 32px;
+            border-radius: 8px;
+            background-color: #fff;
+            max-height: 604px;
+            position: relative;
+
+            .titleBox {
+                margin-top: 32px;
+                display: flex;
+                align-items: center;
+
+                .plusIcon {
+                    color: var(--iv-room);
+                    margin-left: 8px;
+                    cursor: pointer;
+                    transition: .25s;
+
+                    &.rotate {
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+
+            .pageBox {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                bottom: 10px;
+            }
+        }
+
+        .infomations {
+            margin-bottom: 40px;
+            box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+            padding: 20px 32px;
+            border-radius: 8px;
+            background-color: #fff;
+            height: 604px;
+
+            h3 {
+                margin-top: 20px;
+            }
+
+            .visit-request-form {
+                padding-left: 20px;
+                margin-top: 10px;
+
+                label {
+                    display: block;
+                    margin: 0.5rem 0 0.25rem;
+                    font-weight: 500;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                }
+
+                .visitors {
+                    display: flex;
+                    justify-content: start;
+                    margin-top: 16px;
+                    flex-wrap: wrap;
+
+                    .scroll-box {
+                        max-height: 300px;
+                        overflow: scroll;
+                    }
+
+                    .visitor-group {
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin-bottom: 1rem;
+                        width: 300px;
+                        margin: 20px;
+
+                        // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                        // border: 1px solid #dcdcdc;
+                        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                        // box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+                        display: grid;
+                        gap: 0.5rem;
+                    }
+                }
+
+
+                .add-btn,
+                .remove-btn,
+                .submit-btn {
+                    padding: 0.5rem 1rem;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    opacity: .8;
+                    transition: .15;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+
+                .wrap-btn {
+                    cursor: pointer;
+
+                    .btnBoxAdd {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 20px;
+                        border-radius: 10px;
+                        background-color: var(--iv-room) !important;
+                        padding: 6px 10px;
+                        opacity: 0.8;
+                        transition: 0.15s;
+                        margin-left: 12px;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                        .btn {
+                            font-size: 16px;
+                            color: white !important;
+                            transition: .2s;
+                        }
+
+                        .plusIcon {
+                            margin-left: 8px;
+                            cursor: pointer;
+                            transition: .25s;
+                            color: #fff;
+
+                            &.rotate {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+
+
+                .add-btn {
+                    background-color: #28a745;
+                    color: white;
+                    margin-bottom: 1rem;
+                }
+
+                .remove-btn {
+                    background-color: #dc3545;
+                    color: white;
+                    margin-top: 0.5rem;
+                }
+
+                .submit-btn {
+                    background-color: #007bff;
+                    color: white;
+                    width: 100%;
+                    margin-top: 1rem;
+                }
+            }
+        }
+
+        .btnBox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-top: 20px;
+
+            .btn {
+                font-size: 16px;
+                padding: 12px 20px;
+                border-radius: 10px;
+                color: #fff;
+                background-color: var(--iv-room);
+                opacity: .7;
+                transition: .2s;
+
+                &.prevent {
+                    pointer-events: none;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .loading {
+                position: absolute;
+                top: 10%;
+                transition: translateX(-50%);
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .avatar {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-left: 60px;
+
+            &:hover {
+
+                &::before {
+                    visibility: visible;
+                    opacity: .3;
+                    cursor: pointer;
+                }
+
+                .changeIcon {
+                    opacity: 1;
+                }
+            }
+
+            img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: contain;
+            }
+
+            .changeIcon {
+                position: absolute;
+                top: 45%;
+                transform: translateY(-50%);
+                left: 45%;
+                transform: translateX(-50%);
+                color: #333;
+                opacity: 0;
+                transition: .2s;
+                cursor: pointer;
+            }
+
+            &::before {
+                position: absolute;
+                content: '';
+                width: 100%;
+                height: 100%;
+                background-color: #333;
+                opacity: 0;
+                border-radius: 50%;
+                transition: .2s;
+                visibility: hidden;
+            }
+        }
+    }
+
+    .changeIcon {
+        color: var(--iv-electrical);
+        margin-left: 16px;
+        cursor: pointer;
+        transition: .2s;
+        opacity: 0.8;
+        // width: 100%;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .trashIcon {
+        color: var(--main-color);
+        cursor: pointer;
+        opacity: 0.8;
+        transition: .2s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .visit-box {
+        margin-top: 40px;
+    }
+}
+
+.table {
+    width: 100%;
+    margin-top: 32px;
+    position: relative;
+    margin-bottom: 200px;
+
+    th {
+        text-align: start;
+    }
+
+    td {
+        // text-align: center;
+        min-width: 45px;
+
+        &.actions {
+            display: flex;
+            // align-items: center;
+            // height: 100%;
+        }
+    }
+
+
+    thead {
+        margin-bottom: 10px;
+    }
+
+    tbody {
+
+        &:before {
+            content: "";
+            display: block;
+            height: 10px;
+            color: transparent;
+        }
+
+        tr {
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: .25s;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+
+            &:hover {
+                background-color: #f4f4f4;
+            }
+
+            td {
+
+                &.actions {
+                    display: flex;
+                    justify-content: center;
+                    justify-content: start;
+
+                    height: 60px;
+                }
+            }
+
+            img {
+                width: 60px;
+                height: 60px;
+                object-fit: contain;
+                border-radius: 50%;
+
+            }
+        }
+    }
+
+    .loading {
+        position: absolute;
+        top: 105%;
+        left: 50%;
+        transform: translateY(-50%);
+    }
+
+}

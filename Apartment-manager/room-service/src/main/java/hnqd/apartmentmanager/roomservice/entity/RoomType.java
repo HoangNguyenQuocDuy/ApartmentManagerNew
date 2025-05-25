@@ -20,8 +20,11 @@ public class RoomType {
     @Column(name = "type")
     private String type;
     @Basic
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column
+    private BigDecimal rentPrice;
+    @Basic
+    @Column
+    private BigDecimal roomPrice;
     @JsonIgnore
     @OneToMany(mappedBy = "roomType")
     private Collection<Room> rooms;

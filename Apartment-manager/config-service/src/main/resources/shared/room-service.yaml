@@ -1,3 +1,6 @@
+server:
+  port: 9002
+
 spring:
   servlet:
     multipart:
@@ -19,11 +22,3 @@ spring:
       hibernate.transaction.jta.platform: org.hibernate.transaction.JTATransactionFactory
       hibernate:
         format_sql: true
-
-server:
-  port: 9002
-
-cloudinary:
-  cloud-name: dpc4ckhqs
-  api-key: 378389729151436
-  api-secret: mWM7_sWVv85g_SDCWV6yZmTfz8g

@@ -1,0 +1,114 @@
+.container {
+
+    .searchBox {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-top: 40px;
+        margin-right: 40px;
+
+        .btnBox {
+            margin-left: 40px;
+
+            button {
+                font-size: 16px;
+                padding: 12px 26px;
+                background-color: var(--main-color);
+                color: #fff;
+                border-radius: 10px;
+                opacity: .8;
+                transition: .25s;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &:hover {
+                button {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .wrapper {
+        width: 96%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+
+        .table {
+            width: 96%;
+
+            td {
+                text-align: center;
+                padding: 8px 0;
+            }
+
+
+            thead {
+                margin-bottom: 10px;
+            }
+
+            tbody {
+
+                &:before {
+                    content: "";
+                    display: block;
+                    height: 10px;
+                    color: transparent;
+                }
+
+                tr {
+                    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    transition: .25s;
+                    border-collapse: separate;
+                    border-spacing: 0 15px;
+
+                    &:hover {
+                        background-color: #f4f4f4;
+                    }
+
+                    td {
+
+                        &.ct {
+                            display: flex;
+                            justify-content: center;
+                        }
+
+                        .btn {
+                            font-size: 16px;
+                            background-color: var(--iv-other);
+                            padding: 8px 16px;
+                            border-radius: 20px;
+                            color: #fff;
+                            transition: .25s;
+                            box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                            opacity: .5;
+
+                            &:hover {
+                                opacity: 1;
+                            }
+
+                            &.close {
+                                pointer-events: none;
+                            }
+                        }
+                    }
+
+                    // &:before {
+                    //     content: "";
+                    //     display: inline;
+                    //     height: 2px;
+                    //     color: transparent;
+                    // }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+.container {
+    padding: 12px 0;
+    border-radius: 12px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 420px;
+
+    h3 {
+        text-align: center;
+    }
+
+    .infomations {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+
+        .avatar {
+            width: 36%;
+            display: flex;
+            justify-content: center;
+
+
+            img {
+                width: 100px;
+                height: 100px;
+                border: 8px;
+                border-radius: 10px;
+                object-fit: contain;
+            }
+        }
+
+        .fields {
+            flex: 1;
+
+            .field {
+                font-size: 16px;
+                margin-bottom: 8px;
+
+                .title {
+                    font-weight: bold;
+                }
+
+                .status {
+
+                    &.cancel {
+                        color: var(--main-color);
+                    }
+                    
+                    &.pending {
+                        color: var(--iv-electrical);
+                    }
+
+                    &.confirmed {
+                        color: var(--success-text);
+                    }
+                }
+            }
+        }
+    }
+}

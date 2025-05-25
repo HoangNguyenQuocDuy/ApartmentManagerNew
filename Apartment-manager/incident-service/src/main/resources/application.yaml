@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: incident-service
+
+  config:
+    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
+
+  cloud:
+    config:
+      fail-fast: true
+
+server:
+  port: 9009
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/?retryWrites=true&w=majority&appName=ApartmnetManager
+#      database: incident_service

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12-alpine
+    container_name: room_service_container
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: root # Thay "your_username" bằng tên user bạn muốn
+      POSTGRES_PASSWORD: 12345 # Thay "your_password" bằng mật khẩu bạn muốn
+      POSTGRES_DB: room_service # Thay "your_database" bằng tên database bạn muốn
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data # Để dữ liệu không mất khi container bị xóa
+    networks:
+      - apartment_network
+
+volumes:
+  postgres_data:
+
+networks:
+  apartment_network:

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Component
 public class UploadImage {
-//    @Lazy
+    @Lazy
     @Autowired
     private Cloudinary cloudinary;
 

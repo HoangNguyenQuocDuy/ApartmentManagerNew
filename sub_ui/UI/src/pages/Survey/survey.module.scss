@@ -1,0 +1,42 @@
+.container {
+
+    margin-bottom: 60px;
+
+    .btnBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-top: 40px;
+
+        .btn {
+            font-size: 16px;
+            padding: 16px 26px;
+            border-radius: 10px;
+            color: #fff;
+            background-color: var(--main-color);
+            opacity: .7;
+            transition: .2s;
+
+            &.prevent {
+                pointer-events: none;
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            position: absolute;
+            top: 10%;
+            transition: translateX(-50%);
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
