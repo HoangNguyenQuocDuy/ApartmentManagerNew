@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "auth-service", url = "http://localhost:8888")
 public interface IUserServiceClient {
 
-    @GetMapping("/api/users/{userId}")
+    String BASE = "/api/users";
+
+    @GetMapping(BASE + "/{userId}")
     ResponseEntity<ResponseObject> getUserById(@PathVariable int userId);
 
 }

@@ -1,42 +1,46 @@
 package hnqd.aparmentmanager.paymentservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.dto.response.ContractResponse;
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
+import hnqd.aparmentmanager.common.exceptions.CommonException;
+import hnqd.aparmentmanager.common.utils.UploadImage;
 import hnqd.aparmentmanager.paymentservice.client.IUserServiceClient;
+import hnqd.aparmentmanager.paymentservice.entity.Invoice;
 import hnqd.aparmentmanager.paymentservice.entity.Payment;
+import hnqd.aparmentmanager.paymentservice.repository.IInvoiceRepo;
 import hnqd.aparmentmanager.paymentservice.repository.IPaymentRepo;
 import hnqd.aparmentmanager.paymentservice.service.IPaymentService;
+import io.github.perplexhub.rsql.RSQLJPASupport;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements IPaymentService {
 
     private final IPaymentRepo paymentRepo;
     private final IUserServiceClient userService;
     private final ObjectMapper objectMapper;
     private final MongoTemplate mongoTemplate;
-
-    @Autowired
-    public PaymentServiceImpl(
-            IPaymentRepo paymentRepo,
-            IUserServiceClient userService,
-            ObjectMapper objectMapper,
-            MongoTemplate mongoTemplate
-    ) {
-        this.paymentRepo = paymentRepo;
-        this.userService = userService;
-        this.objectMapper = objectMapper;
-        this.mongoTemplate = mongoTemplate;
-    }
+    private final IInvoiceRepo invoiceRepo;
+    private final UploadImage uploadImage;
 
     @Override
     public Page<Payment> getListPayment(Map<String, String> params) {
@@ -78,5 +82,50 @@ public class PaymentServiceImpl implements IPaymentService {
         long total = mongoTemplate.count(Query.of(query).limit(-1).skip(-1), Payment.class);
 
         return new PageImpl<>(payments, pageable, total);
+    }
+
+    @Override
+    public Payment createPaymentManual(MultipartFile file, Map<String, String> params) throws IOException {
+        Invoice invoiceSave = invoiceRepo.findById(Integer.parseInt(params.get("invoiceId"))).orElseThrow(
+                () -> new CommonException.NotFoundException("Invoice not found!")
+        );
+
+        Payment payment = Payment
+                .builder()
+
+                .build();
+        if (file != null) {
+            payment.setUploadImage(uploadImage.uploadToCloudinary(file));
+        }
+        payment.setAmount(invoiceSave.getAmount().longValue());
+        payment.setUserId(Integer.parseInt(params.get("userId")));
+        invoiceSave.setPaidAt(LocalDateTime.now());
+        invoiceSave.setInvoiceStatus(EPaymentStatus.PENDING);
+        invoiceRepo.save(invoiceSave);
+
+        payment.setInvoice(invoiceSave);
+        return paymentRepo.save(payment);
+    }
+
+    @Override
+    public RestResponse<ListResponse<Payment>> getListPayment(int page, int size, String sort, String filter, String search, boolean all) {
+//        Specification<Payment> sortable = RSQLJPASupport.toSort(sort);
+//        Specification<Payment> filterable = RSQLJPASupport.toSpecification(filter);
+//
+//        Pageable pageable = all ? Pageable.unpaged() : PageRequest.of(page, size);
+//
+//        Page<Payment> resultPage = paymentRepo.findAll(sortable.and(filterable), pageable);
+
+        return null;
+    }
+
+    @Override
+    public Payment updatePaymentManual(String id, String status) {
+        Payment payment = paymentRepo.findById(id).orElseThrow(
+                () -> new CommonException.NotFoundException("Payment not found!")
+        );
+        payment.setStatus(status);
+
+        return paymentRepo.save(payment);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @RestController
@@ -19,7 +20,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject> createUser(@ModelAttribute UserRequest u) {
+    public ResponseEntity<ResponseObject> createUser(@RequestBody UserRequest u) {
         try {
             UserResponse userSave = userService.createUser(u);
             return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(
@@ -32,10 +33,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{userId}")
+    @PatchMapping("/{userId}")
     public ResponseEntity<ResponseObject> updateUser(@PathVariable("userId") Integer userId,
-                                                     @RequestPart("file")MultipartFile file,
-                                                     @RequestParam Map<String, String> params){
+                                                     @RequestPart("file") @Nullable MultipartFile file,
+                                                     @RequestParam @Nullable Map<String, String> params){
         try {
             UserResponse userSave = userService.updateUser(userId, file, params);
 
@@ -50,10 +51,19 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<ResponseObject> getListUser(@RequestParam Map<String, String> params) {
+    public ResponseEntity<ResponseObject> getListUser(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id, desc") String sort,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) boolean all
+    ) {
         try {
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                    new ResponseObject("OK", "Get list user successfully!", userService.getUsers(params))
+                    new ResponseObject("OK", "Get list user successfully!",
+                            userService.getListUser(page, size, sort, filter, search, all)
+                    )
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatusCode.valueOf(500)).body(
@@ -63,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ResponseObject> getUserById(@PathVariable int userId) {
+    public ResponseEntity<ResponseObject> getUserById(@PathVariable("userId") int userId) {
         try {
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
                     new ResponseObject("OK", "Get user by Id successfully!", userService.getUserById(userId))

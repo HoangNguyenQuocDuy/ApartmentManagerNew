@@ -18,8 +18,6 @@ public class UserRequest {
     private String phone;
     private String email;
     private String status;
-    private Integer lockerId;
-    private Integer roomId;
     @Nullable
     private MultipartFile file;
 }

@@ -1,5 +1,6 @@
 package hnqd.aparmentmanager.paymentservice.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
@@ -23,10 +24,12 @@ public class Payment {
     private String id;
     private String transactionId;
     private String provider; // "VNPAY", "MOMO", "PAYPAL"
-    private Double amount;
+    private Long amount;
     private String status;
     private Integer userId;
-    private Integer invoiceId;
+    private String uploadImage;
+//    private Integer invoiceId;
+    private Invoice invoice;
 
     @CreatedDate
     private LocalDateTime createdAt;

@@ -68,4 +68,35 @@ public class ChatRoomServiceImp implements IChatRoomService {
     public ChatRoom updateRoom(ChatRoom chatRoom) {
         return null;
     }
+
+    @Override
+    public ChatRoom findOrCreateRoomWithAdmin(int userId, int adminId) {
+        Set<Integer> userIds = new HashSet<>(Set.of(userId, adminId));
+
+        Optional<ChatRoom> existingRoom = chatRoomRepo.findByUserIds(userIds);
+
+        if (existingRoom.isPresent()) {
+            return existingRoom.get();
+        }
+
+        ChatRoom room = ChatRoom.builder()
+                .id(UUID.randomUUID())
+                .userIds(userIds)
+                .roomName("User-" + userId + "-Admin")
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+
+        return chatRoomRepo.save(room);
+    }
+
+    @Override
+    public void addUserToRoom(Integer userId, String roomName) {
+        ChatRoom existingRoom = chatRoomRepo.findByRoomName(roomName)
+                .orElseThrow(() -> new CommonException.NotFoundException("Room with name " + roomName + " not found!"));
+
+        existingRoom.addUser(userId);
+
+        chatRoomRepo.save(existingRoom);
+    }
 }

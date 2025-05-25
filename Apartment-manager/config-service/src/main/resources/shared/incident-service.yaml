@@ -1,5 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/apartmnetDB?retryWrites=true&w=majority
+      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/?retryWrites=true&w=majority&appName=ApartmnetManager
       database: incident_service

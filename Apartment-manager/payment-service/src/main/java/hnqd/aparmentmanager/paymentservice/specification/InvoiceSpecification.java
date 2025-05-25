@@ -48,7 +48,10 @@ public class InvoiceSpecification {
                 return criteriaBuilder.conjunction();
             }
 
-            return criteriaBuilder.in(root.get("contractTermId")).value(contractTermIds);
+            return criteriaBuilder.or(
+                    root.get("contractTermId").in(contractTermIds),
+                    criteriaBuilder.isNull(root.get("contractTermId"))
+            );
         };
     }
 

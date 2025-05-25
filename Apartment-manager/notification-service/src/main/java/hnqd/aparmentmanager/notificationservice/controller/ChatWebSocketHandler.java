@@ -12,9 +12,9 @@ public class ChatWebSocketHandler {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @MessageMapping("/chat")
+    @MessageMapping("/chat.sendMessage")
     public void sendMessage(ChatMessageRequestDto message) {
-        rabbitTemplate.convertAndSend("chatExchange", "G8wMk8fKtQ", message);
+        rabbitTemplate.convertAndSend("chatFanoutExchange", "", message);
     }
 
 }

@@ -18,4 +18,6 @@ public interface IRoomRepo extends JpaRepository<Room, Integer>, JpaSpecificatio
 
     Boolean existsByName(String name);
 
+    List<Room> findByIdNotIn(List<Integer> ids);
+
 }

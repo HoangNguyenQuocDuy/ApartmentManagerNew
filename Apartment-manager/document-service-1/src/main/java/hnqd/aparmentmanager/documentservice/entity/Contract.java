@@ -36,6 +36,7 @@ public class Contract {
     private ETermFrequency termFrequency; // Contract term (Monthly, Quarterly, ...)
     @Convert(converter = ContractStatusConverter.class)
     private EContractStatus status;
+    private Long totalTerms;
 
     @JsonIgnore
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)

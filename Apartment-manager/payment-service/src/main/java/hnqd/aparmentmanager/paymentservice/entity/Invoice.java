@@ -34,6 +34,8 @@ public class Invoice {
     @Convert(converter = InvoiceTypeConverter.class)
     private EInvoiceType invoiceType;
 
+    private LocalDateTime paidAt;
+
     private Integer contractTermId; // FK to contractTerm
     private Integer roomId; // FK to room
 

@@ -18,6 +18,7 @@ public class ContractResponse {
     private BigDecimal totalAmount;
     private String termFrequency; // Contract term (Monthly, Quarterly, ...)
     private String status;
+    private long totalTerms;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

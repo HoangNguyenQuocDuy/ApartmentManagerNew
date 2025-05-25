@@ -1,0 +1,148 @@
+.wrapper {
+    display: flex;
+    align-items: end;
+    margin-bottom: 10px;
+
+        .file-btn {
+            position: relative;
+
+            .imgIcon {
+                // position: fixed;
+                // top: 0;
+            }
+        }
+
+        .input-file {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+            // width: 100%;
+        }
+}
+
+.tippy-box {
+    background-color: #fff;
+    color: #000;
+    font-size: 1.3rem;
+    padding: 8px;
+    border-radius: 10px;
+    transition: var(--duration);
+    opacity: .7;
+    box-shadow: 0 2px 6px #333;
+
+    &.light {
+        background-color: #000;
+        color: #fff;
+
+    }
+}
+
+.tippy-tooltip{
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.imgIcon, .stickerIcon, .gifIcon, .smileIcon {
+    font-size: 1.9rem;
+    padding: 4px !important;
+}
+
+.stickerIcon {
+    margin: 0 2px;
+}
+
+.likeIcon, .imgIcon, .smileIcon {
+    color: var(--primary) !important;
+}
+
+.likeIcon, .smileIcon{
+    font-size: 2rem;
+}
+
+.inputMessage {
+    width: 100%;
+    margin: 0 10px;
+    position: relative;
+
+    .file-wrapper {
+        // position: absolute;
+        width: 100%;
+        height: 80px;
+        // bottom: 30px;
+        background-color: var(--border-color);
+        border-radius: 18px 18px 0 0 ;
+        transition: var(--duration);
+
+        &.light {
+            background-color: var(--light-gray);
+        }
+    }
+
+    .text-box {
+        position: relative;
+
+        .input {
+            padding: 10px 42px 10px 16px;
+            border-radius: 999px;
+            width: 100%;
+            background-color: var(--border-color);
+            border: none;
+            outline: none;
+            color: #fff;
+            transition: var(--duration);
+    
+            &.light {
+                background-color: var(--light-gray);
+                color: #000;
+            }
+    
+            &.small {
+                border-radius: 0 0 18px 18px;
+            }
+        }
+    
+        .smileIcon {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            margin-bottom: 4px;
+        }
+    }
+}
+
+.file-show {
+    position: absolute;
+    padding: 14px;
+
+    .file-image {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    .file-close {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 6px;
+        border-radius: 50%;
+        transition: background-color .15s;
+        box-shadow: 0 0 4px #707070;
+        cursor: pointer;
+
+        .icon {
+            width: 12px;
+            height: 12px;
+            color: #444;
+        }
+
+        &:hover {
+            background-color:var(--text-black);
+        }
+    }
+}

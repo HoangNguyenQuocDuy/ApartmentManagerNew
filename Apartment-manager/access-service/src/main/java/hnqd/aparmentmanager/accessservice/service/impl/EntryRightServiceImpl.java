@@ -12,6 +12,9 @@ import hnqd.aparmentmanager.accessservice.service.IEntryRightService;
 import hnqd.aparmentmanager.accessservice.specification.EntryRightSpecification;
 import hnqd.aparmentmanager.accessservice.specification.ParkingRightSpecification;
 import hnqd.aparmentmanager.common.Enum.ECardStatus;
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.ResponseObject;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,37 +37,42 @@ public class EntryRightServiceImpl implements IEntryRightService {
     private final IRelativeRepository relativeRepository;
 
     @Override
-    public Page<EntryRight> getEntryRightsPaging(Map<String, String> params) {
+    public RestResponse<ListResponse<EntryRight>> getEntryRightsPaging(Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int pageSize = Integer.parseInt(params.getOrDefault("size", "20"));
         int userId = Integer.parseInt(params.getOrDefault("userId", "0"));
         int roomId = Integer.parseInt(params.getOrDefault("roomId", "0"));
         String cardStatus = params.getOrDefault("cardStatus", null);
+        boolean all = Boolean.parseBoolean(params.getOrDefault("all", "false"));
 
         List<Integer> contractIds = new ArrayList<>();
-        Specification<EntryRight> spec = Specification.where(null);
+        boolean flag = false;
 
         if (userId != 0) {
             contractIds.addAll(objectMapper.convertValue(
                     documentServiceClient.getContractIdsByUserId(userId).getBody().getData(),
                     List.class
             ));
+            flag = true;
         }
         if (roomId != 0) {
             contractIds.addAll(objectMapper.convertValue(
                     documentServiceClient.getContractIdsByRoomId(roomId).getBody().getData(),
                     List.class
             ));
+            flag = true;
         }
+
+        Specification<EntryRight> spec = contractIds.isEmpty() && userId == 0 ? null :
+                EntryRightSpecification.hasRelativeInContractId(contractIds);
         if (cardStatus != null) {
             spec.and(EntryRightSpecification.hasEntryRightStatus(cardStatus));
         }
-        if (!contractIds.isEmpty()) {
-            spec.and(EntryRightSpecification.hasRelativeInContractId(contractIds));
-        }
-        Pageable pageable = PageRequest.of(page, pageSize);
 
-        return entryRightRepository.findAll(spec, pageable);
+        Pageable pageable = all ? Pageable.unpaged() : PageRequest.of(page, pageSize);
+        Page<EntryRight> resultPage = entryRightRepository.findAll(spec, pageable);
+
+        return RestResponse.ok(ListResponse.of(resultPage));
     }
 
     @Override
@@ -75,7 +83,7 @@ public class EntryRightServiceImpl implements IEntryRightService {
 
         EntryRight entryRight = new EntryRight();
         entryRight.setRelative(relative);
-        entryRight.setStatus(ECardStatus.Active);
+        entryRight.setStatus(ECardStatus.Pending);
 
         return entryRightRepository.save(entryRight);
     }

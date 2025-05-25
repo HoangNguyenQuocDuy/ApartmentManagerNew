@@ -22,6 +22,7 @@ public class ContractTerm {
     private LocalDateTime termStartDate;
     private LocalDateTime termEndDate;
     private BigDecimal termAmount;
+    private Integer termOrder; //
     @Convert(converter = PaymentStatusConverter.class)
     private EPaymentStatus paymentStatus; // PENDING, PAID, OVERDUE
 

@@ -53,67 +53,54 @@ public class SecurityLogServiceImpl implements ISecurityLogService {
 
     @Transactional
     @Override
-    public CompletableFuture<SecurityLog> checkinVisitor(AccessRequestDto accessRequestDto) {
+    public SecurityLog checkinVisitor(AccessRequestDto accessRequestDto) {
 
-        CompletableFuture<UserResponse> userFuture = CompletableFuture.supplyAsync(() ->
-                objectMapper.convertValue(
-                        userServiceClient.getUserById(accessRequestDto.getStaffId()).getBody().getData(),
-                        UserResponse.class
-                )
+        UserResponse user = objectMapper.convertValue(
+                userServiceClient.getUserById(accessRequestDto.getStaffId()).getBody().getData(),
+                UserResponse.class
         );
-        CompletableFuture<Visitor> visitorFuture = CompletableFuture.supplyAsync(
-                () -> visitorRepository.findByIdCardNumber(accessRequestDto.getIdCardNumber()).orElseThrow(
-                        () -> new CommonException.NotFoundException("Visitor not found")
-                )
+        Visitor visitor = visitorRepository.findByIdCardNumber(accessRequestDto.getIdCardNumber()).orElseThrow(
+                () -> new CommonException.NotFoundException("Visitor not found")
         );
-        CompletableFuture<VisitRequest> visitRequestFuture = CompletableFuture.supplyAsync(
-                () -> visitRequestRepository.findById(accessRequestDto.getVisitRequestId()).orElseThrow(
-                        () -> new CommonException.NotFoundException("Visit request not found")
-                )
+        VisitRequest visitRequest = visitRequestRepository.findById(accessRequestDto.getVisitRequestId()).orElseThrow(
+                () -> new CommonException.NotFoundException("Visit request not found")
         );
 
-        return userFuture
-                .thenCombine(visitorFuture, (staff, visitor) -> new Object[]{staff, visitor})
-                .thenCombine(visitRequestFuture, (arr, visitRequest) -> {
-                    Visitor visitor = (Visitor) arr[1];
+        visitRequest.setVisitDate(LocalDateTime.now());
+        visitRequestRepository.save(visitRequest);
 
-                    SecurityLog securityLog = new SecurityLog();
-                    securityLog.setVisitor(visitor);
-                    securityLog.setCheckinStaffId(accessRequestDto.getStaffId());
-                    securityLog.setVisitRequest(visitRequest);
-                    securityLog.setCheckinTime(LocalDateTime.now());
-                    securityLog.setStatus(ESecurityType.CHECK_IN);
+        SecurityLog securityLog = new SecurityLog();
+        securityLog.setVisitor(visitor);
+        securityLog.setCheckinStaffId(accessRequestDto.getStaffId());
+        securityLog.setVisitRequest(visitRequest);
+        securityLog.setCheckinTime(LocalDateTime.now());
+        securityLog.setStatus(ESecurityType.CHECK_IN);
 
-                    return securityLogRepository.save(securityLog);
-                });
+        return securityLogRepository.save(securityLog);
+
     }
 
     @Override
-    public CompletableFuture<SecurityLog> checkoutVisitor(AccessRequestDto accessRequestDto) {
-        CompletableFuture<UserResponse> userFuture = CompletableFuture.supplyAsync(() ->
-                objectMapper.convertValue(
-                        userServiceClient.getUserById(accessRequestDto.getStaffId()).getBody().getData(),
-                        UserResponse.class
-                )
+    public SecurityLog checkoutVisitor(AccessRequestDto accessRequestDto) {
+        UserResponse user = objectMapper.convertValue(
+                userServiceClient.getUserById(accessRequestDto.getStaffId()).getBody().getData(),
+                UserResponse.class
         );
-        CompletableFuture<SecurityLog> securityLogFuture = CompletableFuture.supplyAsync(
-                () -> securityLogRepository.findTopByVisitorIdAndStatusOrderByCheckinTimeDesc(
-                        accessRequestDto.getSecurityLogId(), ESecurityType.CHECK_IN).orElseThrow(
-                                () -> new CommonException.BadRequestException("Visitor has not checked in yet!")
-                )
+        SecurityLog securityLog = securityLogRepository.findByIdAndStatus(
+                accessRequestDto.getSecurityLogId(), ESecurityType.CHECK_IN).orElseThrow(
+                () -> new CommonException.BadRequestException("Visitor has not checked in yet!")
         );
 
-        return userFuture.thenCombine(securityLogFuture, (userResponse, securityLog) -> {
-                    if (securityLog.getCheckoutTime() != null) {
-                        throw new CommonException.BadRequestException("Visitor has already checked out!");
-                    }
+        if (securityLog.getCheckoutTime() != null) {
+            throw new CommonException.BadRequestException("Visitor has already checked out!");
+        }
 
-                    securityLog.setCheckoutTime(LocalDateTime.now());
-                    securityLog.setCheckoutStaffId(accessRequestDto.getStaffId());
-                    securityLog.setStatus(ESecurityType.CHECK_OUT);
+        securityLog.setCheckoutTime(LocalDateTime.now());
+        securityLog.setCheckoutStaffId(accessRequestDto.getStaffId());
+        securityLog.setStatus(ESecurityType.CHECK_OUT);
 
-                    return securityLogRepository.save(securityLog);
-                });
+        return securityLogRepository.save(securityLog);
+
     }
 
     @Override

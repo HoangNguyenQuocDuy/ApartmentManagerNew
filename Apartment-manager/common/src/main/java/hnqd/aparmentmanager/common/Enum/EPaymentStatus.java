@@ -4,13 +4,14 @@ import hnqd.aparmentmanager.common.exceptions.CommonException;
 
 public enum EPaymentStatus {
     PENDING(0, "Pending"),
-    COMPLETED(1, "Completed"),
+    PAID(1, "Paid"),
     FAILED(2, "Failed"),
     CANCELLED(3, "Cancelled"),
     REFUNDED(4, "Refunded"),
     UNDER_REVIEW(5, "Under Review"), // for especial payment method, need to considerate
     EXPIRED(6, "Expired"),
-    FAILED_AUTOMATICALLY(7, "Failed Automatically");
+    FAILED_AUTOMATICALLY(7, "Failed Automatically"),
+    UNPAID(1, "UnPaid");
 
     private int code;
     private String name;

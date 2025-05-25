@@ -11,7 +11,7 @@ public interface IUserServiceClient {
 
     String BASE = "/api/users";
 
-    @GetMapping(BASE + "/api/users/{userId}")
+    @GetMapping(BASE + "/{userId}")
     ResponseEntity<ResponseObject> getUserById(@PathVariable int userId);
 
 }

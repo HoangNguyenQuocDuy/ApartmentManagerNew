@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
@@ -48,6 +50,24 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("OK", "Get payments successful!",
                             paymentService.getListPayment(params)
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get payments by userId failed!", e.getMessage())
+            );
+        }
+    }
+
+    @PatchMapping("/{paymentId}")
+    public ResponseEntity<?> updatePayment(
+            @PathVariable("paymentId") String paymentId,
+            @RequestBody String status
+    ) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("OK", "Get payments successful!",
+                            paymentService.updatePaymentManual(paymentId, status)
                     )
             );
         } catch (Exception e) {
@@ -103,5 +123,12 @@ public class PaymentController {
                     new ResponseObject("FAILED", "Pay invoice failed!", e.getMessage())
             );
         }
+    }
+
+    @PostMapping("/manual")
+    public ResponseEntity<?> createPayment(
+            @RequestPart MultipartFile file,
+            @RequestParam Map<String, String> params) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(paymentService.createPaymentManual(file, params));
     }
 }

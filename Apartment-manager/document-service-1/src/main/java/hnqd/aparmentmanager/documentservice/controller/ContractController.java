@@ -1,6 +1,7 @@
 package hnqd.aparmentmanager.documentservice.controller;
 
 import hnqd.aparmentmanager.common.Enum.EContractStatus;
+import hnqd.aparmentmanager.common.dto.NotifyToUserDto;
 import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import hnqd.aparmentmanager.documentservice.dto.ContractDto;
@@ -8,37 +9,38 @@ import hnqd.aparmentmanager.documentservice.dto.ContractTermDto;
 import hnqd.aparmentmanager.documentservice.entity.Contract;
 import hnqd.aparmentmanager.documentservice.service.IContractService;
 import hnqd.aparmentmanager.documentservice.service.IContractTermService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/contracts")
+@RequiredArgsConstructor
 public class ContractController {
 
     private final IContractService contractService;
     private final IContractTermService contractTermService;
-
-    @Autowired
-    public ContractController(
-            IContractService contractService,
-            IContractTermService contractTermService
-    ) {
-        this.contractService = contractService;
-        this.contractTermService = contractTermService;
-    }
+    private final RabbitTemplate rabbitTemplate;
 
     @GetMapping("/")
-    public ResponseEntity<ResponseObject> getContractsPaging(@RequestParam Map<String, String> params) {
+    public ResponseEntity<ResponseObject> getContractsPaging(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id, desc") String sort,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) boolean all
+    ) {
         try {
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
                     new ResponseObject("OK", "Get contracts successfully!",
-                            contractService.getContractsPaging(params)
+                            contractService.getListContract(page, size, sort, filter, search, all)
                     )
             );
         } catch (Exception e) {
@@ -68,14 +70,14 @@ public class ContractController {
         try {
             Contract contractSave = contractService.creaeContract(contractDto);
 
-            ContractTermDto contractTermDto = new ContractTermDto();
-            contractTermDto.setContractId(contractSave.getId());
-            contractTermDto.setTermStartDate(contractSave.getStartDate());
-            contractTermDto.setTermEndDate(contractSave.getEndDate());
-            contractTermDto.setTermAmount(BigDecimal.valueOf(498172.3));
-
-            contractTermService.createContractTerm(contractTermDto);
-
+            NotifyToUserDto notifyToUserDto = NotifyToUserDto
+                    .builder()
+                    .userId(contractSave.getUserId())
+                    .message("You have been received an contract!")
+                    .build();
+            rabbitTemplate.convertAndSend("commonNotifyExchange",
+                    "H9wMk8fKtP", notifyToUserDto
+            );
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
                     new ResponseObject("OK", "Create contract successfully!",
                             contractSave
@@ -136,9 +138,18 @@ public class ContractController {
         }
     }
 
-    @GetMapping("/for-creating-relative")
-    public ResponseEntity<?> getContractByUserIdAndRoomIdAndStatus(@RequestParam GetContractForRelativeRequest request) {
+    @GetMapping("/forRelative")
+    public ResponseEntity<?> getContractByUserIdAndRoomIdAndStatus(@RequestParam("userId") @NotNull Integer userId,
+                                                                   @RequestParam("roomId") @NotNull Integer roomId,
+                                                                   @RequestParam("status") @NotNull EContractStatus contractStatus) {
         try {
+            GetContractForRelativeRequest request = GetContractForRelativeRequest
+                    .builder()
+                    .userId(userId)
+                    .roomId(roomId)
+                    .status(contractStatus)
+                    .build();
+
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
                     new ResponseObject("OK", "Get contract for creating relative successfully!",
                             contractService.getContractByRoomIdAndUserId(request)
@@ -177,6 +188,45 @@ public class ContractController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     new ResponseObject("FAILED", "Get contract ids by roomId failed!", e.getMessage())
+            );
+        }
+    }
+
+    @GetMapping("/active-room-ids")
+    public ResponseEntity<?> getRoomIdsInActiveContracts() {
+        try {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get roomIds in active contract successfully!",
+                            contractService.getRoomIdsInActiveContracts()
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get roomIds in active contract failed!", e.getMessage())
+            );
+        }
+    }
+
+    @GetMapping("/contract-for-resident")
+    public ResponseEntity<ResponseObject> getContractForCreateResident(@RequestParam("userId") Integer userId,
+                                                                   @RequestParam("roomId") Integer roomId,
+                                                                   @RequestParam("status") EContractStatus contractStatus) {
+        try {
+            GetContractForRelativeRequest request = GetContractForRelativeRequest
+                    .builder()
+                    .userId(userId)
+                    .roomId(roomId)
+                    .status(contractStatus)
+                    .build();
+
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get contract for creating relative successfully!",
+                            contractService.getContractByRoomIdAndUserId(request)
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get userId by contractId failed!", e.getMessage())
             );
         }
     }

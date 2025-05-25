@@ -4,7 +4,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   config:
     import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
@@ -12,3 +12,6 @@ spring:
   cloud:
     config:
       fail-fast: true
+
+secret:
+  key: mySecretKey

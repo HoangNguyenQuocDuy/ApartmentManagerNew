@@ -9,15 +9,19 @@ import hnqd.aparmentmanager.common.dto.request.PaymentRequest;
 import hnqd.aparmentmanager.common.dto.response.PaymentResponse;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
+import hnqd.aparmentmanager.paymentservice.client.IDocumentServiceClient;
 import hnqd.aparmentmanager.paymentservice.client.IUserServiceClient;
 import hnqd.aparmentmanager.paymentservice.config.VNPayConfig;
 import hnqd.aparmentmanager.paymentservice.dto.response.UserResponse;
+import hnqd.aparmentmanager.paymentservice.entity.Invoice;
 import hnqd.aparmentmanager.paymentservice.entity.Payment;
+import hnqd.aparmentmanager.paymentservice.repository.IInvoiceRepo;
 import hnqd.aparmentmanager.paymentservice.repository.IPaymentRepo;
 import hnqd.aparmentmanager.paymentservice.service.IPayService;
 import hnqd.aparmentmanager.paymentservice.service.IPaymentCallbackService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class VNPayService implements IPayService, IPaymentCallbackService {
 
     private final ObjectMapper objectMapper;
@@ -38,35 +43,20 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
     private final ObjectMapper mapper;
     private final RabbitTemplate rabbitTemplate;
     private final IUserServiceClient userServiceClient;
-
-    public VNPayService(
-            ObjectMapper objectMapper,
-            IPaymentRepo paymentRepo,
-            VNPayConfig vnPayConfig,
-            ObjectMapper mapper,
-            RabbitTemplate rabbitTemplate,
-            IUserServiceClient userServiceClient
-    ) {
-        this.objectMapper = objectMapper;
-        this.paymentRepo = paymentRepo;
-        this.vnPayConfig = vnPayConfig;
-        this.mapper = mapper;
-        this.rabbitTemplate = rabbitTemplate;
-        this.userServiceClient = userServiceClient;
-    }
+    private final IInvoiceRepo invoiceRepo;
+    private final IDocumentServiceClient documentServiceClient;
 
     @Transactional
     @Override
     public PaymentResponse createPaymentUrl(HttpServletRequest req, PaymentRequest paymentRequest) throws UnsupportedEncodingException, JsonProcessingException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        Map<String, String> vnp_OrderInfo = new HashMap<>();
-        double amount = Integer.parseInt(req.getParameter("amount"));
+        long amount = Long.parseLong(req.getParameter("amount"));
         Integer userId = Optional.ofNullable(paymentRequest.getUserId()).orElseThrow(() ->
                 new CommonException.IllegalArgument("UserId is required!")
         );
-        Integer invoiceId = Optional.ofNullable(paymentRequest.getInvoiceId()).orElseThrow(() ->
-                new CommonException.IllegalArgument("InvoiceId is required!")
+        Invoice invoice = invoiceRepo.findById(paymentRequest.getInvoiceId()).orElseThrow(
+                () -> new CommonException.NotFoundException("InvoiceId not found!")
         );
         Payment payment = Payment
                 .builder()
@@ -75,7 +65,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
                 .amount(amount * 100)
                 .provider(EProvider.VNPAY.getName())
                 .userId(userId)
-                .invoiceId(invoiceId)
+                .invoice(invoice)
                 .build();
         Payment savePayment = paymentRepo.save(payment);
 
@@ -84,9 +74,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
                 UserResponse.class
         );
 
-        vnp_OrderInfo.put("paymentId", savePayment.getId().toString());
-        vnp_OrderInfo.put("email", userResponse.getEmail());
-        String orderType = "order_type";
+        String orderType = "topup";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = VNPayConfig.getIpAddress(req);
         String vnp_TmnCode = vnPayConfig.getVnp_tmnCode();
@@ -95,11 +83,10 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(10000 * 100));
+        vnp_Params.put("vnp_Amount", amount * 100);
         vnp_Params.put("vnp_CurrCode", "VND");
-        vnp_Params.put("vnp_BankCode", "NCB");
+        vnp_Params.put("vnp_BankCode", "ncb");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", mapper.writeValueAsString(vnp_OrderInfo));
         vnp_Params.put("vnp_OrderType", orderType);
         vnp_Params.put("vnp_Locale", "vn");
         vnp_Params.put("vnp_ReturnUrl", vnPayConfig.getVnp_returnurl());
@@ -115,6 +102,10 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         //Add Params of 2.1.0 Version
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
+        Map<String, String> vnp_OrderInfo = new HashMap<>();
+        vnp_OrderInfo.put("paymentId", savePayment.getId().toString());
+        vnp_OrderInfo.put("email", userResponse.getEmail());
+        vnp_Params.put("vnp_OrderInfo", mapper.writeValueAsString(vnp_OrderInfo));
 
 //        todo: execute later
 //        String callbackUrl = "http://localhost:8080/api/invoices/payemtResult/";
@@ -127,7 +118,9 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         Iterator itr = fieldNames.iterator();
         while (itr.hasNext()) {
             String fieldName = (String) itr.next();
-            String fieldValue = (String) vnp_Params.get(fieldName);
+            System.out.println(fieldName);
+            vnp_Params.forEach((key, value) -> System.out.println(key + " : " + value));
+            String fieldValue = vnp_Params.get(fieldName).toString();
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
                 //Build hash data
                 hashData.append(fieldName);
@@ -150,6 +143,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = vnPayConfig.getVnp_payurl() + "?" + queryUrl;
 
+
         return PaymentResponse.builder()
                 .status("OK")
                 .message("Successfully")
@@ -157,6 +151,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
                 .build();
     }
 
+    @Transactional
     @Override
     public ResponseObject handleCallback(Map<String, String> params) throws JsonProcessingException {
         String vnp_TmnCode = params.getOrDefault("vnp_TmnCode", "");
@@ -180,6 +175,17 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
                     () -> new CommonException.NotFoundException("Payment not found!")
             );
 
+            Invoice invoice = invoiceRepo.findById(payment.getInvoice().getId()).orElseThrow(
+                    () -> new CommonException.NotFoundException("Invoice not found!")
+            );
+            invoice.setInvoiceStatus(EPaymentStatus.PAID);
+            invoice.setPaidAt(LocalDateTime.now());
+            invoiceRepo.save(invoice);
+
+            if (invoice.getContractTermId() != null) {
+                documentServiceClient.updateContractTermById(invoice.getContractTermId(), "Completed");
+            }
+
             Map<String, Object> extraData = new HashMap<>();
             extraData.put("vnp_TmnCode", vnp_TmnCode);
             extraData.put("vnp_Amount", vnp_Amount);
@@ -193,7 +199,7 @@ public class VNPayService implements IPayService, IPaymentCallbackService {
             extraData.put("vnp_TxnRef", vnp_TxnRef);
             extraData.put("vnp_SecureHash", vnp_SecureHash);
             payment.setExtraData(extraData);
-            payment.setStatus(EPaymentStatus.COMPLETED.getName());
+            payment.setStatus(EPaymentStatus.PAID.getName());
 
             Map<String, String> paramMessage = new HashMap<>();
 

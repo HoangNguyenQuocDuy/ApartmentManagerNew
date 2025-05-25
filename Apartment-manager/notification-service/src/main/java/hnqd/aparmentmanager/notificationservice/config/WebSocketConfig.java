@@ -19,14 +19,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/chat-rooms", "/notify");
+        registry.enableSimpleBroker("/chat-rooms", "/notify", "/commonNotify");
         registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
+                .setAllowedOrigins("http://localhost:3000")
                 .withSockJS();
     }
 

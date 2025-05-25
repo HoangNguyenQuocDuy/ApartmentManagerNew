@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "document-service", url = "http://localhost:9003")
 public interface IDocumentServiceClient {
 
-    @GetMapping("/api/contracts/room/user/{userId}")
+    String BASE =  "/api/contracts";
+
+    @GetMapping(BASE + "/room/user/{userId}")
     ResponseEntity<ResponseObject> getRoomIdsByUserIdPaging(@PathVariable("userId") Integer userId);
+
+    @GetMapping(BASE + "/active-room-ids")
+    ResponseEntity<ResponseObject> getRoomIdsInActiveContracts();
 
 }

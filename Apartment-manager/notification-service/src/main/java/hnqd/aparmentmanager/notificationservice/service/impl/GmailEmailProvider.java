@@ -49,9 +49,16 @@ public class GmailEmailProvider implements IEmailProvider {
 
                 // Render template thành chuỗi
                 emailContent = templateEngine.process(EEmailType.WELCOME.getTemplateName(), context);
-
-                // Thiết lập nội dung email
                 break;
+
+            case RESET_PASSWORD:
+                context.setVariable("username", data.get("username"));
+                context.setVariable("resetPasswordCode", data.get("otp"));
+                context.setVariable("subject", subject);
+
+                emailContent = templateEngine.process(EEmailType.RESET_PASSWORD.getTemplateName(), context);
+                break;
+
             case PAYMENT_SUCCESS:
                 context.setVariable("paymentDate", data.get("paymentDate"));
                 context.setVariable("amount", data.get("amount"));
@@ -59,7 +66,17 @@ public class GmailEmailProvider implements IEmailProvider {
                 context.setVariable("subject", subject);
 
                 emailContent = templateEngine.process(EEmailType.PAYMENT_SUCCESS.getTemplateName(), context);
+                break;
 
+            case FIRE_ALERT:
+                context.setVariable("location", data.get("location"));
+                context.setVariable("timestamp", data.get("timestamp"));
+                context.setVariable("cameraId", data.get("cameraId"));
+                context.setVariable("subject", subject);
+                emailContent = templateEngine.process(EEmailType.FIRE_ALERT.getTemplateName(), context);
+                break;
+            default:
+                break;
         }
 
         helper.setText(emailContent, true); // true nghĩa là email này là HTML

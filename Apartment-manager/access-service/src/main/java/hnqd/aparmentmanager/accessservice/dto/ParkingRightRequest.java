@@ -9,6 +9,6 @@ public class ParkingRightRequest {
 
     private int relativeId;
     private String typeOfVehicle;
-    private String licensePlate;
+    private String licensePlates;
 
 }

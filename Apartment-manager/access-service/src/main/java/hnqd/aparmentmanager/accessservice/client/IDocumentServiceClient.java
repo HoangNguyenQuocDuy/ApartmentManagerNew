@@ -1,5 +1,6 @@
 package hnqd.aparmentmanager.accessservice.client;
 
+import hnqd.aparmentmanager.common.Enum.EContractStatus;
 import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -21,5 +22,10 @@ public interface IDocumentServiceClient {
 
     @GetMapping(BASE + "/by-room/{roomId}")
     ResponseEntity<ResponseObject> getContractIdsByRoomId(@PathVariable("roomId") Integer roomId);
+
+    @GetMapping(BASE + "/contract-for-resident")
+    ResponseEntity<ResponseObject> getContractForCreateResident(@RequestParam("userId") Integer userId,
+                                                                @RequestParam("roomId") Integer roomId,
+                                                                @RequestParam("status") EContractStatus contractStatus);
 
 }

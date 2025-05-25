@@ -20,4 +20,8 @@ public interface IChatRoomService {
 
     ChatRoom updateRoom(ChatRoom chatRoom);
 
+    ChatRoom findOrCreateRoomWithAdmin(int userId, int adminId);
+
+    void addUserToRoom(Integer userId, String roomName);
+
 }

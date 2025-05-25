@@ -1,10 +1,12 @@
 package hnqd.aparmentmanager.paymentservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hnqd.aparmentmanager.common.Enum.EInvoiceType;
 import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.dto.request.InvoiceReqDto;
+import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.paymentservice.client.IDocumentServiceClient;
 import hnqd.aparmentmanager.paymentservice.client.IUserServiceClient;
-import hnqd.aparmentmanager.paymentservice.dto.request.InvoiceReqDto;
 import hnqd.aparmentmanager.paymentservice.dto.response.UserResponse;
 import hnqd.aparmentmanager.paymentservice.entity.Invoice;
 import hnqd.aparmentmanager.paymentservice.repository.IInvoiceRepo;
@@ -17,8 +19,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +69,10 @@ public class InvoiceServiceImpl implements IInvoiceService {
             toDate = LocalDateTime.parse(toDateStr, formatter);
         }
 
-        Specification<Invoice> specification = Specification
-                .where(InvoiceSpecification.hasInvoiceStatus(invoiceStatus))
-                .and(InvoiceSpecification.hasInvoiceType(invoiceType))
-                .and(InvoiceSpecification.hasCreatedAtBetween(fromDate, toDate));
+        Specification<Invoice> specification = Specification.where(null);
+//                .where(InvoiceSpecification.hasInvoiceStatus(invoiceStatus))
+//                .and(InvoiceSpecification.hasInvoiceType(invoiceType))
+//                .and(InvoiceSpecification.hasCreatedAtBetween(fromDate, toDate));
 
         if (userId != 0) {
             UserResponse userResponse = objectMapper.convertValue(
@@ -83,8 +89,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
                     List.class
             );
 
-            specification.and(InvoiceSpecification.hasContractTermIdIn(contractTermIds));
-            specification.and(InvoiceSpecification.hasRoomIdsIn(roomTermIds));
+            if (!contractTermIds.isEmpty()) {
+                specification = specification.and(InvoiceSpecification.hasContractTermIdIn(contractTermIds));
+            }
+
+            if (!roomTermIds.isEmpty()) {
+                specification = specification.and(InvoiceSpecification.hasRoomIdsIn(roomTermIds));
+            }
+
+            System.out.println("Final Specification: " + specification);
+            System.out.println("ContractTermIds: " + contractTermIds);
+            System.out.println("RoomTermIds: " + roomTermIds);
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
@@ -92,10 +107,109 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     @Override
-    public Invoice createInvoice(InvoiceReqDto invoiceReqDto) {
-        Invoice invoice = objectMapper.convertValue(invoiceReqDto, Invoice.class);
-        invoice.setInvoiceStatus(EPaymentStatus.PENDING);
+    public Invoice createInvoice(Map<String, String> invoiceReq) {
+        if (Integer.parseInt(invoiceReq.get("amount")) <= 0) {
+            throw new CommonException.RequestBodyInvalid("Amount <= 0!!!");
+        }
+        Invoice invoice = new Invoice();
+
+        if (invoiceReq.get("dueDate") == null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_MONTH, 5);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 0);
+
+            invoice.setDueDate(new Timestamp(new Date(calendar.getTimeInMillis()).getTime()).toLocalDateTime());
+        } else {
+            String dueDateWithTime = invoiceReq.get("dueDate") + " 23:59:59";  // Thêm giờ phút giây mặc định
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime date = LocalDateTime.parse(dueDateWithTime, formatter);
+
+            if (date.isBefore(LocalDateTime.now()) || date.isEqual(LocalDateTime.now())) {
+                throw new CommonException.DueDateException("Due date cannot be in the past or equal to the current date/time.");
+            } else {
+                invoice.setDueDate(date);
+            }
+        }
+
+
+        invoice.setDescription(invoiceReq.get("description"));
+        invoice.setAmount(BigDecimal.valueOf(Long.parseLong(invoiceReq.get("amount"))));
+        invoice.setInvoiceStatus(EPaymentStatus.UNPAID);
+        invoice.setInvoiceType(EInvoiceType.safeValueOfName(invoiceReq.get("invoiceType")));
+        invoice.setRoomId(Integer.parseInt(invoiceReq.get("roomId")));
+//        invoice.setContractTermId(invoiceReq.getC);
 
         return invoiceRepo.save(invoice);
+    }
+
+    @Override
+    public Invoice createInvoice(InvoiceReqDto invoiceReq) {
+        if (invoiceReq.getAmount() == null || invoiceReq.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new CommonException.RequestBodyInvalid("Amount must be greater than 0!");
+        }
+
+        Invoice invoice = new Invoice();
+        invoice.setAmount(invoiceReq.getAmount());
+        invoice.setDescription(invoiceReq.getDescription() != null ? invoiceReq.getDescription() : "");
+        invoice.setInvoiceType(invoiceReq.getInvoiceType());
+        invoice.setRoomId(invoiceReq.getRoomId());
+        invoice.setInvoiceStatus(EPaymentStatus.UNPAID);
+
+        // Handle due date
+        if (invoiceReq.getDueDate() == null) {
+            LocalDateTime defaultDueDate = LocalDateTime.now().plusDays(5)
+                    .withHour(23).withMinute(59).withSecond(59);
+            invoice.setDueDate(defaultDueDate);
+        } else {
+            if (invoiceReq.getDueDate().isBefore(LocalDateTime.now().plusSeconds(1))) {
+                throw new CommonException.DueDateException("Due date cannot be in the past or equal to now.");
+            }
+            invoice.setDueDate(invoiceReq.getDueDate());
+        }
+
+        return invoiceRepo.save(invoice);
+    }
+
+
+    @Override
+    public Invoice updateInvoice(int invoiceId, Map<String, String> params) {
+        Invoice invoiceSave = invoiceRepo.findById(invoiceId).orElseThrow(
+                () -> new CommonException.NotFoundException("Invoice not found!")
+        );
+
+        boolean check = false;
+
+        if (params.get("status") != null && !params.get("status").isEmpty()) {
+            invoiceSave.setInvoiceStatus(EPaymentStatus.safeValueOfName(params.get("status")));
+            check = true;
+        }
+        if (params.get("invoiceType") != null && !params.get("invoiceType").isEmpty()) {
+            invoiceSave.setInvoiceType(EInvoiceType.safeValueOfName(params.get("invoiceType")));
+            check = true;
+        }
+        if (params.get("description") != null && !params.get("description").isEmpty()) {
+            invoiceSave.setDescription(params.get("description"));
+            check = true;
+        }
+        if (params.get("amount") != null && !params.get("amount").isEmpty()) {
+            invoiceSave.setAmount(new BigDecimal(params.get("amount")));
+            check = true;
+        }
+        if (params.get("dueDate") != null && !params.get("dueDate").isEmpty()) {
+            String dueDateWithTime = params.get("dueDate") + " 23:59:59";  // Thêm giờ phút giây mặc định
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime date = LocalDateTime.parse(dueDateWithTime, formatter);
+            invoiceSave.setDueDate(date);
+            check = true;
+        }
+
+        if (check) {
+            return invoiceRepo.save(invoiceSave);
+        } else {
+            throw new CommonException.RequestBodyInvalid("No keys match with invoice column");
+        }
     }
 }

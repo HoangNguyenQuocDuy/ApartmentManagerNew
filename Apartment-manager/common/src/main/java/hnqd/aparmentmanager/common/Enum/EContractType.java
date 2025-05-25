@@ -4,7 +4,7 @@ import hnqd.aparmentmanager.common.exceptions.CommonException;
 
 public enum EContractType {
     RENTAL(0, "Rental"),
-    MAINTENANCE(1, "Maintain"),
+    BUY(1, "Buy"),
     OTHER(2, "Other");
 
     private int code;

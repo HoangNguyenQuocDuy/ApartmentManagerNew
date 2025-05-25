@@ -17,9 +17,9 @@ spring:
       hibernate:
         format_sql: true
 
-VNPay:
-  vnp_PayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-  vnp_Returnurl: http://localhost:8080/vnpay_jsp/vnpay_return.jsp
-  vnp_TmnCode: L3ZM6UQH
-  vnp_HashSecret: MF8MQQN58R1CURQIIJMA8Q0QE2V8N2K7
-  vnp_ApiUrl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
+#VNPay:
+#  vnp_PayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+#  vnp_Returnurl: http://localhost:8080/vnpay_jsp/vnpay_return.jsp
+#  vnp_TmnCode: L3ZM6UQH
+#  vnp_HashSecret: MF8MQQN58R1CURQIIJMA8Q0QE2V8N2K7
+#  vnp_ApiUrl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction

@@ -1,19 +1,20 @@
 package hnqd.aparmentmanager.chatservice.controller;
 
 import hnqd.aparmentmanager.chatservice.dto.ChatMessageRequestDto;
+import hnqd.aparmentmanager.chatservice.dto.ChatRoomRequestDto;
 import hnqd.aparmentmanager.chatservice.model.ChatMessage;
 import hnqd.aparmentmanager.chatservice.model.ChatRoom;
 import hnqd.aparmentmanager.chatservice.service.IChatMessageService;
 import hnqd.aparmentmanager.chatservice.service.IChatRoomService;
+import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -97,9 +98,39 @@ public class ChatRoomController {
 //        }
 //    }
 
-    @GetMapping("/rooms")
-    public ResponseEntity<?> getChatRooms(@RequestHeader("X-User-Id") Integer userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getChatRooms(@PathVariable("userId") Integer userId) {
         List<ChatRoom> chatRooms = chatRoomService.findRoomsByUserId(userId);
         return ResponseEntity.ok(chatRooms);
+    }
+
+    @PostMapping("/with-admin")
+    public ResponseEntity<ResponseObject> createOrGetChatRoomWithAdmin(@RequestParam int userId) {
+        try {
+            int adminId = 5;
+            ChatRoom room = chatRoomService.findOrCreateRoomWithAdmin(userId, adminId);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Add user to group chat with admin successfully!", room)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Add user to group chat with admin failed!", e.getMessage())
+            );
+        }
+    }
+
+    @PostMapping("/with-common")
+    public ResponseEntity<ResponseObject> createOrGetChatRoomWithCommonGroup(@RequestParam Integer userId) {
+        try {
+            String commonGroupName = "QD APARTMENT - COMMON GROUP";
+            chatRoomService.addUserToRoom(userId, commonGroupName);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Add user to common group chat successfully!", "")
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Add user to common group chat failed!", e.getMessage())
+            );
+        }
     }
 }

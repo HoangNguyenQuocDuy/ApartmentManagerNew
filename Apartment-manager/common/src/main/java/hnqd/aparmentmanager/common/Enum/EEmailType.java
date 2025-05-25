@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 public enum EEmailType {
     WELCOME(0, "welcome", "welcome-email-template.html"),
-    PAYMENT_SUCCESS(1, "payment-success", "payment-email-template.html");
+    PAYMENT_SUCCESS(1, "payment-success", "payment-email-template.html"),
+    FIRE_ALERT(2, "fire-alert", "fire-alert-email-template.html"),
+    RESET_PASSWORD(3, "reset-password", "reset-password-email-template.html");
 
     private int code;
     private String name;

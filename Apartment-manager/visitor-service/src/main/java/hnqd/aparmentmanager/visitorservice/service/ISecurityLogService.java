@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 public interface ISecurityLogService {
 
-    CompletableFuture<SecurityLog> checkinVisitor(AccessRequestDto accessRequestDto);
+    SecurityLog checkinVisitor(AccessRequestDto accessRequestDto);
 
-    CompletableFuture<SecurityLog> checkoutVisitor(AccessRequestDto accessRequestDto);
+    SecurityLog checkoutVisitor(AccessRequestDto accessRequestDto);
 
     Page<SecurityLog> getSecurityLogs(Map<String, String> params);
 

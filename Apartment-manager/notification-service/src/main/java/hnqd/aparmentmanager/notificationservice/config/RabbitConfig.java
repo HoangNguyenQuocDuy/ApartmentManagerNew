@@ -3,6 +3,7 @@ package hnqd.aparmentmanager.notificationservice.config;
 import hnqd.aparmentmanager.notificationservice.listener.Listener;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
@@ -22,9 +23,14 @@ public class RabbitConfig {
     }
 
     @Bean
+    public FanoutExchange chatFanoutExchange() {
+        return new FanoutExchange("chatFanoutExchange");
+    }
+
+    @Bean
     public Queue chatQueue() {
         return QueueBuilder
-                .durable("chatQueue")
+                .durable("chatQueue.notify-service")
                 .build();
     }
 
@@ -32,24 +38,30 @@ public class RabbitConfig {
     public Queue notificationQueue() {
         return QueueBuilder
                 .durable("notificationQueue")
-                .deadLetterExchange("dlx-exchange")
-                .deadLetterRoutingKey("dlx")
+//                .deadLetterExchange("dlx-exchange")
+//                .deadLetterRoutingKey("dlx")
+                .build();
+    }
+    @Bean
+    public Queue commonNotifyQueue() {
+        return QueueBuilder
+                .durable("commonNotifyQueue")
                 .build();
     }
 
     // queue for Dead Letter
-    @Bean
-    public Queue deadLetterQueue() {
-        return QueueBuilder.durable("dlq")
-                .ttl(10000)  // TTL (time-to-live) for DLQ messages
-                .build();
-    }
+//    @Bean
+//    public Queue deadLetterQueue() {
+//        return QueueBuilder.durable("dlq")
+//                .ttl(10000)  // TTL (time-to-live) for DLQ messages
+//                .build();
+//    }
 
     // exchange for DLX
-    @Bean
-    public DirectExchange dlxExchange() {
-        return new DirectExchange("dlx-exchange");
-    }
+//    @Bean
+//    public DirectExchange dlxExchange() {
+//        return new DirectExchange("dlx-exchange");
+//    }
 
     // exchange for main queue
     @Bean
@@ -63,8 +75,18 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Binding bindChatQueue(Queue chatQueue, FanoutExchange chatFanoutExchange) {
+        return BindingBuilder.bind(chatQueue).to(chatFanoutExchange);
+    }
+
+    @Bean
     public DirectExchange alertExchange() {
         return new DirectExchange("alertExchange");
+    }
+
+    @Bean
+    public DirectExchange commonNotifyExchange() {
+        return new DirectExchange("commonNotifyExchange");
     }
 
     // binding for notificationQueue and notificationExchange
@@ -76,12 +98,12 @@ public class RabbitConfig {
     }
 
     // binding for chatQueue and chatExchange
-    @Bean
-    public Binding bindingChatQueue(Queue chatQueue, DirectExchange chatExchange) {
-        return BindingBuilder.bind(chatQueue)
-                .to(chatExchange)
-                .with("G8wMk8fKtQ"); // Main binding with routing key "G8wMk8fKtQ"
-    }
+//    @Bean
+//    public Binding bindingChatQueue(Queue chatQueue, DirectExchange chatExchange) {
+//        return BindingBuilder.bind(chatQueue)
+//                .to(chatExchange)
+//                .with("G8wMk8fKtQ"); // Main binding with routing key "G8wMk8fKtQ"
+//    }
 
     // binding for chatQueue and alertExchange
     @Bean
@@ -92,11 +114,18 @@ public class RabbitConfig {
     }
 
     // binding for deadLetterQueue and dlxExchange
+//    @Bean
+//    public Binding bindingDeadLetterQueue(Queue deadLetterQueue, DirectExchange dlxExchange) {
+//        return BindingBuilder.bind(deadLetterQueue)
+//                .to(dlxExchange)
+//                .with("dlx"); // Binding for DLQ with routing key "dlx"
+//    }
+
     @Bean
-    public Binding bindingDeadLetterQueue(Queue deadLetterQueue, DirectExchange dlxExchange) {
-        return BindingBuilder.bind(deadLetterQueue)
-                .to(dlxExchange)
-                .with("dlx"); // Binding for DLQ with routing key "dlx"
+    public Binding bindingCommonNotifyQueue(Queue commonNotifyQueue, DirectExchange commonNotifyExchange) {
+        return BindingBuilder.bind(commonNotifyQueue)
+                .to(commonNotifyExchange)
+                .with("H9wMk8fKtP"); // Main binding with routing key "H9wMk8fKtP"
     }
 
     @Bean
@@ -104,11 +133,14 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    // Single MessageListenerAdapter Bean
     @Bean
-    public MessageListenerAdapter notifyListenerAdapter(Listener listener, Jackson2JsonMessageConverter messageConverter) {
-        // Notice the name of the method being used ("handleNotification")
-        return new MessageListenerAdapter(listener, "handleNotification");
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+            ConnectionFactory connectionFactory,
+            Jackson2JsonMessageConverter messageConverter) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setMessageConverter(messageConverter);
+        return factory;
     }
 
     @Bean
@@ -121,35 +153,5 @@ public class RabbitConfig {
     public MessageListenerAdapter alertListenerAdapter(Listener listener, Jackson2JsonMessageConverter messageConverter) {
         // Notice the name of the method being used ("handleAlert")
         return new MessageListenerAdapter(listener, "handleAlert");
-    }
-
-    @Bean
-    public SimpleMessageListenerContainer notifyListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter notifyListenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory); // connect to RabbitMQ
-        container.setQueueNames("notificationQueue"); // listen message from 'notificationQueue' queue
-        container.setMessageListener(notifyListenerAdapter); // Using the MessageListenerAdapter to handle message
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); // manual in confirm message
-        return container;
-    }
-
-    @Bean
-    public SimpleMessageListenerContainer chatListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter chatListenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory); // connect to RabbitMQ
-        container.setQueueNames("chatQueue"); // listen message from 'chatQueue' queue
-        container.setMessageListener(chatListenerAdapter); // Using the MessageListenerAdapter to handle message
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); // manual in confirm message
-        return container;
-    }
-
-    @Bean
-    public SimpleMessageListenerContainer alertListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter alertListenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory); // connect to RabbitMQ
-        container.setQueueNames("alertQueue"); // listen message from 'alertQueue' queue
-        container.setMessageListener(alertListenerAdapter); // Using the MessageListenerAdapter to handle message
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); // manual in confirm message
-        return container;
     }
 }

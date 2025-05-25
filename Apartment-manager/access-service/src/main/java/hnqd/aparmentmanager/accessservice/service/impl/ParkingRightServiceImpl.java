@@ -4,12 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hnqd.aparmentmanager.accessservice.client.IDocumentServiceClient;
 import hnqd.aparmentmanager.accessservice.dto.ParkingRightRequest;
 import hnqd.aparmentmanager.accessservice.entity.ParkingRight;
+import hnqd.aparmentmanager.accessservice.entity.Relative;
 import hnqd.aparmentmanager.accessservice.repository.IParkingRightRepository;
 import hnqd.aparmentmanager.accessservice.repository.IRelativeRepository;
 import hnqd.aparmentmanager.accessservice.service.IParkingRightService;
 import hnqd.aparmentmanager.accessservice.specification.ParkingRightSpecification;
+import hnqd.aparmentmanager.accessservice.specification.RelativeSpecification;
 import hnqd.aparmentmanager.common.Enum.ECardStatus;
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
+import io.github.perplexhub.rsql.RSQLJPASupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ParkingRightServiceImpl implements IParkingRightService {
@@ -43,46 +49,57 @@ public class ParkingRightServiceImpl implements IParkingRightService {
     }
 
     @Override
-    public Page<ParkingRight> getParkingRightsPaging(Map<String, String> params) {
+    public RestResponse<ListResponse<ParkingRight>> getParkingRightsPaging(Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int pageSize = Integer.parseInt(params.getOrDefault("size", "20"));
         int userId = Integer.parseInt(params.getOrDefault("userId", "0"));
         int roomId = Integer.parseInt(params.getOrDefault("roomId", "0"));
         String cardStatus = params.getOrDefault("cardStatus", null);
-
+        boolean all = Boolean.parseBoolean(params.getOrDefault("all", "false"));
+        boolean flag = false;
         List<Integer> contractIds = new ArrayList<>();
-        Specification<ParkingRight> spec = Specification.where(null);
 
         if (userId != 0) {
             contractIds.addAll(objectMapper.convertValue(
                     documentServiceClient.getContractIdsByUserId(userId).getBody().getData(),
                     List.class
             ));
+            flag = true;
         }
         if (roomId != 0) {
             contractIds.addAll(objectMapper.convertValue(
                     documentServiceClient.getContractIdsByRoomId(roomId).getBody().getData(),
                     List.class
             ));
+            flag = true;
         }
+        Specification<ParkingRight> spec = contractIds.isEmpty() && !flag ?
+                null : ParkingRightSpecification.hasRelativeInContractId(contractIds);
+
         if (cardStatus != null) {
             spec.and(ParkingRightSpecification.hasParkingRightStatus(cardStatus));
         }
-        if (!contractIds.isEmpty()) {
-            spec.and(ParkingRightSpecification.hasRelativeInContractId(contractIds));
-        }
-        Pageable pageable = PageRequest.of(page, pageSize);
 
-        return parkingRightRepository.findAll(spec, pageable);
+        Pageable pageable = all ? Pageable.unpaged() : PageRequest.of(page, pageSize);
+
+        Page<ParkingRight> resultPage = parkingRightRepository.findAll(spec, pageable);
+
+        return RestResponse.ok(ListResponse.of(resultPage));
     }
 
     @Override
     public ParkingRight createParkingRight(ParkingRightRequest pr) {
+        Optional<ParkingRight> parkingRightFind = parkingRightRepository.findByLicensePlates(pr.getLicensePlates());
+
+        if (parkingRightFind.isPresent()) {
+            throw new CommonException.DuplicationError("Duplicate license plates");
+        }
+
         ParkingRight parkingRight = ParkingRight
                 .builder()
-                .status(ECardStatus.Active)
+                .status(ECardStatus.Pending)
                 .typeOfVehicle(pr.getTypeOfVehicle())
-                .licensePlates(pr.getLicensePlate())
+                .licensePlates(pr.getLicensePlates())
                 .relative(relativeRepository.findById(pr.getRelativeId()).orElseThrow(() ->
                     new CommonException.NotFoundException("Relative with id " + pr.getRelativeId() + " not found")
                 ))
@@ -99,7 +116,7 @@ public class ParkingRightServiceImpl implements IParkingRightService {
 
         String cardStatus = params.getOrDefault("cardStatus", "");
 
-        if (!cardStatus.isEmpty() && parkingRight.getStatus() == ECardStatus.Pending) {
+        if (!cardStatus.isEmpty()) {
             parkingRight.setStatus(ECardStatus.valueOf(cardStatus));
 
             return parkingRightRepository.save(parkingRight);

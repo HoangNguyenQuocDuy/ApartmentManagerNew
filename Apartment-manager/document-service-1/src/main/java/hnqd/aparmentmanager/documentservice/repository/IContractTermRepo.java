@@ -1,5 +1,6 @@
 package hnqd.aparmentmanager.documentservice.repository;
 
+import hnqd.aparmentmanager.documentservice.entity.Contract;
 import hnqd.aparmentmanager.documentservice.entity.ContractTerm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface IContractTermRepo extends JpaRepository<ContractTerm, Integer> 
 
     @Query("select ct.id from ContractTerm ct where ct.contract.userId = :userId")
     List<Integer> findContractTermIdsByUserId(Integer userId);
+
+    List<ContractTerm> findAllByContractOrderByTermOrderDesc(Contract contract);
 }

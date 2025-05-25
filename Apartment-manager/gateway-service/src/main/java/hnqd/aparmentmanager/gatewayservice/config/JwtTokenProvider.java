@@ -1,10 +1,13 @@
 package hnqd.aparmentmanager.gatewayservice.config;
 
+import hnqd.aparmentmanager.common.Enum.EKey;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -14,7 +17,7 @@ public class JwtTokenProvider {
 
     public Claims getClaimsFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(EKey.SECRET_KEY.getKey().getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -22,17 +25,17 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Claims claims = getClaimsFromToken(token);
-            return claims.getExpiration().after(new Date());
+            return claims.getExpiration().toInstant().isAfter(Instant.now());
         } catch (Exception e) {
             return false;
         }
     }
 
-    public String getUserIdFromToken(String token) {
+    public Integer getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(EKey.SECRET_KEY.getKey().getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.get("userId", String.class);
+        return claims.get("userId", Integer.class);
     }
 }

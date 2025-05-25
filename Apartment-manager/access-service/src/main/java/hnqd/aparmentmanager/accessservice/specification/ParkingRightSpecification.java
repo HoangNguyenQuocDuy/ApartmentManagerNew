@@ -11,6 +11,8 @@ public class ParkingRightSpecification {
 
     public static Specification<ParkingRight> hasRelativeInContractId(List<Integer> contractIds) {
         return (Root<ParkingRight> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (contractIds.isEmpty()) return criteriaBuilder.disjunction();
+
             Join<ParkingRight, Relative> relativeJoin = root.join("relative");
             Predicate contractPredicate = relativeJoin.get("contractId").in(contractIds);
             return criteriaBuilder.and(contractPredicate);

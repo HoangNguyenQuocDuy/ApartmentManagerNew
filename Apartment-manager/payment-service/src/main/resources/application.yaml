@@ -18,5 +18,5 @@ vnpay:
   vnp_payurl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   vnp_returnurl: http://localhost:9010/api/invoices?page=0&size=2&userId=49
   vnp_tmnCode: MDCLI0U4
-  vnp_hashsecret: 5ECZ6H9DQBYV6XXJDF2F4WM0T9HZD8YC
+  vnp_hashsecret: DBJD4EFXEBCHPR2812W14BDH9CITXU10
   vnp_apiurl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction

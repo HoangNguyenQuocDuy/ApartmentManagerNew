@@ -20,7 +20,7 @@ public class VisitorController {
 
     @GetMapping("/")
     public ResponseEntity<ResponseObject> getVisitors(
-            @RequestBody Map<String, String> params
+            @RequestParam Map<String, String> params
     ) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(

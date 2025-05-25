@@ -1,11 +1,13 @@
 package hnqd.aparmentmanager.gatewayservice.config;
 
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
 
+@Getter
 @Configuration
 public class PublicApiConfig {
     @Value("${publicApi.GET}")
@@ -20,11 +22,4 @@ public class PublicApiConfig {
         System.out.println("POST Endpoints: " + postEndpoints);  // Debugging
     }
 
-    public Set<String> getGetEndpoints() {
-        return getEndpoints;
-    }
-
-    public Set<String> getPostEndpoints() {
-        return postEndpoints;
-    }
 }

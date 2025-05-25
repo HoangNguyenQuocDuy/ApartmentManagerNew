@@ -1,9 +1,12 @@
 package hnqd.aparmentmanager.accessservice.controller;
 
 import hnqd.aparmentmanager.accessservice.dto.ParkingRightRequest;
+import hnqd.aparmentmanager.accessservice.entity.ParkingRight;
 import hnqd.aparmentmanager.accessservice.service.IParkingRightService;
+import hnqd.aparmentmanager.common.dto.NotifyToUserDto;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import java.util.Map;
 public class ParkingRightController {
 
     private final IParkingRightService parkingRightService;
+    private final RabbitTemplate rabbitTemplate;
 
     @PostMapping("/")
     public ResponseEntity<ResponseObject> createParkingRight(@RequestBody ParkingRightRequest pr) {
@@ -46,11 +50,20 @@ public class ParkingRightController {
     }
 
     @PatchMapping("/{prId}")
-    public ResponseEntity<ResponseObject> updateParkingRights(@PathVariable("prId") Integer prId , @RequestBody Map<String, String> params) {
+    public ResponseEntity<ResponseObject> updateParkingRights(@PathVariable("prId") Integer prId, @RequestBody Map<String, String> params) {
         try {
+            ParkingRight result = parkingRightService.updateParkingRight(prId, params);
+
+            NotifyToUserDto notifyToUserDto = NotifyToUserDto
+                    .builder()
+                    .userId(Integer.parseInt(params.get("userId")))
+                    .message("Your requested card has been updated!")
+                    .build();
+            rabbitTemplate.convertAndSend("commonNotifyExchange",
+                    "H9wMk8fKtP", notifyToUserDto
+            );
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
-                    new ResponseObject("OK", "Update parking right successfully!",
-                            parkingRightService.updateParkingRight(prId, params))
+                    new ResponseObject("OK", "Update parking right successfully!", result)
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatusCode.valueOf(500)).body(

@@ -14,5 +14,6 @@ public class ContractTermDto {
     private LocalDateTime termStartDate;
     private LocalDateTime termEndDate;
     private BigDecimal termAmount;
+    private Integer termOrder;
 
 }

@@ -1,13 +1,10 @@
 package hnqd.apartmentmanager.roomservice.config;
 
 import com.cloudinary.Cloudinary;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import hnqd.aparmentmanager.common.utils.UploadImage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.codec.ServerCodecConfigurer;
 
 import java.util.HashMap;
 import java.util.Map;

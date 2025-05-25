@@ -18,4 +18,8 @@ public interface IContractTermService {
 
     ContractTerm createContractTerm(ContractTermDto contractTerm);
 
+    ContractTerm getContractTermById(Integer id);
+
+    ContractTerm updateContractTermById(Integer id, String status);
+
 }

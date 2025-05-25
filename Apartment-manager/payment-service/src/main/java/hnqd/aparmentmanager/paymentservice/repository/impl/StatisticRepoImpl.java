@@ -20,21 +20,78 @@ public class StatisticRepoImpl implements IStatisticRepo {
     EntityManager entityManager;
 
     @Override
+    public List<Object[]> getRevenueByMonth(int month, int year) {
+        CriteriaBuilder b = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root invoice = q.from(Invoice.class);
+
+//        Expression<Integer> invoiceMonth = b.function("MONTH", Integer.class, invoice.get("dueDate"));
+//        Expression<Integer> invoiceYear = b.function("YEAR", Integer.class, invoice.get("dueDate"));
+
+        Expression<Integer> invoiceMonth = b.function(
+                "date_part",
+                Integer.class,
+                b.literal("month"),
+                invoice.get("dueDate")
+        );
+        Expression<Integer> invoiceYear = b.function(
+                "date_part",
+                Integer.class,
+                b.literal("year"),
+                invoice.get("dueDate")
+        );
+
+        q.multiselect(
+                invoice.get("invoiceType"),
+                b.sum(invoice.get("amount"))
+        );
+
+        q.where(
+                b.equal(invoice.get("invoiceStatus"), "Paid"),
+                b.equal(invoiceMonth, month),
+                b.equal(invoiceYear, year)
+        );
+
+        q.groupBy(invoice.get("invoiceType"));
+//        q.orderBy(b.asc(invoiceType.get("type")));
+
+        List<Object[]> results = entityManager.createQuery(q).getResultList();
+
+        return results;
+    }
+
+    @Override
     public List<Object[]> getTotalRevenueByYear(int year) {
         CriteriaBuilder b = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
         Root<Invoice> invoice = q.from(Invoice.class);
 
-        Expression<Integer> invoiceMonth = b.function("MONTH", Integer.class, invoice.get("dueDate"));
-        Expression<Integer> invoiceYear = b.function("YEAR", Integer.class, invoice.get("dueDate"));
+//        Expression<Integer> invoiceMonth = b.function("MONTH", Integer.class, invoice.get("dueDate"));
+//        Expression<Integer> invoiceYear = b.function("YEAR", Integer.class, invoice.get("dueDate"));
+
+        Expression<Integer> invoiceMonth = b.function(
+                "date_part",
+                Integer.class,
+                b.literal("month"),
+                invoice.get("dueDate")
+        );
+
+// thay b.function("YEAR", Integer.class, invoice.get("dueDate"))
+        Expression<Integer> invoiceYear = b.function(
+                "date_part",
+                Integer.class,
+                b.literal("year"),
+                invoice.get("dueDate")
+        );
 
         q.multiselect(
                 invoiceMonth,
                 b.sum(invoice.get("amount"))
         );
         q.where(
-                b.equal(invoice.get("status"), "Paid"),
+                b.equal(invoice.get("invoiceStatus"), "Paid"),
                 b.equal(invoiceYear, year)
         );
         q.groupBy(invoiceMonth);
@@ -57,35 +114,5 @@ public class StatisticRepoImpl implements IStatisticRepo {
         }
 
         return finalResults;
-    }
-
-    @Override
-    public List<Object[]> getRevenueByMonth(int month, int year) {
-        CriteriaBuilder b = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-
-        Root invoice = q.from(Invoice.class);
-        Join<Invoice, EInvoiceType> invoiceType = invoice.join("invoiceType");
-
-        Expression<Integer> invoiceMonth = b.function("MONTH", Integer.class, invoice.get("dueDate"));
-        Expression<Integer> invoiceYear = b.function("YEAR", Integer.class, invoice.get("dueDate"));
-
-        q.multiselect(
-                invoiceType.get("type"),
-                b.sum(invoice.get("amount"))
-        );
-
-        q.where(
-                b.equal(invoice.get("status"), "Paid"),
-                b.equal(invoiceMonth, month),
-                b.equal(invoiceYear, year)
-        );
-
-        q.groupBy(invoiceType.get("type"));
-//        q.orderBy(b.asc(invoiceType.get("type")));
-
-        List<Object[]> results = entityManager.createQuery(q).getResultList();
-
-        return results;
     }
 }

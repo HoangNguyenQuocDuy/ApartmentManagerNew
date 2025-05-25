@@ -10,22 +10,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
     @Bean
-    public Queue chatQueue() {
+    public FanoutExchange chatFanoutExchange() {
+        return new FanoutExchange("chatFanoutExchange");
+    }
+
+    @Bean
+    public Queue chatServiceQueue() {
         return QueueBuilder
-                .durable("chatQueue")
-//                .deadLetterExchange("dlx-exchange")
-//                .deadLetterRoutingKey("dlx")
+                .durable("chatQueue.chat-service")
                 .build();
     }
 
     @Bean
-    public DirectExchange chatExchange() {
-        return new DirectExchange("chatExchange");
-    }
-
-    @Bean
-    public Binding binding(Queue chatQueue, DirectExchange chatExchange) {
-        return BindingBuilder.bind(chatQueue).to(chatExchange).with("G8wMk8fKtQ");
+    public Binding bindChatServiceQueue(Queue chatServiceQueue, FanoutExchange chatFanoutExchange) {
+        return BindingBuilder.bind(chatServiceQueue).to(chatFanoutExchange);
     }
 
     @Bean

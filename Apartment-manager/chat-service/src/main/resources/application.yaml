@@ -9,7 +9,7 @@ spring:
     config:
       fail-fast: true
 
-  data:
+  data: #khoaluantotnghiep2025
     mongodb:
-      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/apartmnetDB?retryWrites=true&w=majority
+      uri: mongodb+srv://quocduy6114:khoaluantotnghiep2025@apartmnetmanager.cdrrr.mongodb.net/?retryWrites=true&w=majority&appName=ApartmnetManager
       database: chat_service

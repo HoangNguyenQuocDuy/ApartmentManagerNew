@@ -7,6 +7,20 @@ spring:
 
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://localhost:3000"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
       routes:
         - id: room-route
           uri: lb://room-service
@@ -21,6 +35,55 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
+
+        - id: access-route
+          uri: lb://access-service
+          predicates:
+            - Path=/access/**
+          filters:
+            - StripPrefix=1
+
+        - id: document-route
+          uri: lb://document-service
+          predicates:
+            - Path=/document/**
+          filters:
+            - StripPrefix=1
+
+        - id: payment-route
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/**
+          filters:
+            - StripPrefix=1
+
+        - id: incident-route
+          uri: lb://incident-service
+          predicates:
+            - Path=/incident/**
+          filters:
+            - StripPrefix=1
+
+        - id: notification-route
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/**
+          filters:
+            - StripPrefix=1
+
+        - id: chat-route
+          uri: lb://chat-service
+          predicates:
+            - Path=/chat/**
+          filters:
+            - StripPrefix=1
+
+        - id: visit-route
+          uri: lb://visitor-service
+          predicates:
+            - Path=/visit/**
+          filters:
+            - StripPrefix=1
   main:
     web-application-type: reactive
 
@@ -33,18 +96,27 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*" #public all API
-
+        include: "*"  # expose tất cả actuator endpoint
   endpoint:
+    gateway:
+      enabled: true  # <- quan trọng trong 1 số version
     health:
-      show-components: always
+      show-details: always
+
+secret:
+  key: mySecretKey
 
 publicApi:
   GET: > 
     /api/public/**, 
     /swagger-ui/**, 
-    /v3/api-docs/**, 
-    /api/rooms/list
+    /v3/api-docs/**,
+    /api/rooms/list,
+    /actuator/**
+#    /ws/info,
+#    /ws/**,
+#    /ws
+
   POST: >
     /api/auth/login, 
     /api/auth/forgotPassword, 

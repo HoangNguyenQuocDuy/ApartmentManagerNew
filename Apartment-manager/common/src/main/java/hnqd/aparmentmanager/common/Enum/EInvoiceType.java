@@ -3,7 +3,7 @@ package hnqd.aparmentmanager.common.Enum;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 
 public enum EInvoiceType {
-    RENT(0, "Rent"),
+    ROOM(0, "Room"),
     UTILITY(1, "Utility"),
     MAINTENANCE(2, "Maintain"),
     ELECTRIC(3, "Electric"),

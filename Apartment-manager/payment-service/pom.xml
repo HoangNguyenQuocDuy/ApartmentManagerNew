@@ -29,6 +29,7 @@
     <properties>
         <java.version>21</java.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <rsql-jpa-spring-boot-starter.verison>6.0.6</rsql-jpa-spring-boot-starter.verison>
     </properties>
     <dependencies>
         <dependency>
@@ -87,6 +88,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.perplexhub</groupId>
+            <artifactId>rsql-jpa-spring-boot-starter</artifactId>
+            <version>${rsql-jpa-spring-boot-starter.verison}</version>
         </dependency>
     </dependencies>
 

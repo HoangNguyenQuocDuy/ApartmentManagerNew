@@ -51,4 +51,39 @@ public class ContractTermController {
             );
         }
     }
+
+    @GetMapping("/{contractTermId}")
+    public ResponseEntity<?> getContractTermById(@PathVariable("contractTermId") Integer contractTermId) {
+        try {
+
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Get contract term successfully!",
+                            contractTermService.getContractTermById(contractTermId)
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Get contract term paging failed!", e.getMessage())
+            );
+        }
+    }
+
+    @PatchMapping("/{contractTermId}")
+    public ResponseEntity<?> updateContractTermById(
+            @PathVariable("contractTermId") Integer contractTermId,
+            @RequestBody String status
+    ) {
+        try {
+
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(
+                    new ResponseObject("OK", "Update contract term successfully!",
+                            contractTermService.updateContractTermById(contractTermId, status)
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ResponseObject("FAILED", "Update contract term paging failed!", e.getMessage())
+            );
+        }
+    }
 }

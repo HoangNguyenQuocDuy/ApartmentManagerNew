@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -110,24 +111,24 @@ public class VNPayConfig {
         return hmacSHA512(vnp_hashsecret, sb.toString());
     }
 
-    public static String hmacSHA512(String key, String data) {
-        Mac sha512Hmac;
-        String result;
-        try {
-            final byte[] byteKey = key.getBytes(StandardCharsets.US_ASCII);
-            sha512Hmac = Mac.getInstance("HmacSHA512");
-            SecretKeySpec keySpec = new SecretKeySpec(byteKey, "HmacSHA512");
-            sha512Hmac.init(keySpec);
-            byte[] macData = sha512Hmac.doFinal(data.getBytes(StandardCharsets.US_ASCII));
-            result = Hex.encodeHexString(macData);
-            return result;
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new RuntimeException(e);
-        } finally {
-            // Put any cleanup here
-            System.out.println("Done");
-        }
-    }
+//    public static String hmacSHA512(String key, String data) {
+//        Mac sha512Hmac;
+//        String result;
+//        try {
+//            final byte[] byteKey = key.getBytes(StandardCharsets.UTF_8);
+//            sha512Hmac = Mac.getInstance("HmacSHA512");
+//            SecretKeySpec keySpec = new SecretKeySpec(byteKey, "HmacSHA512");
+//            sha512Hmac.init(keySpec);
+//            byte[] macData = sha512Hmac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+//            result = Hex.encodeHexString(macData);
+//            return result;
+//        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            // Put any cleanup here
+//            System.out.println("Done");
+//        }
+//    }
 
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
@@ -150,6 +151,47 @@ public class VNPayConfig {
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
         }
         return sb.toString();
+    }
+
+    public static String hmacSHA512(String key, String data) {
+        try {
+            Mac sha512Hmac = Mac.getInstance("HmacSHA512");
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(StandardCharsets.US_ASCII), "HmacSHA512");
+            sha512Hmac.init(keySpec);
+            byte[] macData = sha512Hmac.doFinal(data.getBytes(StandardCharsets.US_ASCII));
+            return Hex.encodeHexString(macData);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String buildVnpayUrl(String baseUrl, Map<String, String> params, String secretKey) {
+        try {
+            // 1. Sort param A-Z
+            SortedMap<String, String> sortedParams = new TreeMap<>(params);
+
+            // 2. Build data for sign
+            StringBuilder signData = new StringBuilder();
+            StringBuilder urlData = new StringBuilder();
+
+            for (Map.Entry<String, String> entry : sortedParams.entrySet()) {
+                if (signData.length() > 0) {
+                    signData.append('&');
+                    urlData.append('&');
+                }
+                signData.append(entry.getKey()).append('=').append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString()));
+                urlData.append(entry.getKey()).append('=').append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString()));
+            }
+
+            // 3. Tính chữ ký
+            String secureHash = hmacSHA512(secretKey, signData.toString());
+
+            // 4. Build full URL
+            return baseUrl + "?" + urlData.toString() + "&vnp_SecureHash=" + secureHash;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error building VNPAY URL", e);
+        }
     }
 
 }

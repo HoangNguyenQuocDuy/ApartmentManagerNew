@@ -23,7 +23,7 @@ public class VisitRequestController {
     @PostMapping("/")
     public ResponseEntity<ResponseObject> createVisitRequest(@RequestBody VisitRequestDto visitRequestDto) {
         try {
-            VisitRequest visitRequest = visitRequestService.createVisitRequest(visitRequestDto).join();
+            VisitRequest visitRequest = visitRequestService.createVisitRequest(visitRequestDto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     new ResponseObject("OK", "Create visit request successful!", visitRequest)
@@ -57,12 +57,12 @@ public class VisitRequestController {
 
     @GetMapping("/")
     public ResponseEntity<ResponseObject> getVisitRequests(
-            @RequestBody Map<String, String> paramGet
+            @RequestParam Map<String, String> paramGet
     ) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("OK", "Get visit request successful!",
-                            visitRequestService.getVisitRequests(paramGet)
+                            visitRequestService.getVisitRequestRes(paramGet)
                     )
             );
         } catch (Exception e) {

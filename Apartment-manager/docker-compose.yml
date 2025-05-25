@@ -90,6 +90,19 @@ services:
     networks:
       - apartment_network
 
+  # RabbitMQ Service
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - apartment_network
+
 volumes:
   room_service_postgres_data:
   auth_service_postgres_data:

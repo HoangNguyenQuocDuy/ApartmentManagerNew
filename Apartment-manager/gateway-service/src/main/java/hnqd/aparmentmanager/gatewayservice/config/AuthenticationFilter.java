@@ -39,11 +39,11 @@ public class AuthenticationFilter implements GlobalFilter {
                 );
             }
 
-            String userId = jwtTokenProvider.getUserIdFromToken(token);
+            Integer userId = jwtTokenProvider.getUserIdFromToken(token);
 
             exchange = exchange.mutate().request(
                     exchange.getRequest().mutate()
-                            .header("X-User-Id", userId)
+                            .header("X-User-Id", userId.toString())
                             .header("Authorization", "Bearer " + token)
                             .build()
                     ).build();

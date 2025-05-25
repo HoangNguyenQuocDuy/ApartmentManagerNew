@@ -1,14 +1,17 @@
 package hnqd.aparmentmanager.authservice.service.impl;
 
+import hnqd.aparmentmanager.authservice.client.IChatRoomService;
 import hnqd.aparmentmanager.authservice.dto.request.UserRequest;
 import hnqd.aparmentmanager.authservice.dto.response.UserResponse;
 import hnqd.aparmentmanager.authservice.entity.User;
 import hnqd.aparmentmanager.authservice.repository.IUserRepo;
-import hnqd.aparmentmanager.authservice.service.IOtpService;
 import hnqd.aparmentmanager.authservice.service.IUserService;
 import hnqd.aparmentmanager.common.Enum.EEmailType;
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.common.utils.UploadImage;
+import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -18,8 +21,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,6 +44,7 @@ public class UserServiceImpl implements IUserService {
     private final RabbitTemplate rabbitTemplate;
     private final ModelMapper modelMapper;
     private final UploadImage uploadImage;
+    private final IChatRoomService chatRoomService;
 
     @Override
     public User getUserByUsername(String username) {
@@ -48,11 +54,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResponse createUser(UserRequest userReq) {
         if (userRepo.existsByUsername(userReq.getUsername())) {
             throw new CommonException.DuplicationError("User with username has exists");
         }
-        if (userRepo.existsByEmail(userReq.getEmail())) {
+        if (userRepo.existsByEmailAndStatus(userReq.getEmail(), "Active")) {
+            throw new CommonException.DuplicationError("User with email has exists");
+        }
+        if (userRepo.existsByEmailAndStatus(userReq.getEmail(), "New")) {
             throw new CommonException.DuplicationError("User with email has exists");
         }
 
@@ -117,6 +127,7 @@ public class UserServiceImpl implements IUserService {
         return new PageImpl<>(userResponses, pageable, userFindPage.getTotalElements());
     }
 
+    @Transactional
     @Override
     public UserResponse updateUser(Integer userId, MultipartFile file, Map<String, String> params) throws IOException {
         String fN = params.getOrDefault("firstname", "");
@@ -127,27 +138,27 @@ public class UserServiceImpl implements IUserService {
 
         UserRequest userReq = UserRequest.builder()
                 .file(file)
-                .lockerId(Integer.valueOf(params.getOrDefault("lockerId", "0")))
                 .password(params.get("password"))
-                .roomId(Integer.valueOf(params.getOrDefault("roomId", "0")))
+//                .roomId(Integer.valueOf(params.getOrDefault("roomId", "0")))
                 .build();
 
-        if (!Objects.equals(fN, "")) {
+        if (!fN.equals("")) {
             userReq.setFirstname(fN);
         }
-        if (!Objects.equals(lN, "")) {
+        if (!lN.equals("")) {
             userReq.setLastname(lN);
         }
-        if (!Objects.equals(phone, "")) {
+        if (!phone.equals("")) {
             userReq.setPhone(phone);
         }
-        if (!Objects.equals(status, "")) {
+        if (!status.equals("")) {
             userReq.setStatus(status);
         }
 
         User storedUser = userRepo.findById(userId).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with ID: " + userId)
         );
+        String userStoredStatus = storedUser.getStatus();
 
         if (userReq.getPassword() != null && !userReq.getPassword().isEmpty()) {
             String storedPassword = storedUser.getPassword();
@@ -175,7 +186,21 @@ public class UserServiceImpl implements IUserService {
         if (userReq.getStatus() != null && !userReq.getStatus().isEmpty()) {
             storedUser.setStatus(userReq.getStatus());
         }
+        if (!fN.equals("")) {
+            storedUser.setFirstname(fN);
+        }
+        if (!lN.equals("")) {
+            storedUser.setLastname(lN);
+        }
+        if (!phone.equals("")) {
+            storedUser.setPhone(phone);
+        }
         User user = userRepo.save(storedUser);
+
+        if (userStoredStatus.equals("New")) {
+            chatRoomService.createOrGetChatRoomWithAdmin(userId);
+            chatRoomService.createOrGetChatRoomWithCommonGroup(userId);
+        }
 
         return modelMapper.map(user, UserResponse.class);
     }
@@ -200,21 +225,37 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void forgotPassword(String email) {
-//        User user = userRepo.findByEmail(email).orElseThrow(
-//                () -> new CommonException.NotFoundException("User not found with email: " + email)
-//        );
-//
-//        if (user == null) {
-//            throw new RuntimeException("User with Email: " + email + " not found!");
-//        }
-//        String verificationCode = generateVerificationCode();
-//        user.setResetPasswordCode(verificationCode);
-//        userRepo.save(user);
+        User user = userRepo.findByEmail(email).orElseThrow(
+                () -> new CommonException.NotFoundException("User not found with email: " + email)
+        );
+
+        if (user == null) {
+            throw new RuntimeException("User with Email: " + email + " not found!");
+        }
+        String verificationCode = generateVerificationCode();
+        user.setResetPasswordCode(verificationCode);
+        userRepo.save(user);
 //        emailSender.sendEmail(
 //                email,
 //                "YOUR VERIFICATION CODE FROM QD APARTMENT",
 //                "Your verification code is: " + verificationCode
 //        );
+
+        Map<String, String> otpMessage = new HashMap<>();
+        otpMessage.put("otp", verificationCode);
+        otpMessage.put("email", user.getEmail());
+        otpMessage.put("username", user.getUsername());
+        otpMessage.put("mailType", EEmailType.RESET_PASSWORD.getName());
+        otpMessage.put("subject", "RESET PASSWORD REQUEST CODE FROM QUOC DUY APARTMENT");
+        rabbitTemplate.convertAndSend(
+                "notificationExchange",
+                "rSc7D1FNUS",
+                otpMessage,
+                message -> {
+                    message.getMessageProperties().setCorrelationId(UUID.randomUUID().toString());
+                    return message;
+                }
+        );
     }
 
     @Override
@@ -233,6 +274,22 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetPasswordCode(null);
         userRepo.save(user);
+    }
+
+    @Override
+    public RestResponse<ListResponse<UserResponse>> getListUser(int page, int size,
+                                                                String sort, String filter,
+                                                                String search, boolean all) {
+        Specification<User> sortable = RSQLJPASupport.toSort(sort);
+        Specification<User> filterable = RSQLJPASupport.toSpecification(filter);
+
+        Pageable pageable = all ? Pageable.unpaged() : PageRequest.of(page, size);
+
+        Page<User> resultPage = userRepo.findAll(sortable.and(filterable), pageable);
+
+        Page<UserResponse> responsePage = resultPage.map(user -> modelMapper.map(user, UserResponse.class));
+
+        return RestResponse.ok(ListResponse.of(responsePage));
     }
 
     private String generateRandomString(int length) {

@@ -16,10 +16,14 @@ public class SecurityConfig {
 //                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 //                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/rooms/list").permitAll();
+                    authorize.requestMatchers(
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/api/rooms/**"
+                    ).permitAll();
                     authorize.anyRequest().authenticated();
                 })
-//                .authenticationProvider()
                 .addFilterBefore(authRequestFilter(), UsernamePasswordAuthenticationFilter.class)
         ;
         return http.build();

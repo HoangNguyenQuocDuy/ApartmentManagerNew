@@ -3,6 +3,8 @@ package hnqd.aparmentmanager.authservice.service;
 import hnqd.aparmentmanager.authservice.dto.request.UserRequest;
 import hnqd.aparmentmanager.authservice.dto.response.UserResponse;
 import hnqd.aparmentmanager.authservice.entity.User;
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,4 +29,7 @@ public interface IUserService {
 
     void resetPassword(String email, String verificationCode, String newPassword);
 
+    RestResponse<ListResponse<UserResponse>> getListUser(int page, int size,
+                                                         String sort, String filter,
+                                                         String search, boolean all);
 }

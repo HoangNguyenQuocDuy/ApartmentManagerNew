@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/visit_securitys")
+@RequestMapping("/api/visit_securities")
 public class SecurityLogController {
 
     private final ISecurityLogService securityLogService;
