@@ -1,11 +1,14 @@
 package hnqd.aparmentmanager.accessservice.entity;
 
 import hnqd.aparmentmanager.accessservice.converter.CardStatusConverter;
-import hnqd.aparmentmanager.common.Enum.ECardStatus;
-import hnqd.aparmentmanager.common.entity.BaseEntity;
+import hnqd.aparmentmanager.common.enums.ECardStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,8 +16,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParkingRight extends BaseEntity {
+public class ParkingRight {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Basic
     @Column(name = "typeOfVehicle")
     private String typeOfVehicle;
@@ -27,5 +33,10 @@ public class ParkingRight extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "relativeId", referencedColumnName = "id", nullable = false)
     private Relative relative;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }

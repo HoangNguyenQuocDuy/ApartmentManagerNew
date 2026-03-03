@@ -1,8 +1,8 @@
 package hnqd.aparmentmanager.paymentservice.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EInvoiceType;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.common.serialize.EnumSerialize;
 import hnqd.aparmentmanager.common.serialize.LocalDateTimeSerialize;
 import hnqd.aparmentmanager.paymentservice.converter.InvoiceTypeConverter;

@@ -1,8 +1,7 @@
 package hnqd.aparmentmanager.documentservice.service.impl;
 
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.EInvoiceType;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.common.dto.request.InvoiceReqDto;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.documentservice.client.IPaymentServiceClient;
@@ -13,13 +12,11 @@ import hnqd.aparmentmanager.documentservice.repository.IContractRepo;
 import hnqd.aparmentmanager.documentservice.repository.IContractTermRepo;
 import hnqd.aparmentmanager.documentservice.service.IContractTermService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 

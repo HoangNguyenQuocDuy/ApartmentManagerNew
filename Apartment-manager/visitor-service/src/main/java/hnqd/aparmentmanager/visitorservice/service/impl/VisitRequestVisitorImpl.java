@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.service.impl;
 
-import hnqd.aparmentmanager.common.Enum.EVisitStatus;
+import hnqd.aparmentmanager.common.enums.EVisitStatus;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.visitorservice.dto.response.VisitRequestVisitorRes;
@@ -12,12 +12,12 @@ import hnqd.aparmentmanager.visitorservice.service.IVisitRequestVisitorService;
 import hnqd.aparmentmanager.visitorservice.specification.VisitRequestVisitorSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -73,7 +73,14 @@ public class VisitRequestVisitorImpl implements IVisitRequestVisitorService {
                 .map(this::mapToRes)
                 .toList();
 
-        return RestResponse.ok(ListResponse.of(result));
+        Page<VisitRequestVisitorRes> mappedPage = new PageImpl<>(
+                result,
+                pageable,
+                pageResult.getTotalElements()
+        );
+
+        // Trả về kết quả phân trang đúng
+        return RestResponse.ok(ListResponse.of(mappedPage));
     }
 
     private VisitRequestVisitorRes mapToRes(VisitRequestVisitor entity) {

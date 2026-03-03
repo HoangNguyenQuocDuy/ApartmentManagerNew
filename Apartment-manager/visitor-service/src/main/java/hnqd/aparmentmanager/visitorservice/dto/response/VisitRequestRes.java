@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.dto.response;
 
-import hnqd.aparmentmanager.common.Enum.EVisitStatus;
+import hnqd.aparmentmanager.common.enums.EVisitStatus;
 import hnqd.aparmentmanager.visitorservice.entity.SecurityLog;
 import hnqd.aparmentmanager.visitorservice.entity.Visitor;
 import lombok.Getter;

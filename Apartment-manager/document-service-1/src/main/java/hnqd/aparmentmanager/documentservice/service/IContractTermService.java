@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.service;
 
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.documentservice.dto.ContractTermDto;
 import hnqd.aparmentmanager.documentservice.entity.ContractTerm;
 import org.springframework.data.domain.Page;

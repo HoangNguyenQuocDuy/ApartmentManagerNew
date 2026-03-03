@@ -1,0 +1,27 @@
+package hnqd.aparmentmanager.roomservice.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+public class Room {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    private Integer id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+    @Basic
+    @Column(name = "status")
+    private String status;
+    @Basic
+    @Column(name = "image")
+    private String image;
+    @ManyToOne
+    @JoinColumn(name = "roomTypeId", referencedColumnName = "id", nullable = false)
+    private RoomType roomType;
+}

@@ -1,6 +1,5 @@
 package hnqd.aparmentmanager.paymentservice.repository.impl;
 
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
 import hnqd.aparmentmanager.paymentservice.entity.Invoice;
 import hnqd.aparmentmanager.paymentservice.repository.IStatisticRepo;
 import jakarta.persistence.EntityManager;

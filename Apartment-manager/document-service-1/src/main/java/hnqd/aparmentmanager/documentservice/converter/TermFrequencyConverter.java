@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.ETermFrequency;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

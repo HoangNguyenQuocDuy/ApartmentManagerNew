@@ -14,4 +14,8 @@ spring:
         native:
           search-locations: classpath:/shared
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

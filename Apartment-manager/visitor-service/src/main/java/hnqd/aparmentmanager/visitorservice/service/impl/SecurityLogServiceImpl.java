@@ -1,7 +1,7 @@
 package hnqd.aparmentmanager.visitorservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hnqd.aparmentmanager.common.Enum.ESecurityType;
+import hnqd.aparmentmanager.common.enums.ESecurityType;
 import hnqd.aparmentmanager.common.dto.response.UserResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.visitorservice.client.IUserServiceClient;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class SecurityLogServiceImpl implements ISecurityLogService {

@@ -6,13 +6,14 @@ import hnqd.aparmentmanager.authservice.dto.response.UserResponse;
 import hnqd.aparmentmanager.authservice.entity.User;
 import hnqd.aparmentmanager.authservice.repository.IUserRepo;
 import hnqd.aparmentmanager.authservice.service.IUserService;
-import hnqd.aparmentmanager.common.Enum.EEmailType;
+import hnqd.aparmentmanager.common.enums.EEmailType;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.common.utils.UploadImage;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -48,6 +50,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User getUserByUsername(String username) {
+        log.info("#UserServiceImpl.getUserByUsername - Start - username: {}", username);
         return userRepo.findByUsername(username).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with username: " + username)
         );
@@ -56,13 +59,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserResponse createUser(UserRequest userReq) {
+        log.info("#UserServiceImpl.createUser - Start - username: {}, firstname: {}, lastname: {}, phone: {}," +
+                "email: {}, status: {}", userReq.getUsername(), userReq.getFirstname(), userReq.getLastname(),
+                userReq.getPhone(), userReq.getEmail(), userReq.getStatus());
+
         if (userRepo.existsByUsername(userReq.getUsername())) {
+            log.info("#UserServiceImpl.getUserByUsername - User with username has exists");
             throw new CommonException.DuplicationError("User with username has exists");
         }
         if (userRepo.existsByEmailAndStatus(userReq.getEmail(), "Active")) {
+            log.info("#UserServiceImpl.getUserByUsername - User with email has exists");
             throw new CommonException.DuplicationError("User with email has exists");
         }
         if (userRepo.existsByEmailAndStatus(userReq.getEmail(), "New")) {
+            log.info("#UserServiceImpl.getUserByUsername - User with email has exists");
             throw new CommonException.DuplicationError("User with email has exists");
         }
 
@@ -85,7 +95,7 @@ public class UserServiceImpl implements IUserService {
         otpMessage.put("username", user.getUsername());
         otpMessage.put("mailType", EEmailType.WELCOME.name());
         otpMessage.put("subject", "WELCOME TO QUOC DUY APARTMENT");
-        log.info("Start send to notification's queue ->>>>>>");
+        log.info("#UserServiceImpl.getUserByUsername - Start send to notification's queue ->>>>>>");
         rabbitTemplate.convertAndSend(
                 "notificationExchange",
                 "rSc7D1FNUS",
@@ -105,6 +115,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Page<UserResponse> getUsers(Map<String, String> params) {
+        log.info("#UserServiceImpl.getUsers - Start");
+
         int page = Integer.parseInt(params.get("page"));
         int size = Integer.parseInt(params.get("size"));
         Pageable pageable = PageRequest.of(page, size);
@@ -130,11 +142,12 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @Override
     public UserResponse updateUser(Integer userId, MultipartFile file, Map<String, String> params) throws IOException {
+        log.info("#UserServiceImpl.updateUser - Start");
         String fN = params.getOrDefault("firstname", "");
         String lN = params.getOrDefault("lastname", "");
         String phone = params.getOrDefault("phone", "");
-        String email = params.getOrDefault("email", "");
         String status = params.getOrDefault("status", "");
+        log.info("#UserServiceImpl.updateUser - firstname: {}, lastname: {}, phone: {}, status: {}", fN, lN, phone, status);
 
         UserRequest userReq = UserRequest.builder()
                 .file(file)
@@ -176,6 +189,7 @@ public class UserServiceImpl implements IUserService {
             if (!passwordEncoder.matches(storedPassword, userReq.getPassword())) {
                 storedUser.setPassword(passwordEncoder.encode(userReq.getPassword()));
             } else {
+                log.info("#UserServiceImpl.updateUser - Duplicate password!");
                 throw new CommonException.DuplicatePasswordException("Duplicate password!");
             }
         }
@@ -195,7 +209,9 @@ public class UserServiceImpl implements IUserService {
         if (!phone.equals("")) {
             storedUser.setPhone(phone);
         }
+        log.info("#UserServiceImpl.updateUser - Start update user");
         User user = userRepo.save(storedUser);
+        log.info("#UserServiceImpl.updateUser - Update user successfully!");
 
         if (userStoredStatus.equals("New")) {
             chatRoomService.createOrGetChatRoomWithAdmin(userId);
@@ -207,6 +223,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserResponse getUserById(int id) throws CommonException.NotFoundException {
+        log.info("#UserServiceImpl.getUserById - Start - id: {}", id);
         User user = userRepo.findById(id).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with ID: " + id)
         );
@@ -215,6 +232,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void deleteUserById(int id) {
+        log.info("#UserServiceImpl.deleteUserById - Start - id: {}", id);
         User storedUser = userRepo.findById(id).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with ID: " + id)
         );
@@ -225,16 +243,21 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void forgotPassword(String email) {
+        log.info("#UserServiceImpl.forgotPassword - Start - email: {}", email);
         User user = userRepo.findByEmail(email).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with email: " + email)
         );
 
         if (user == null) {
-            throw new RuntimeException("User with Email: " + email + " not found!");
+            log.info("#UserServiceImpl.forgotPassword - User with Email: {} not found!", email);
+            throw new CommonException.NotFoundException("User with Email: " + email + " not found!");
         }
         String verificationCode = generateVerificationCode();
         user.setResetPasswordCode(verificationCode);
+        log.info("#UserServiceImpl.forgotPassword - Start save user");
         userRepo.save(user);
+        log.info("#UserServiceImpl.forgotPassword - save user successfully!");
+
 //        emailSender.sendEmail(
 //                email,
 //                "YOUR VERIFICATION CODE FROM QD APARTMENT",
@@ -247,6 +270,7 @@ public class UserServiceImpl implements IUserService {
         otpMessage.put("username", user.getUsername());
         otpMessage.put("mailType", EEmailType.RESET_PASSWORD.getName());
         otpMessage.put("subject", "RESET PASSWORD REQUEST CODE FROM QUOC DUY APARTMENT");
+        log.info("#UserServiceImpl.forgotPassword - Start sending notification to user");
         rabbitTemplate.convertAndSend(
                 "notificationExchange",
                 "rSc7D1FNUS",
@@ -260,16 +284,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void resetPassword(String email, String verificationCode, String newPassword) {
+        log.info("#UserServiceImpl.resetPassword - Start - verificationCode: {}", verificationCode);
         User user = userRepo.findByEmail(email).orElseThrow(
                 () -> new CommonException.NotFoundException("User not found with email: " + email)
         );
 
-        if (user == null) {
-            throw new RuntimeException("User with Email: " + email + " not found!");
-        }
-
         if (!user.getResetPasswordCode().equals(verificationCode)) {
-            throw new IllegalArgumentException("Invalid verification code");
+            throw new CommonException.NotFoundException("Invalid verification code");
         }
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetPasswordCode(null);
@@ -280,6 +301,8 @@ public class UserServiceImpl implements IUserService {
     public RestResponse<ListResponse<UserResponse>> getListUser(int page, int size,
                                                                 String sort, String filter,
                                                                 String search, boolean all) {
+        log.info("#UserServiceImpl.getListUser - Start - page: {}, size: {}, sort: {}, filter: {}, search: {}",
+                page, size, sort, filter, search);
         Specification<User> sortable = RSQLJPASupport.toSort(sort);
         Specification<User> filterable = RSQLJPASupport.toSpecification(filter);
 
@@ -293,19 +316,25 @@ public class UserServiceImpl implements IUserService {
     }
 
     private String generateRandomString(int length) {
+        log.info("#UserServiceImpl.generateRandomString - Start - length: {}", length);
         StringBuilder randomString = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
             int randomIndex = random.nextInt(CHARACTERS.length());
             randomString.append(CHARACTERS.charAt(randomIndex));
         }
+        log.info("#UserServiceImpl.generateRandomString - randomString: {}", randomString);
 
         return randomString.toString();
     }
 
     private String generateVerificationCode() {
+        log.info("#UserServiceImpl.generateVerificationCode - Start");
+
         Random random = new Random();
         int code = random.nextInt(900000) + 100000;
+
+        log.info("#UserServiceImpl.generateVerificationCode - code: {}", code);
         return String.valueOf(code);
     }
 }

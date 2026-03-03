@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

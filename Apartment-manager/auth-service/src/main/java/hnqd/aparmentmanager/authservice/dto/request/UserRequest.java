@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.authservice.dto.request;
 
-import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +13,11 @@ public class UserRequest {
     private String username;
     private String firstname;
     private String lastname;
-    @Nullable
+    @NotBlank(message = "password can not be blank or empty")
     private String password;
     private String phone;
     private String email;
     private String status;
-    @Nullable
+    @NotBlank(message = "avatar can not be blank or empty")
     private MultipartFile file;
 }

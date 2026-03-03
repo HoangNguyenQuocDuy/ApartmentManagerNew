@@ -1,115 +1,223 @@
-version: '3.8'
+#version: '3.8'
 services:
-  # Room Service PostgreSQL
-  room-service-postgres:
-    image: postgres:12-alpine
-    container_name: room_service_container
+
+  config-service:
+    build:
+      context: .
+      dockerfile: ./config-service/Dockerfile
+    container_name: config_service
     ports:
-      - "5434:5432"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: room_service
-    volumes:
-      - room_service_postgres_data:/var/lib/postgresql/data
+      - "9998:9998"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:9998/actuator/health || 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     networks:
       - apartment_network
 
-  # Auth Service PostgreSQL
-  auth-service-postgres:
-    image: postgres:12-alpine
-    container_name: auth_service_container
+  discovery-service:
+    build:
+      context: .
+      dockerfile: ./discovery-service/Dockerfile
+    container_name: discovery_service
     ports:
-      - "5435:5434"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: user_service
-    volumes:
-      - auth_service_postgres_data:/var/lib/postgresql/data
+      - "9999:9999"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:9999/actuator/health || 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      config-service:
+        condition: service_healthy
     networks:
       - apartment_network
 
-  # Document Service PostgreSQL
-  document-service-postgres:
-    image: postgres:12-alpine
-    container_name: document_service_container
+  gateway-service:
+    build:
+      context: .
+      dockerfile: ./gateway-service/Dockerfile
+    container_name: gateway_service
     ports:
-      - "5436:5434"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: document_service
-    volumes:
-      - document_service_postgres_data:/var/lib/postgresql/data
+      - "8080:8080"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
     networks:
       - apartment_network
 
-  # Payment Service PostgreSQL
-  payment-service-postgres:
-    image: postgres:12-alpine
-    container_name: payment_service_container
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./auth-service/Dockerfile
+    container_name: auth_service
     ports:
-      - "5437:5434"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: payment_service
-    volumes:
-      - payment_service_postgres_data:/var/lib/postgresql/data
+      - "8888:8888"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
     networks:
       - apartment_network
 
-#   Visitor Service PostgreSQL
-  visitor-service-postgres:
-    image: postgres:12-alpine
-    container_name: visitor_service_container
+  access-service:
+    build:
+      context: .
+      dockerfile: ./access-service/Dockerfile
+    container_name: access_service
     ports:
-      - "5438:5434"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: visitor_service
-    volumes:
-      - visitor_service_postgres_data:/var/lib/postgresql/data
+      - "9012:9012"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
     networks:
       - apartment_network
 
-  #   Access Service PostgreSQL
-  access-service-postgres:
-    image: postgres:12-alpine
-    container_name: access_service_container
+  payment-service:
+    build:
+      context: .
+      dockerfile: ./payment-service/Dockerfile
+    container_name: payment_service
     ports:
-      - "5439:5434"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: access_service
-    volumes:
-      - access_service_postgres_data:/var/lib/postgresql/data
+      - "9010:9010"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
     networks:
       - apartment_network
 
-  # RabbitMQ Service
+  room-service:
+    build:
+      context: .
+      dockerfile: ./room-service/Dockerfile
+    container_name: room_service
+    ports:
+      - "9002:9002"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
+    networks:
+      - apartment_network
+
+  document-service:
+    build:
+      context: .
+      dockerfile: ./document-service-1/Dockerfile
+    container_name: document_service
+    ports:
+      - "9003:9003"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
+    networks:
+      - apartment_network
+
+  visitor-service:
+    build:
+      context: .
+      dockerfile: ./visitor-service/Dockerfile
+    container_name: visitor_service
+    ports:
+      - "9015:9015"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
+    networks:
+      - apartment_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_container
+    networks:
+      - apartment_network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq_container
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
     networks:
       - apartment_network
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - apartment_network
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
-  room_service_postgres_data:
-  auth_service_postgres_data:
-  document_service_postgres_data:
-  payment_service_postgres_data:
-  visitor_service_postgres_data:
-  access_service_postgres_data:
+  postgres_data:
 
 networks:
   apartment_network:

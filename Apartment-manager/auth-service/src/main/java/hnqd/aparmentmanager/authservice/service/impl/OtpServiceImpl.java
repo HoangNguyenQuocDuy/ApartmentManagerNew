@@ -18,9 +18,9 @@ public class OtpServiceImpl implements IOtpService {
 
     @Override
     public String generateOtp(String username) {
-        logger.info("Start generateOtp");
+        logger.info("#OtpServiceImpl.generateOtp - Start generateOtp");
         String otp = String.valueOf(new Random().nextInt(900000) + 100000); // otp include 6 characters
-        logger.info("OTP_USERNAME: {}", otp);
+        logger.info("#OtpServiceImpl.generateOtp - OTP_USERNAME: {}", otp);
         stringRedisTemplate.opsForValue().set("OTP_" + username, otp, 5, TimeUnit.MINUTES);
 
         return otp;
@@ -28,7 +28,11 @@ public class OtpServiceImpl implements IOtpService {
 
     @Override
     public boolean verifyOtp(String userId, String otp) {
+        logger.info("#OtpServiceImpl.verifyOtp - Start - userId: {}, otp: {}", userId, otp);
+
         String storedOtp = stringRedisTemplate.opsForValue().get("OTP_" + userId);
+        logger.info("#OtpServiceImpl.verifyOtp - storedOtp: {}", storedOtp);
+
         return otp.equals(storedOtp);
     }
 }

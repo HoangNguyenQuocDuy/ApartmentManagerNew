@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
+import hnqd.aparmentmanager.common.enums.EInvoiceType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

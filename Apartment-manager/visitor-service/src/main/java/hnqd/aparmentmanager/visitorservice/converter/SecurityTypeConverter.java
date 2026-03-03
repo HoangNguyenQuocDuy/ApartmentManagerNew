@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.ESecurityType;
+import hnqd.aparmentmanager.common.enums.ESecurityType;
 import jakarta.persistence.AttributeConverter;
 
 public class SecurityTypeConverter implements AttributeConverter<ESecurityType, String> {

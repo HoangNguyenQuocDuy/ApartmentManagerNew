@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.entity;
 
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.documentservice.converter.PaymentStatusConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

@@ -2,9 +2,9 @@ package hnqd.aparmentmanager.paymentservice.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hnqd.aparmentmanager.common.Enum.EEmailType;
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
-import hnqd.aparmentmanager.common.Enum.EProvider;
+import hnqd.aparmentmanager.common.enums.EEmailType;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EProvider;
 import hnqd.aparmentmanager.common.dto.request.PaymentRequest;
 import hnqd.aparmentmanager.common.dto.response.PaymentResponse;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;

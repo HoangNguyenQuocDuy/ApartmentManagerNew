@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.accessservice.dto;
 
-import hnqd.aparmentmanager.common.Enum.ERelativeType;
+import hnqd.aparmentmanager.common.enums.ERelativeType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;

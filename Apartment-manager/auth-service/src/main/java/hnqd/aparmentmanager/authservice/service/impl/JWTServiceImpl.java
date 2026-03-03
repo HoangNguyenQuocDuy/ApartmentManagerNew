@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import hnqd.aparmentmanager.authservice.entity.User;
 import hnqd.aparmentmanager.authservice.service.IJWTService;
-import hnqd.aparmentmanager.common.Enum.EKey;
+import hnqd.aparmentmanager.common.enums.EKey;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;

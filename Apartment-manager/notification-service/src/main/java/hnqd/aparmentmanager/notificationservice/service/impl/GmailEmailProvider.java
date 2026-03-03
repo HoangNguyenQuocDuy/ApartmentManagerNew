@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.notificationservice.service.impl;
 
-import hnqd.aparmentmanager.common.Enum.EEmailType;
+import hnqd.aparmentmanager.common.enums.EEmailType;
 import hnqd.aparmentmanager.notificationservice.service.IEmailProvider;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

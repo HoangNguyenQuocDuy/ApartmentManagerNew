@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.documentservice.repository;
 
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
 import hnqd.aparmentmanager.documentservice.entity.Contract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

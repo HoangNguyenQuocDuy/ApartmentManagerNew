@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5434/user_service
+    url: jdbc:postgresql://postgres:5432/user_service
     username: root
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -20,7 +20,7 @@ spring:
   # Redis Host và Port
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 
   # Redis Password (nếu có)

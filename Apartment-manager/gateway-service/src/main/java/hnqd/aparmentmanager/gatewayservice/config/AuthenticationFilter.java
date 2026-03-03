@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.gatewayservice.config;
 
-import hnqd.aparmentmanager.common.Enum.HttpMethod;
+import hnqd.aparmentmanager.common.enums.HttpMethod;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpHeaders;

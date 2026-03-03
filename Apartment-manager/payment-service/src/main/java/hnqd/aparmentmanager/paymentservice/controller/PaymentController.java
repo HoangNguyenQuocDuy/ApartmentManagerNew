@@ -1,9 +1,10 @@
 package hnqd.aparmentmanager.paymentservice.controller;
 
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.common.dto.request.PaymentRequest;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
+import hnqd.aparmentmanager.paymentservice.dto.request.PaymentUpdateDto;
 import hnqd.aparmentmanager.paymentservice.entity.Payment;
 import hnqd.aparmentmanager.paymentservice.repository.IPaymentRepo;
 import hnqd.aparmentmanager.paymentservice.service.IPayService;
@@ -62,12 +63,12 @@ public class PaymentController {
     @PatchMapping("/{paymentId}")
     public ResponseEntity<?> updatePayment(
             @PathVariable("paymentId") String paymentId,
-            @RequestBody String status
+            @RequestBody PaymentUpdateDto paymentUpdateDto
     ) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("OK", "Get payments successful!",
-                            paymentService.updatePaymentManual(paymentId, status)
+                    new ResponseObject("OK", "Update payments successful!",
+                            paymentService.updatePaymentManual(paymentId, paymentUpdateDto.getStatus().getName())
                     )
             );
         } catch (Exception e) {

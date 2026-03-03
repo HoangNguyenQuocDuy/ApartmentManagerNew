@@ -7,8 +7,8 @@ import hnqd.aparmentmanager.accessservice.entity.Relative;
 import hnqd.aparmentmanager.accessservice.repository.IRelativeRepository;
 import hnqd.aparmentmanager.accessservice.service.IRelativeService;
 import hnqd.aparmentmanager.accessservice.specification.RelativeSpecification;
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
-import hnqd.aparmentmanager.common.Enum.ERelativeType;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
+import hnqd.aparmentmanager.common.enums.ERelativeType;
 import hnqd.aparmentmanager.common.dto.response.ContractResponse;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
@@ -17,10 +17,10 @@ import hnqd.aparmentmanager.common.utils.UploadImage;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RelativeServiceImpl implements IRelativeService {
@@ -42,12 +43,17 @@ public class RelativeServiceImpl implements IRelativeService {
 
     @Override
     public RestResponse<ListResponse<Relative>> getListRelative(Map<String, String> query) {
+        log.info("#RelativeServiceImpl.getListRelative - Start");
+
         int page = Integer.parseInt(query.getOrDefault("page", "0"));
         int pageSize = Integer.parseInt(query.getOrDefault("size", "20"));
         int userId = Integer.parseInt(query.getOrDefault("userId", "0"));
         int roomId = Integer.parseInt(query.getOrDefault("roomId", "0"));
         boolean all = Boolean.parseBoolean(query.getOrDefault("all", "false"));
         String filter = query.getOrDefault("filter", null);
+
+        log.info("#RelativeServiceImpl.getListRelative - page: {}, pageSize: {}, userId: {}, roomId: {}, filter: {}, all: {}",
+                page, pageSize, userId, roomId, filter, all);
 
         List<Integer> contractIds = new ArrayList<>();
 
@@ -82,6 +88,8 @@ public class RelativeServiceImpl implements IRelativeService {
     @Override
     @Transactional
     public Relative createRelative(RelativeRequest relativeRequest) throws IOException {
+        log.info("#RelativeServiceImpl.createRelative - Start - fullName: {}, relationship: {}, idCard: {}, roomId: {}, userId: {}",
+                relativeRequest.getFullName(), relativeRequest.getRelationship().getName(), relativeRequest.getIdCard(), relativeRequest.getRoomId(), relativeRequest.getUserId());
 
         Optional<Relative> relativeFindWithIdCard = relativeRepository.findByIdCard(relativeRequest.getIdCard());
         if (relativeFindWithIdCard.isPresent()) {
@@ -101,7 +109,6 @@ public class RelativeServiceImpl implements IRelativeService {
         relative.setContractId(contractFuture.getId());
         relative.setIdCard(relativeRequest.getIdCard());
         relative.setAvatar(uploadImage.uploadToCloudinary(relativeRequest.getFile()));
-
 
         return relativeRepository.save(relative);
     }

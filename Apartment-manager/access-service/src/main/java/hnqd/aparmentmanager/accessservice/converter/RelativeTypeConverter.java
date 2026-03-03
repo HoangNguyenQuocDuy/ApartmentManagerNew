@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.accessservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.ERelativeType;
+import hnqd.aparmentmanager.common.enums.ERelativeType;
 import jakarta.persistence.AttributeConverter;
 
 public class RelativeTypeConverter implements AttributeConverter<ERelativeType, String> {

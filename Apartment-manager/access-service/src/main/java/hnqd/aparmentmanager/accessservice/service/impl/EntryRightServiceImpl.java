@@ -4,19 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hnqd.aparmentmanager.accessservice.client.IDocumentServiceClient;
 import hnqd.aparmentmanager.accessservice.dto.EntryRightRequest;
 import hnqd.aparmentmanager.accessservice.entity.EntryRight;
-import hnqd.aparmentmanager.accessservice.entity.ParkingRight;
 import hnqd.aparmentmanager.accessservice.entity.Relative;
 import hnqd.aparmentmanager.accessservice.repository.IEntryRightRepository;
 import hnqd.aparmentmanager.accessservice.repository.IRelativeRepository;
 import hnqd.aparmentmanager.accessservice.service.IEntryRightService;
 import hnqd.aparmentmanager.accessservice.specification.EntryRightSpecification;
-import hnqd.aparmentmanager.accessservice.specification.ParkingRightSpecification;
-import hnqd.aparmentmanager.common.Enum.ECardStatus;
+import hnqd.aparmentmanager.common.enums.ECardStatus;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
-import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EntryRightServiceImpl implements IEntryRightService {
@@ -38,12 +37,16 @@ public class EntryRightServiceImpl implements IEntryRightService {
 
     @Override
     public RestResponse<ListResponse<EntryRight>> getEntryRightsPaging(Map<String, String> params) {
+        log.info("#EntryRightServiceImpl.getEntryRightsPaging - Start");
+
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int pageSize = Integer.parseInt(params.getOrDefault("size", "20"));
         int userId = Integer.parseInt(params.getOrDefault("userId", "0"));
         int roomId = Integer.parseInt(params.getOrDefault("roomId", "0"));
         String cardStatus = params.getOrDefault("cardStatus", null);
         boolean all = Boolean.parseBoolean(params.getOrDefault("all", "false"));
+        log.info("#EntryRightServiceImpl.getEntryRightsPaging - page: {}, pageSize: {}, userId: {}, roomId: {}, cardStatus: {}, all: {}",
+                page, pageSize, userId, roomId, cardStatus, all);
 
         List<Integer> contractIds = new ArrayList<>();
         boolean flag = false;
@@ -77,6 +80,8 @@ public class EntryRightServiceImpl implements IEntryRightService {
 
     @Override
     public EntryRight createEntryRight(EntryRightRequest entryRightRequest) {
+        log.info("#EntryRightServiceImpl.createEntryRight - Start - relativeId: {}", entryRightRequest.getRelativeId());
+
         Relative relative = relativeRepository.findById(entryRightRequest.getRelativeId()).orElseThrow(() ->
                 new CommonException.NotFoundException("Relative with id " + entryRightRequest.getRelativeId() + " not found")
         );
@@ -90,6 +95,7 @@ public class EntryRightServiceImpl implements IEntryRightService {
 
     @Override
     public EntryRight updateEntryRight(int erId, Map<String, String> params) {
+        log.info("#EntryRightServiceImpl.updateEntryRight - Start - erId: {}", erId);
         EntryRight entryRight = entryRightRepository.findById(erId).orElseThrow(() ->
                 new CommonException.NotFoundException("EntryRight with id " + erId + " not found")
         );
@@ -105,6 +111,7 @@ public class EntryRightServiceImpl implements IEntryRightService {
 
     @Override
     public void deleteEntryRight(int erId) {
+        log.info("#EntryRightServiceImpl.deleteEntryRight - Start - erId: {}", erId);
         EntryRight entryRight = entryRightRepository.findById(erId).orElseThrow(() ->
                 new CommonException.NotFoundException("EntryRight with id " + erId + " not found")
         );

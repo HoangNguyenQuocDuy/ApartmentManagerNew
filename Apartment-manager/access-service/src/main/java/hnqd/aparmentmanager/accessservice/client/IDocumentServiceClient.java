@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.accessservice.client;
 
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
 import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -1,11 +1,10 @@
 package hnqd.aparmentmanager.documentservice.controller;
 
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
 import hnqd.aparmentmanager.common.dto.NotifyToUserDto;
 import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import hnqd.aparmentmanager.documentservice.dto.ContractDto;
-import hnqd.aparmentmanager.documentservice.dto.ContractTermDto;
 import hnqd.aparmentmanager.documentservice.entity.Contract;
 import hnqd.aparmentmanager.documentservice.service.IContractService;
 import hnqd.aparmentmanager.documentservice.service.IContractTermService;
@@ -16,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/contracts")

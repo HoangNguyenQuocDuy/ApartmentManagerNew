@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.common.dto.request;
 
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

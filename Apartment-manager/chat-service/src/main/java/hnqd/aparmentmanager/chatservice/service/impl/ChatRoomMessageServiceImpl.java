@@ -3,11 +3,10 @@ package hnqd.aparmentmanager.chatservice.service.impl;
 import hnqd.aparmentmanager.chatservice.model.ChatMessage;
 import hnqd.aparmentmanager.chatservice.repository.IChatMessageRepo;
 import hnqd.aparmentmanager.chatservice.service.IChatMessageService;
-import hnqd.aparmentmanager.common.Enum.EChatType;
+import hnqd.aparmentmanager.common.enums.EChatType;
 import hnqd.aparmentmanager.common.dto.request.ChatMessageRequestDto;
 import hnqd.aparmentmanager.common.utils.UploadImage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

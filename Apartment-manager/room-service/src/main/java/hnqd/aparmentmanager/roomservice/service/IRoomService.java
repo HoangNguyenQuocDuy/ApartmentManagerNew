@@ -1,0 +1,32 @@
+package hnqd.aparmentmanager.roomservice.service;
+
+import hnqd.aparmentmanager.common.dto.response.ListResponse;
+import hnqd.aparmentmanager.common.dto.response.RestResponse;
+import hnqd.aparmentmanager.roomservice.dto.RoomRequest;
+import hnqd.aparmentmanager.roomservice.entity.Room;
+import org.springframework.data.domain.Page;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+public interface IRoomService {
+
+    Room createRoom(RoomRequest room) throws IOException;
+
+    List<Room> getRooms(Map<String, String> params);
+
+    Room getRoomById(Integer id);
+
+    Page<Room> getRoomsPaging(Map<String, String> params);
+
+    Room updateRoom(RoomRequest roomReq, Integer roomId);
+
+    void deleteRoom(Integer id);
+
+    Page<Integer> getRoomIdsByUserId(Integer userId, int page, int size);
+
+    RestResponse<ListResponse<Room>> getListRoom(int page, int size,
+                                                         String sort, String filter,
+                                                         String search, boolean all);
+}

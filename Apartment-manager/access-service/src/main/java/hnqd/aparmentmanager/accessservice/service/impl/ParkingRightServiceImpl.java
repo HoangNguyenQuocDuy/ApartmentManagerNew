@@ -4,17 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hnqd.aparmentmanager.accessservice.client.IDocumentServiceClient;
 import hnqd.aparmentmanager.accessservice.dto.ParkingRightRequest;
 import hnqd.aparmentmanager.accessservice.entity.ParkingRight;
-import hnqd.aparmentmanager.accessservice.entity.Relative;
 import hnqd.aparmentmanager.accessservice.repository.IParkingRightRepository;
 import hnqd.aparmentmanager.accessservice.repository.IRelativeRepository;
 import hnqd.aparmentmanager.accessservice.service.IParkingRightService;
 import hnqd.aparmentmanager.accessservice.specification.ParkingRightSpecification;
-import hnqd.aparmentmanager.accessservice.specification.RelativeSpecification;
-import hnqd.aparmentmanager.common.Enum.ECardStatus;
+import hnqd.aparmentmanager.common.enums.ECardStatus;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
-import io.github.perplexhub.rsql.RSQLJPASupport;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ParkingRightServiceImpl implements IParkingRightService {
 
@@ -50,6 +49,8 @@ public class ParkingRightServiceImpl implements IParkingRightService {
 
     @Override
     public RestResponse<ListResponse<ParkingRight>> getParkingRightsPaging(Map<String, String> params) {
+        log.info("#ParkingRightServiceImpl.getParkingRightsPaging - Start");
+
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int pageSize = Integer.parseInt(params.getOrDefault("size", "20"));
         int userId = Integer.parseInt(params.getOrDefault("userId", "0"));
@@ -58,6 +59,8 @@ public class ParkingRightServiceImpl implements IParkingRightService {
         boolean all = Boolean.parseBoolean(params.getOrDefault("all", "false"));
         boolean flag = false;
         List<Integer> contractIds = new ArrayList<>();
+        log.info("#ParkingRightServiceImpl.getParkingRightsPaging - page: {}, pageSize: {}, userId: {}, roomId: {}, cardStatus: {}, all: {}",
+                page, pageSize, userId, roomId, cardStatus, all);
 
         if (userId != 0) {
             contractIds.addAll(objectMapper.convertValue(
@@ -89,6 +92,8 @@ public class ParkingRightServiceImpl implements IParkingRightService {
 
     @Override
     public ParkingRight createParkingRight(ParkingRightRequest pr) {
+        log.info("#ParkingRightServiceImpl.createParkingRight - Start - relativeId: {}, typeOfVehicle: {}, licensePlates: {}",
+                pr.getRelativeId(), pr.getTypeOfVehicle(), pr.getLicensePlates());
         Optional<ParkingRight> parkingRightFind = parkingRightRepository.findByLicensePlates(pr.getLicensePlates());
 
         if (parkingRightFind.isPresent()) {
@@ -110,6 +115,7 @@ public class ParkingRightServiceImpl implements IParkingRightService {
 
     @Override
     public ParkingRight updateParkingRight(int prId, Map<String, String> params) {
+        log.info("#ParkingRightServiceImpl.updateParkingRight - Start - prId: {}", prId);
         ParkingRight parkingRight = parkingRightRepository.findById(prId).orElseThrow(() ->
                 new CommonException.NotFoundException("Parking right with id " + prId + " not found")
         );
@@ -121,12 +127,14 @@ public class ParkingRightServiceImpl implements IParkingRightService {
 
             return parkingRightRepository.save(parkingRight);
         }
+        log.info("#ParkingRightServiceImpl.updateParkingRight - Card status (prId={}) is empty", prId);
 
         return null;
     }
 
     @Override
     public void deleteParkingRight(int prId) {
+        log.info("#ParkingRightServiceImpl.deleteParkingRight - Start - prId: {}", prId);
         ParkingRight parkingRight = parkingRightRepository.findById(prId).orElseThrow(() ->
                 new CommonException.NotFoundException("Parking right with id " + prId + " not found")
         );

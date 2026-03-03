@@ -1,8 +1,7 @@
 package hnqd.aparmentmanager.paymentservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
-import hnqd.aparmentmanager.common.dto.response.ContractResponse;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
 import hnqd.aparmentmanager.common.dto.response.RestResponse;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
@@ -13,19 +12,16 @@ import hnqd.aparmentmanager.paymentservice.entity.Payment;
 import hnqd.aparmentmanager.paymentservice.repository.IInvoiceRepo;
 import hnqd.aparmentmanager.paymentservice.repository.IPaymentRepo;
 import hnqd.aparmentmanager.paymentservice.service.IPaymentService;
-import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -84,6 +80,7 @@ public class PaymentServiceImpl implements IPaymentService {
         return new PageImpl<>(payments, pageable, total);
     }
 
+    @Transactional
     @Override
     public Payment createPaymentManual(MultipartFile file, Map<String, String> params) throws IOException {
         Invoice invoiceSave = invoiceRepo.findById(Integer.parseInt(params.get("invoiceId"))).orElseThrow(
@@ -92,7 +89,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
         Payment payment = Payment
                 .builder()
-
+                .status(EPaymentStatus.PENDING.getName())
                 .build();
         if (file != null) {
             payment.setUploadImage(uploadImage.uploadToCloudinary(file));
@@ -119,12 +116,19 @@ public class PaymentServiceImpl implements IPaymentService {
         return null;
     }
 
+    @Transactional
     @Override
     public Payment updatePaymentManual(String id, String status) {
         Payment payment = paymentRepo.findById(id).orElseThrow(
                 () -> new CommonException.NotFoundException("Payment not found!")
         );
+
+        Invoice invoiceSave = invoiceRepo.findById(payment.getInvoice().getId()).orElseThrow(
+                () -> new CommonException.NotFoundException("Invoice not found!")
+        );
         payment.setStatus(status);
+        invoiceSave.setInvoiceStatus(EPaymentStatus.safeValueOfName(status));
+        invoiceRepo.save(invoiceSave);
 
         return paymentRepo.save(payment);
     }

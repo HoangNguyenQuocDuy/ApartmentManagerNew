@@ -1,7 +1,6 @@
 package hnqd.aparmentmanager.notificationservice.listener;
 
-import com.rabbitmq.client.Channel;
-import hnqd.aparmentmanager.common.Enum.EEmailType;
+import hnqd.aparmentmanager.common.enums.EEmailType;
 import hnqd.aparmentmanager.common.dto.NotifyToUserDto;
 import hnqd.aparmentmanager.common.dto.request.ChatMessageRequestDto;
 import hnqd.aparmentmanager.common.dto.request.FireAlertRequest;
@@ -9,13 +8,10 @@ import hnqd.aparmentmanager.notificationservice.service.IEmailProvider;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service

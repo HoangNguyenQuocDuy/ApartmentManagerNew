@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.accessservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.ECardStatus;
+import hnqd.aparmentmanager.common.enums.ECardStatus;
 import jakarta.persistence.AttributeConverter;
 
 public class CardStatusConverter implements AttributeConverter<ECardStatus, String> {

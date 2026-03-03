@@ -1,8 +1,7 @@
 package hnqd.aparmentmanager.documentservice.config;
 
-import hnqd.aparmentmanager.common.Enum.EKey;
+import hnqd.aparmentmanager.common.enums.EKey;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;

@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.specification;
 
-import hnqd.aparmentmanager.common.Enum.ESecurityType;
+import hnqd.aparmentmanager.common.enums.ESecurityType;
 import hnqd.aparmentmanager.visitorservice.entity.SecurityLog;
 import hnqd.aparmentmanager.visitorservice.entity.Visitor;
 import jakarta.persistence.criteria.Join;

@@ -1,16 +1,10 @@
-FROM ubuntu:latest
-LABEL authors="quocduy"
-# Sử dụng OpenJDK 11 làm base image
-FROM openjdk:11-jdk-slim as builder
+#FROM maven:3.9.9-eclipse-temurin-21 AS builder
+#WORKDIR /app
+#COPY . .
+#RUN mvn -pl room-service -am clean package -DskipTests
 
-# Đặt thư mục làm việc
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-
-# Sao chép file JAR vào trong container
-COPY target/room-service.jar /app/room-service.jar
-
-# Cung cấp lệnh chạy ứng dụng khi container khởi động
-ENTRYPOINT ["java", "-jar", "room-service.jar"]
-
-# Expose port 9002 để có thể truy cập ứng dụng từ bên ngoài
-EXPOSE 9002
+#COPY --from=builder /app/room-service/target/*.jar app.jar
+COPY room-service/target/room-service-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]

@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.paymentservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.EPaymentMethod;
+import hnqd.aparmentmanager.common.enums.EPaymentMethod;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

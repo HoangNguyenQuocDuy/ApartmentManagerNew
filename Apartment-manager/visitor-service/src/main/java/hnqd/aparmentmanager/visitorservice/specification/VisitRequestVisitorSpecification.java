@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.specification;
 
-import hnqd.aparmentmanager.common.Enum.EVisitStatus;
+import hnqd.aparmentmanager.common.enums.EVisitStatus;
 import hnqd.aparmentmanager.visitorservice.entity.VisitRequest;
 import hnqd.aparmentmanager.visitorservice.entity.VisitRequestVisitor;
 import hnqd.aparmentmanager.visitorservice.entity.Visitor;

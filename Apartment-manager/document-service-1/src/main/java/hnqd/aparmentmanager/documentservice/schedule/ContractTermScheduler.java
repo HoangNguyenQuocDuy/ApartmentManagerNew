@@ -1,7 +1,7 @@
 package hnqd.aparmentmanager.documentservice.schedule;
 
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
+import hnqd.aparmentmanager.common.enums.ETermFrequency;
 import hnqd.aparmentmanager.documentservice.dto.ContractTermDto;
 import hnqd.aparmentmanager.documentservice.entity.Contract;
 import hnqd.aparmentmanager.documentservice.entity.ContractTerm;

@@ -2,12 +2,11 @@ package hnqd.aparmentmanager.accessservice.controller;
 
 import hnqd.aparmentmanager.accessservice.dto.RelativeRequest;
 import hnqd.aparmentmanager.accessservice.service.IRelativeService;
-import hnqd.aparmentmanager.common.Enum.ERelativeType;
+import hnqd.aparmentmanager.common.enums.ERelativeType;
 import hnqd.aparmentmanager.common.dto.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

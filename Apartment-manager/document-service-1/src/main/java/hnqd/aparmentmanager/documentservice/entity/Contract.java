@@ -1,8 +1,8 @@
 package hnqd.aparmentmanager.documentservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
-import hnqd.aparmentmanager.common.Enum.EContractType;
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
+import hnqd.aparmentmanager.common.enums.EContractType;
+import hnqd.aparmentmanager.common.enums.ETermFrequency;
 import hnqd.aparmentmanager.documentservice.converter.ContractStatusConverter;
 import hnqd.aparmentmanager.documentservice.converter.ContractTypeConverter;
 import hnqd.aparmentmanager.documentservice.converter.TermFrequencyConverter;
@@ -13,7 +13,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 

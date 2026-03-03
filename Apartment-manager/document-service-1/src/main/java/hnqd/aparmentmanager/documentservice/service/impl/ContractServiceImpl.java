@@ -1,10 +1,9 @@
 package hnqd.aparmentmanager.documentservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hnqd.aparmentmanager.common.Enum.EContractStatus;
-import hnqd.aparmentmanager.common.Enum.EContractType;
-import hnqd.aparmentmanager.common.Enum.ERoomStatus;
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.EContractStatus;
+import hnqd.aparmentmanager.common.enums.ERoomStatus;
+import hnqd.aparmentmanager.common.enums.ETermFrequency;
 import hnqd.aparmentmanager.common.dto.request.GetContractForRelativeRequest;
 import hnqd.aparmentmanager.common.dto.response.ContractResponse;
 import hnqd.aparmentmanager.common.dto.response.ListResponse;
@@ -17,12 +16,9 @@ import hnqd.aparmentmanager.documentservice.entity.Contract;
 import hnqd.aparmentmanager.documentservice.repository.IContractRepo;
 import hnqd.aparmentmanager.documentservice.service.IContractService;
 import hnqd.aparmentmanager.documentservice.service.IContractTermService;
-import hnqd.apartmentmanager.roomservice.dto.ResponseObject;
-import hnqd.apartmentmanager.roomservice.dto.RoomRequest;
-import hnqd.apartmentmanager.roomservice.service.IRoomService;
+import hnqd.aparmentmanager.common.dto.request.RoomRequest;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -152,6 +148,13 @@ public class ContractServiceImpl implements IContractService {
         Contract contract = contractRepo.findById(id).orElseThrow(
                 () -> new CommonException.NotFoundException("Contract with id " + id + " not found")
         );
+        if (status.equals(EContractStatus.TERMINATED)) {
+            RoomRequest rq = RoomRequest.builder().roomStatus(ERoomStatus.AVAILABLE).build();
+            roomService.updateRoom(contract.getRoomId(), rq);
+        } else if (status.equals(EContractStatus.ACTIVE)) {
+            RoomRequest rq = RoomRequest.builder().roomStatus(ERoomStatus.OCCUPIED).build();
+            roomService.updateRoom(contract.getRoomId(), rq);
+        }
         contract.setStatus(status);
 
         return contractRepo.save(contract);

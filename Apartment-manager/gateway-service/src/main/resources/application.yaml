@@ -3,7 +3,7 @@ spring:
     name: gateway-service
 
   config:
-    import: configserver:http://localhost:9998 #entrypoint for spring to know where look for the configuration file
+    import: optional:configserver:http://config-service:9998 #entrypoint for spring to know where look for the configuration file
 
   cloud:
     gateway:
@@ -11,7 +11,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowed-origins:
-              - "http://localhost:3000"
+              - "*"
             allowed-methods:
               - GET
               - POST
@@ -20,7 +20,7 @@ spring:
               - PATCH
             allowedHeaders:
               - "*"
-            allowCredentials: true
+            allowCredentials: false
       routes:
         - id: room-route
           uri: lb://room-service
@@ -122,4 +122,3 @@ publicApi:
     /api/auth/forgotPassword, 
     /api/auth/resetPassword,
     /api/users/
-    

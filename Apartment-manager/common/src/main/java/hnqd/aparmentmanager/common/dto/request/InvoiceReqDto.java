@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.common.dto.request;
 
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
+import hnqd.aparmentmanager.common.enums.EInvoiceType;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Getter;

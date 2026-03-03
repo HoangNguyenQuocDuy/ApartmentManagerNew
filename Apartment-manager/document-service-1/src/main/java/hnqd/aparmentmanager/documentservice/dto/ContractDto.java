@@ -1,7 +1,7 @@
 package hnqd.aparmentmanager.documentservice.dto;
 
-import hnqd.aparmentmanager.common.Enum.EContractType;
-import hnqd.aparmentmanager.common.Enum.ETermFrequency;
+import hnqd.aparmentmanager.common.enums.EContractType;
+import hnqd.aparmentmanager.common.enums.ETermFrequency;
 import lombok.Getter;
 import lombok.Setter;
 

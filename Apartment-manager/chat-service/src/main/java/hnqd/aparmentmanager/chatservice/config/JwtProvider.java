@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.chatservice.config;
 
-import hnqd.aparmentmanager.common.Enum.EKey;
+import hnqd.aparmentmanager.common.enums.EKey;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 

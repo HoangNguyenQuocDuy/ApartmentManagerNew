@@ -1,6 +1,6 @@
 package hnqd.aparmentmanager.visitorservice.converter;
 
-import hnqd.aparmentmanager.common.Enum.EVisitStatus;
+import hnqd.aparmentmanager.common.enums.EVisitStatus;
 import jakarta.persistence.AttributeConverter;
 
 public class VisitStatusConverter implements AttributeConverter<EVisitStatus, String> {

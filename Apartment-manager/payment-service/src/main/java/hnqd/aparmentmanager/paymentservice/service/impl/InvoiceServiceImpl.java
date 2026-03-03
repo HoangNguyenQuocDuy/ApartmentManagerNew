@@ -1,8 +1,8 @@
 package hnqd.aparmentmanager.paymentservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hnqd.aparmentmanager.common.Enum.EInvoiceType;
-import hnqd.aparmentmanager.common.Enum.EPaymentStatus;
+import hnqd.aparmentmanager.common.enums.EInvoiceType;
+import hnqd.aparmentmanager.common.enums.EPaymentStatus;
 import hnqd.aparmentmanager.common.dto.request.InvoiceReqDto;
 import hnqd.aparmentmanager.common.exceptions.CommonException;
 import hnqd.aparmentmanager.paymentservice.client.IDocumentServiceClient;
